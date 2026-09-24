@@ -205,6 +205,7 @@ h3 {
   border-radius: 4px;
   font-size: 15px;
   font-weight: 600;
+  margin-left: 15px;
 }
 .lime {
   background: var(--lime);
@@ -221,6 +222,7 @@ h3 {
   margin-top: 40px;
   font-size: 10px;
   letter-spacing: 1.4px;
+  margin-left: 15px;
 }
 .hero-meta span {
   font-size: 13px;
