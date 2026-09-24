@@ -44,9 +44,9 @@ summary:focus-visible {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  min-height: 104px;
+  min-height: 90px;
   gap: 30px;
-  padding-block: 14px;
+  padding-block: 5px;
 }
 
 .brand {
@@ -121,7 +121,7 @@ nav .nav-link:hover {
   grid-template-columns: 1.1fr 1fr;
   padding-top: 48px;
   padding-bottom: 64px;
-  gap: 56px;
+  gap: 30px;
   align-items: stretch;
 }
 
