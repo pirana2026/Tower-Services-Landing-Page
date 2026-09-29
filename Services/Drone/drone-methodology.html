@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="How the Drone service detects tree crowns and produces a labelled species map.">
+  <title>Drone Methodology · Tower Services</title>
+  <link rel="stylesheet" href="drone-methodology.css">
+  <link rel="icon" type="image/png" href="../../resources/images/logo.png">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="brand" href="https://core-stack.org/" aria-label="CoRE Stack website">
+        <img class="brand-logo" src="../../resources/images/logo.png" alt="CoRE Stack logo">
+        <span>CoRE Stack<small>TOWER SERVICES</small></span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="../../Index/index.html#services">Services</a>
+        <a href="../../Index/index.html#more">More Tools</a>
+        <a class="nav-doc" href="https://docs.core-stack.org/infra/tower-services/" target="_blank" rel="noopener noreferrer">Documentation ↗</a>
+      </nav>
+    </div>
+  </header>
+  <main class="wrap">
+    <a class="back" href="../Drone/drone.html">← Back to Drone</a>
+    <article class="methodology-content">
+      <p class="eyebrow">DRONE SERVICE</p>
+      <h1 class="service-name">Methodology</h1>
+      <p class="about-copy">From drone imagery to a labelled map of individual tree crowns.</p>
+      <section>
+        <h2>Input</h2>
+        <p>Upload a stitched drone orthomosaic as a GeoTIFF (.tif or .tiff). The image represents your study area and provides the source for crown detection.</p>
+      </section>
+      <section>
+        <h2>How the analysis works</h2>
+        <ol>
+          <li><strong>Detect:</strong> Detectree2 analyses the imagery in tiles and outlines visible tree crowns.</li>
+          <li><strong>Review:</strong> Crown outlines are combined into a map. Check the detection overlay against the image and adjust settings if trees are missed or merged.</li>
+          <li><strong>Group:</strong> Similar looking crowns are grouped together. Charts and sample crown images help you inspect the groups.</li>
+          <li><strong>Label:</strong> Give each group a species name based on your knowledge of the site. The label is applied to crowns in that group.</li>
+        </ol>
+      </section>
+      <section>
+        <h2>Outputs</h2>
+        <p>Download a species map (KMZ), CSV tables, GeoJSON and a STAC record. Each run has a separate results folder in FileBrowser, so you can compare settings and revisit earlier runs.</p>
+      </section>
+      <section>
+        <h2>Learn more</h2>
+        <p><a class="resource-link" href="https://csciitd-my.sharepoint.com/:p:/g/personal/mcs252102_iitd_ac_in/IQC4HV9ZtihuSIZmI0gpdln1AYxP5Q2D2tMmJM16r_ocpWc" target="_blank" rel="noopener noreferrer">View the Drone presentation <span aria-hidden="true">↗</span></a></p>
+        <p><a class="try-button" href="https://www.cse.iitd.ernet.in/act4dws5/drone/" target="_blank" rel="noopener noreferrer">Use the Drone service <span aria-hidden="true">↗</span></a></p>
+      </section>
+    </article>
+  </main>
+  <footer class="wrap"><span>CoRE Stack · Tower Services</span></footer>
+</body>
+</html>
