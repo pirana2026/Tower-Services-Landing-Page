@@ -14,20 +14,10 @@
    <script src="Index.js"></script>
   </head>
   <body>
-  <header class="site-header">
+<header class="site-header">
   <div class="wrap header-inner">
-
-    <a
-  class="brand"
-  href="https://core-stack.org/"
-  aria-label="CoRE Stack website"
->
-      <img
-        class="brand-logo"
-        src="resources/images/logo.png"
-        alt="CoRE Stack logo"
-      >
-
+    <a class="brand" href="https://core-stack.org/" aria-label="CoRE Stack website">
+      <img class="brand-logo" src="resources/images/logo.png" alt="CoRE Stack logo">
       <span>
         CoRE Stack
         <br>
@@ -37,24 +27,41 @@
 
     <nav aria-label="Main navigation">
       <a class="nav-link" href="index.html#services">Services</a>
-
-<a class="nav-link" href="index.html#more">More Tools</a>
-      <a
-        class="nav-doc nav-link"
-        href="https://docs.core-stack.org/infra/tower-services/"
-        target="_blank"
-        rel="noopener"
-      >
+      <a class="nav-link" href="index.html#more">More Tools</a>
+      <a class="nav-doc nav-link" href="https://docs.core-stack.org/infra/tower-services/" target="_blank" rel="noopener">
         Documentation ↗
       </a>
     </nav>
-
   </div>
+
+<!-- Organic Green Vine / Branch Bottom Border SVG (Exact Mask & Expanded Canvas) -->
+  <svg class="header-branch-border" viewBox="0 0 1200 32" preserveAspectRatio="none" aria-hidden="true">
+    <!-- Top Header Green Fill (Uses Header CSS Variable) -->
+    <path d="M0,0 L1200,0 L1200,16 Q900,10 600,16 T300,12 T0,8 Z" fill="var(--header-bg)" />
+    
+    <!-- Bottom Area Fill (Pure White) -->
+    <path d="M0,8 Q150,22 300,12 T600,16 T900,10 T1200,16 L1200,32 L0,32 Z" fill="#ffffff" />
+    
+    <!-- Continuous Visible Stem Line Across Entire Width -->
+    <path d="M0,8 Q150,22 300,12 T600,16 T900,10 T1200,16" fill="none" stroke="#6b9347" stroke-width="4" stroke-linecap="round" />
+    
+    <!-- Rich Fixed Leaf Accents Along the Stem -->
+    <path d="M120,13 C115,7 107,8 110,15 C115,15 123,13 120,13 Z" fill="#84ab5c" />
+    <path d="M125,14 C130,8 138,10 134,17 C129,16 121,16 125,14 Z" fill="#6b9347" />
+    <path d="M295,12 C290,6 282,7 285,14 C290,14 298,12 295,12 Z" fill="#84ab5c" />
+    <path d="M302,12 C307,6 315,8 311,15 C306,14 298,14 302,12 Z" fill="#6b9347" />
+    <path d="M480,13 C475,7 467,8 470,15 C475,15 483,13 480,13 Z" fill="#84ab5c" />
+    <path d="M605,16 C610,9 618,11 614,18 C609,17 601,17 605,16 Z" fill="#6b9347" />
+    <path d="M750,12 C745,6 737,7 740,14 C745,14 753,12 750,12 Z" fill="#84ab5c" />
+    <path d="M895,10 C890,4 882,5 885,12 C890,12 898,10 895,10 Z" fill="#84ab5c" />
+    <path d="M902,10 C907,4 915,6 911,13 C906,12 898,12 902,10 Z" fill="#6b9347" />
+    <path d="M1080,14 C1075,8 1067,9 1070,16 C1075,16 1083,14 1080,14 Z" fill="#84ab5c" />
+  </svg>
 </header>
+
     <main id="main">
       <section class="hero wrap">
-        <!-- Floating Green Particles Canvas -->
-   <canvas id="bg-particles"></canvas>
+        <canvas id="bg-particles"></canvas>
         <div class="hero-copy">
           <h2>A closer look at<br />our living planet with<em> Tower Services</em></h2>
           <p class="lead">
@@ -184,41 +191,45 @@
           </article>
         </div>
       </section>
-      <section class="resources wrap" id="more">
+    <section class="resources wrap" id="more">
         <div>
           <p class="eyebrow">SUPPORTING YOUR WORK</p>
           <h2>Behind every insight.</h2>
           <p>Shared tools and guidance for working with the services.</p>
         </div>
+
+        <!-- Center Middle Circular Icon Link -->
+        <div class="resource-center-action">
+  <a href="YOUR_PAGE_LINK.html" class="stacd-standalone-icon" aria-label="STACD Resources">
+  <img src="resources/images/StacD2.png" alt="STACD Icon" />
+</a>
+</div>
+
         <div class="resource-links">
-          <a
-            href="https://www.cse.iitd.ernet.in/act4dws5/file/"
-            target="_blank"
-            rel="noopener"
-            ><span
-              ><strong>FileBrowser</strong
-              ><small>Browse and download compute outputs</small></span
-            >↗</a
-          >
-          <a href="https://www.cse.iitd.ernet.in/act4dws5/airflow/home"
-            target="_blank"
-            rel="noopener"
-            ><span
-              ><strong>Airflow + STACD</strong
-              ><small>Workflow orchestration · operator sign-in</small></span
-            >↗</a
-          >
-          <a
-            href="https://docs.core-stack.org/infra/tower-services/"
-            target="_blank"
-            rel="noopener"
-            ><span>
+          <a href="https://www.cse.iitd.ernet.in/act4dws5/file/" target="_blank" rel="noopener">
+            <span>
+              <strong>FileBrowser</strong>
+              <small>Browse and download compute outputs</small>
+            </span>
+            <span class="arrow-icon">↗</span>
+          </a>
+          <a href="https://www.cse.iitd.ernet.in/act4dws5/airflow/home" target="_blank" rel="noopener">
+            <span>
+              <strong>Airflow + STACD</strong>
+              <small>Workflow orchestration · operator sign-in</small>
+            </span>
+            <span class="arrow-icon">↗</span>
+          </a>
+          <a href="https://docs.core-stack.org/infra/tower-services/" target="_blank" rel="noopener">
+            <span>
               <strong>Documentation</strong>
               <small>Guides, architecture and developer resources</small>
-              </span>↗
-              </a>
+            </span>
+              <span class="arrow-icon">↗</span>
+          </a>
         </div>
       </section>
+</section>
        <section class="how" id="how">
         <div class="wrap">
           <div class="section-heading">

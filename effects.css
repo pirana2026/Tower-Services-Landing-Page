@@ -62,3 +62,133 @@ ye hai
   z-index: -1; /* Hero content ke piche rahega */
   opacity: 0.85;
 }
+
+
+/* =========================================================
+   HEADER WITH ORGANIC BRANCH BOTTOM BORDER
+   ========================================================= */
+
+/* =========================================================
+   HEADER & TEXT VISIBILITY RECOVERY FIX
+   ========================================================= */
+
+/* Restoring Visibility for Brand Logo & Nav Text */
+.brand span,
+.nav-link {
+  color: #173c30 !important; /* High-contrast crisp text */
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #3b5e40 !important;
+}
+/* Shared Background Color Lock Variable */
+/* Header Base & Color Variable Lock */
+:root {
+  --header-bg: #e2ebd5;
+}
+
+.site-header {
+  position: relative;
+  background-color: var(--header-bg) !important;
+  background-image: none !important;
+  color: #173c30 !important;
+  overflow: visible !important;
+  border-bottom: none !important;
+}
+
+/* Restoring Crisp Dark Bold Header Typography */
+.site-header .brand span {
+  color: #173c30 !important;
+  font-weight: 700 !important;
+}
+
+.site-header .our-services {
+  color: #173c30 !important;
+  font-weight: 600 !important;
+}
+
+.site-header .nav-link {
+  color: #173c30 !important;
+  font-weight: 700 !important;
+}
+
+.site-header .nav-doc {
+  background-color: #4d6e27 !important;
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+/* SVG Positioning Overlap Fix */
+.header-branch-border {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  height: 28px;
+  margin-top: -1px; /* 1px overlap seals white gap */
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Left Side Extra Resource Button Style */
+.resource-extra-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 22px;
+  padding: 11px 20px;
+  border-radius: 8px;
+  background-color: #5a771e;
+  color: #ffffff !important;
+  font-weight: 600;
+  font-size: 14px;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.resource-extra-btn:hover {
+  background-color: #3b5e40;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(23, 60, 48, 0.2);
+}
+
+.resource-extra-btn .btn-arrow {
+  transition: transform 0.3s ease;
+}
+
+.resource-extra-btn:hover .btn-arrow {
+  transform: translateX(4px);
+}
+
+/* Center button ke andar Image fit karne ke liye */
+/* Direct Standalone Image Icon Button */
+.stacd-standalone-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  background: transparent !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  cursor: pointer;
+}
+
+/* Image Size Yahan Se Bada Hoga */
+/* Image Icon Size Aur Bada Kar Diya Hai */
+.stacd-standalone-icon img {
+  width: 120px; /* Pehle 80px tha, ab aur bada (120px) kar diya hai */
+  height: auto;
+  display: block;
+  background: transparent !important;
+  filter: drop-shadow(0 6px 14px rgba(23, 60, 48, 0.18));
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+}
+
+/* Hover Effect */
+.stacd-standalone-icon:hover img {
+  transform: scale(1.1) translateY(-3px);
+  filter: drop-shadow(0 10px 22px rgba(23, 60, 48, 0.28));
+}

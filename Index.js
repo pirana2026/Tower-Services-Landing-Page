@@ -212,7 +212,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-// yhi hai
+// START: this is js for falling leaves 
 
 
 
@@ -322,3 +322,31 @@ document.addEventListener("DOMContentLoaded", () => {
 
   animate();
 });
+
+// END: end of js of falling leaves
+
+// Slow Staggered Scroll Reveal for Resources
+document.addEventListener("DOMContentLoaded", () => {
+  const resourceLinks = document.querySelectorAll(".resource-links a");
+  if (!resourceLinks.length) return;
+
+  resourceLinks.forEach((link, index) => {
+    link.classList.add("reveal-resource");
+    // Har item ke beech 250ms ka slow gap taaki ek-ek karke clear dikhe
+    link.style.transitionDelay = `${index * 300}ms`;
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("is-visible");
+      }
+    });
+  }, {
+    threshold: 0.15
+  });
+
+  resourceLinks.forEach((link) => observer.observe(link));
+});
+
+
