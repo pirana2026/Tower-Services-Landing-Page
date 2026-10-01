@@ -9,11 +9,12 @@
       content="Discover CoRE Stack services for tree crowns, ecological monitoring and land-cover mapping."
     />
     <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="effects.css" />
     <link rel="icon" type="image/png" href="resources/images/logo.png">
    <script src="Index.js"></script>
   </head>
   <body>
-   <header class="site-header">
+  <header class="site-header">
   <div class="wrap header-inner">
 
     <a
@@ -52,6 +53,8 @@
 </header>
     <main id="main">
       <section class="hero wrap">
+        <!-- Floating Green Particles Canvas -->
+   <canvas id="bg-particles"></canvas>
         <div class="hero-copy">
           <h2>A closer look at<br />our living planet with<em> Tower Services</em></h2>
           <p class="lead">
@@ -74,6 +77,7 @@
     <p class="hero-image-description">
       Tower Services is the group of small Docker apps that run compute: Drone, Bioacoustic (CEM), DIY LULC, and others. Each service does one job (tree crowns, audio, land cover). They share Airflow and STACD when a job needs orchestration.
     </p>
+
   </div>
 </div>
       </section>

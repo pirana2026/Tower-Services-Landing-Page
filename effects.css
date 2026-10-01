@@ -1,0 +1,64 @@
+/* Grid Pattern + Stationary Breathing Color Patches */
+.grid {
+  position: relative;
+  padding: 30px;
+  border-radius: 16px;
+  border: 1px solid #d9dfd3;
+  overflow: hidden;
+
+  /* Layer 1 & 2: Grid Lines | Layer 3-6: Patches fixed at corners & center */
+  background-image: 
+    linear-gradient(rgba(31, 65, 49, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(31, 65, 49, 0.05) 1px, transparent 1px),
+    radial-gradient(circle at 20% 25%, #d8ebd0 0%, transparent 45%),
+    radial-gradient(circle at 80% 25%, #cde2c4 0%, transparent 40%),
+    radial-gradient(circle at 75% 75%, #e1edd8 0%, transparent 45%),
+    radial-gradient(circle at 25% 75%, #d2e6c8 0%, transparent 40%);
+
+  background-size: 48px 48px, 48px 48px, 140% 140%, 140% 140%, 140% 140%, 140% 140%;
+  background-position: 0 0, 0 0, center, center, center, center;
+  background-color: #f7f8f5;
+  
+  /* Patches Breathing Motion in Place */
+  animation: patchPulse 8s ease-in-out infinite alternate;
+}
+
+/* Localized Breathing Keyframe (Apne Point Par Scale Shift) */
+@keyframes patchPulse {
+  0% {
+    background-size: 48px 48px, 48px 48px, 110% 110%, 160% 160%, 120% 120%, 150% 150%;
+    filter: brightness(100%) contrast(100%);
+  }
+  50% {
+    background-size: 48px 48px, 48px 48px, 150% 150%, 120% 120%, 160% 160%, 110% 110%;
+    filter: brightness(103%) contrast(105%);
+  }
+  100% {
+    background-size: 48px 48px, 48px 48px, 130% 130%, 140% 140%, 110% 110%, 160% 160%;
+    filter: brightness(98%) contrast(98%);
+  }
+}
+
+/* 
+ye hai
+*/
+
+/* Fixed Layer for Falling Leaves */
+/* Hero section ko container reference banana */
+.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden; /* Boundaries ke bahar leaves nahi dikhenge */
+}
+
+/* Canvas ko absolute position dena taaki hero ke sath hi scroll ho jaye */
+#bg-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1; /* Hero content ke piche rahega */
+  opacity: 0.85;
+}
