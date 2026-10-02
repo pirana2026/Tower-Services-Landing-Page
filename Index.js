@@ -350,3 +350,65 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+// this is scroll color change
+// Dual-Stage Background Color Switch (Cards -> Try Now Buttons)
+document.addEventListener("DOMContentLoaded", () => {
+  const serviceCards = document.querySelectorAll(".cards .card");
+  const tryButtons = document.querySelectorAll(".try-link");
+
+  if (!serviceCards.length) return;
+
+  // Observer for Service Cards (Drone, Bioacoustic, DIY LULC)
+  const cardsObserver = new IntersectionObserver(
+    (entries) => {
+      const isCardVisible = entries.some((entry) => entry.isIntersecting);
+      if (isCardVisible) {
+        document.body.classList.add("cards-visible-bg");
+      } else {
+        document.body.classList.remove("cards-visible-bg");
+      }
+    },
+    { threshold: 0.15 }
+  );
+
+  // Observer specifically for "Try now" buttons
+  const tryObserver = new IntersectionObserver(
+    (entries) => {
+      const isTryVisible = entries.some((entry) => entry.isIntersecting);
+      if (isTryVisible) {
+        document.body.classList.add("try-buttons-visible-bg");
+      } else {
+        document.body.classList.remove("try-buttons-visible-bg");
+      }
+    },
+    { threshold: 0.3 }
+  );
+
+  serviceCards.forEach((card) => cardsObserver.observe(card));
+  tryButtons.forEach((btn) => tryObserver.observe(btn));
+});
+
+
+
+// Text Scroll Reveal (Har Baar Scroll Karne Par Repeat Hoga)
+document.addEventListener("DOMContentLoaded", () => {
+  const animatedTexts = document.querySelectorAll(".animate-text");
+  if (!animatedTexts.length) return;
+
+  const textObserver = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible"); // View mein aane par show
+        } else {
+          entry.target.classList.remove("is-visible"); // View se bahar jaane par reset
+        }
+      });
+    },
+    {
+      threshold: 0.2, // 20% visible hote hi animation repeat trigger hoga
+    }
+  );
+
+  animatedTexts.forEach((el) => textObserver.observe(el));
+});

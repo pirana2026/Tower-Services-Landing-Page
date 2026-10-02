@@ -3,7 +3,7 @@
   position: relative;
   padding: 30px;
   border-radius: 16px;
-  border: 1px solid #d9dfd3;
+  border: 1px solid #5daa11;
   overflow: hidden;
 
   /* Layer 1 & 2: Grid Lines | Layer 3-6: Patches fixed at corners & center */
@@ -17,7 +17,7 @@
 
   background-size: 48px 48px, 48px 48px, 140% 140%, 140% 140%, 140% 140%, 140% 140%;
   background-position: 0 0, 0 0, center, center, center, center;
-  background-color: #f7f8f5;
+  background-color: #d1d1ca;
   
   /* Patches Breathing Motion in Place */
   animation: patchPulse 8s ease-in-out infinite alternate;
@@ -191,4 +191,62 @@ ye hai
 .stacd-standalone-icon:hover img {
   transform: scale(1.1) translateY(-3px);
   filter: drop-shadow(0 10px 22px rgba(23, 60, 48, 0.28));
+}
+
+
+/* Lighter Top & Smooth Bottom Gradient Layer */
+/* Multi-Tone Smooth Background Layer Setup */
+/* =========================================================
+   DYNAMIC 3-STAGE SCROLL BACKGROUND TRANSITION
+   ========================================================= */
+
+/* Smooth Background Shift when Service Cards Are Visible */
+/* Smooth Background Color Transition */
+/* Smooth Background Color Transition Setup */
+body {
+  transition: background-color 1.2s cubic-bezier(0.25, 1, 0.35, 1) !important;
+  will-change: background-color;
+}
+
+/* Stage 1: Cards (Drone, Bioacoustic, LULC) Dikhte hi Soft Organic Green */
+body.cards-visible-bg {
+  background-color: #e1f1e2 !important;
+}
+
+/* Stage 2: Try Now Buttons Dikhte hi Clean Light Shade (Higher Specificity) */
+body.try-buttons-visible-bg {
+  background-color: #ffffff !important;
+}
+/* animate more wala text */
+
+
+/* =========================================================
+   TEXT LEFT-TO-RIGHT SCROLL REVEAL (#more section)
+   ========================================================= */
+
+/* Initial state: Hidden + Shifted 45px to the Left */
+.animate-text {
+  opacity: 0;
+  transform: translateX(-45px);
+  filter: blur(4px);
+  transition: opacity 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.85s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.85s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform, filter;
+}
+
+/* Active State: Slides in smoothly to original position */
+.animate-text.is-visible {
+  opacity: 1;
+  transform: translateX(0);
+  filter: blur(0);
+}
+
+/* Staggered Delay: Ek-ek karke aaye left se */
+.animate-delay-1 {
+  transition-delay: 0.2s;
+}
+
+.animate-delay-2 {
+  transition-delay: 0.4s;
 }
