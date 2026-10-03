@@ -123,7 +123,7 @@
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Try now ↗
+                Use the Service ↗
               </a>
             </div>
           </article>
@@ -191,44 +191,100 @@
           </article>
         </div>
       </section>
-    <section class="resources wrap" id="more">
-       <div class="resources-info">
-  <p class="eyebrow animate-text">SUPPORTING YOUR WORK</p>
-  <h2 class="animate-text animate-delay-1">Behind every insight.</h2>
-  <p class="animate-text animate-delay-2">Shared tools and guidance for working with the services.</p>
-</div>
+  <section class="resources wrap" id="more">
+      <div class="resources-info">
+        <p class="eyebrow animate-text">SUPPORTING YOUR WORK</p>
+        <h2 class="animate-text animate-delay-1">Behind every insight.</h2>
+        <p class="animate-text animate-delay-2">Shared tools and guidance for working with the services.</p>
+      </div>
 
-  <!-- Center Middle Circular Icon Link -->
-  <div class="resource-center-action">
-    <a href="YOUR_PAGE_LINK.html" class="stacd-standalone-icon" aria-label="STACD Resources">
-      <img src="resources/images/StacD2.png" alt="STACD Icon" />
-    </a>
+      <!-- Center Middle Circular Icon Link -->
+      <div class="resource-center-action">
+        <button type="button" class="stacd-standalone-icon" id="openStacdModal" aria-label="Open STACD Information">
+          <img src="resources/images/StacD2.png" alt="STACD Icon" />
+        </button>
+      </div>
+
+      <div class="resource-links">
+        <a href="https://www.cse.iitd.ernet.in/act4dws5/file/" target="_blank" rel="noopener">
+          <span>
+            <strong>FileBrowser</strong>
+            <small>Browse and download compute outputs</small>
+          </span>
+          <span class="arrow-icon">↗</span>
+        </a>
+        <a href="https://www.cse.iitd.ernet.in/act4dws5/airflow/home" target="_blank" rel="noopener">
+          <span>
+            <strong>Airflow + STACD</strong>
+            <small>Workflow orchestration · operator sign-in</small>
+          </span>
+          <span class="arrow-icon">↗</span>
+        </a>
+        <a href="https://docs.core-stack.org/infra/tower-services/" target="_blank" rel="noopener">
+          <span>
+            <strong>Documentation</strong>
+            <small>Guides, architecture and developer resources</small>
+          </span>
+          <span class="arrow-icon">↗</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- STACD Modal Overlay & Popup Box (Modal markup placed cleanly) -->
+<!-- STACD Modal Overlay & Popup Box (Clean & Professional English) -->
+<div class="modal-overlay" id="stacdModalOverlay" aria-hidden="true">
+  <div class="modal-container">
+    <button type="button" class="modal-close-btn" id="closeStacdModal" aria-label="Close Modal">&times;</button>
+    
+    <div class="modal-header">
+      <span class="eyebrow">RESEARCH & ORCHESTRATION</span>
+      <h2>STACD Overview</h2>
+      <p class="modal-subtitle">SpatioTemporal Asset Catalog with DAGs · IIT Delhi Research</p>
+    </div>
+
+    <div class="modal-body">
+      <!-- Diagram Image -->
+
+      <article class="modal-section">
+        <h3>What is STACD?</h3>
+        <p>
+         Geospatial datasets have complex lineages that are crucial for reproducibility and understanding data provenance, yet current metadata standards like STAC (SpatioTemporal Asset Catalog) provide limited support for capturing complete processing workflows. We propose STACD (STAC extension with DAGs), an extension to STAC specifications that incorporates Directed Acyclic Graph (DAG) representations along with defining algorithms and version changes in the workflows. We also provide a reference implementation on Apache Airflow to demonstrate STACD capabilities such as selective recomputation when some datasets or algorithms in a DAG are updated, complete lineage construction for a dataset, and opportunities for improved collaboration and distributed processing that arise with this standard.
+        </p>
+      </article>
+      <div class="modal-diagram-container">
+        <img src="resources/images/stacd_workflow.png" alt="STACD Workflow Diagram" class="modal-diagram-img" />
+      </div>
+
+      <article class="modal-section">
+        <h3>Key Features</h3>
+        <ul class="modal-list">
+          <li><strong>Selective Recomputation:</strong> When an algorithm is updated, STACD re-runs only the affected steps instead of processing the entire workflow again.</li>
+          <li><strong>Automated Workflows:</strong> Developers define pipelines using simple YAML configurations, which automatically compile into executable Apache Airflow DAGs.</li>
+          <li><strong>Full Data Provenance:</strong> Tracks dataset versions and history across multiple computational tools and isolated Docker containers.</li>
+        </ul>
+      </article>
+
+      <article class="modal-section">
+        <h3>Real-World Impact</h3>
+        <p>
+          STACD serves as the data orchestration backbone for the <strong>CoRE Stack</strong> project at IIT Delhi, powering drone canopy processing, bioacoustics monitoring, and landscape mapping across more than 1,000 villages in India.
+        </p>
+      </article>
+    </div>
+
+    <div class="modal-footer">
+      <a href="https://dl.acm.org/doi/10.1145/3759536.3763803" target="_blank" rel="noopener noreferrer" class="modal-btn btn-primary">
+        Research Paper ↗
+      </a>
+      <a href="https://drive.google.com/file/d/14LTqk47Nfjp4DOOyME3SMxElkxdvmTr1/view" target="_blank" rel="noopener noreferrer" class="modal-btn btn-secondary">
+        Read Thesis PDF ↗
+      </a>
+      <a href="https://github.com/SaharshLaud/STACD_framework/tree/dev" target="_blank" rel="noopener noreferrer" class="modal-btn btn-secondary">
+        Github Repo ↗
+      </a>
+    </div>
   </div>
-
-        <div class="resource-links">
-          <a href="https://www.cse.iitd.ernet.in/act4dws5/file/" target="_blank" rel="noopener">
-            <span>
-              <strong>FileBrowser</strong>
-              <small>Browse and download compute outputs</small>
-            </span>
-            <span class="arrow-icon">↗</span>
-          </a>
-          <a href="https://www.cse.iitd.ernet.in/act4dws5/airflow/home" target="_blank" rel="noopener">
-            <span>
-              <strong>Airflow + STACD</strong>
-              <small>Workflow orchestration · operator sign-in</small>
-            </span>
-            <span class="arrow-icon">↗</span>
-          </a>
-          <a href="https://docs.core-stack.org/infra/tower-services/" target="_blank" rel="noopener">
-            <span>
-              <strong>Documentation</strong>
-              <small>Guides, architecture and developer resources</small>
-            </span>
-              <span class="arrow-icon">↗</span>
-          </a>
-        </div>
-      </section>
+</div>
 </section>
        <section class="how" id="how">
         <div class="wrap">

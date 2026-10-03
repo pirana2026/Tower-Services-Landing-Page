@@ -412,3 +412,38 @@ document.addEventListener("DOMContentLoaded", () => {
 
   animatedTexts.forEach((el) => textObserver.observe(el));
 });
+
+// stacd button 
+// STACD Popup Modal Trigger
+document.addEventListener("DOMContentLoaded", () => {
+  const openBtn = document.getElementById("openStacdModal");
+  const closeBtn = document.getElementById("closeStacdModal");
+  const modalOverlay = document.getElementById("stacdModalOverlay");
+
+  if (!openBtn || !modalOverlay) return;
+
+  function openModal() {
+    modalOverlay.classList.add("is-open");
+    modalOverlay.setAttribute("aria-hidden", "false");
+  }
+
+  function closeModal() {
+    modalOverlay.classList.remove("is-open");
+    modalOverlay.setAttribute("aria-hidden", "true");
+  }
+
+  openBtn.addEventListener("click", openModal);
+  if (closeBtn) closeBtn.addEventListener("click", closeModal);
+
+  // Close when clicking outside the container (on backdrop)
+  modalOverlay.addEventListener("click", (e) => {
+    if (e.target === modalOverlay) closeModal();
+  });
+
+  // Close on Escape key press
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && modalOverlay.classList.contains("is-open")) {
+      closeModal();
+    }
+  });
+});

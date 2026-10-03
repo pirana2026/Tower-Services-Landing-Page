@@ -210,7 +210,7 @@ body {
 
 /* Stage 1: Cards (Drone, Bioacoustic, LULC) Dikhte hi Soft Organic Green */
 body.cards-visible-bg {
-  background-color: #e1f1e2 !important;
+  background-color: #b8f3bc !important;
 }
 
 /* Stage 2: Try Now Buttons Dikhte hi Clean Light Shade (Higher Specificity) */
@@ -249,4 +249,204 @@ body.try-buttons-visible-bg {
 
 .animate-delay-2 {
   transition-delay: 0.4s;
+}
+
+/* =========================================================
+   STACD POPUP MODAL (ENLARGED & DEEP BLUR)
+   ========================================================= */
+
+/* Backdrop Overlay with Rich Deep Blur */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(12, 30, 23, 0.55);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s ease, visibility 0.35s ease;
+  z-index: 9999;
+  padding: 24px;
+}
+
+.modal-overlay.is-open {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Enlarged Modal Container Card */
+.modal-container {
+  position: relative;
+  width: 100%;
+  max-width: 780px; /* Pehle 520px tha, ab bada (780px) kar diya hai */
+  background: #ffffff;
+  border-radius: 20px;
+  padding: 44px 40px;
+  border: 1px solid #d9dfd3;
+  box-shadow: 0 25px 60px rgba(15, 45, 33, 0.3);
+  transform: scale(0.92) translateY(20px);
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-overlay.is-open .modal-container {
+  transform: scale(1) translateY(0);
+}
+
+/* Close Button Size & Position */
+.modal-close-btn {
+  position: absolute;
+  top: 22px;
+  right: 26px;
+  background: transparent;
+  border: none;
+  font-size: 34px;
+  color: #56695f;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.modal-close-btn:hover {
+  color: #173c30;
+  transform: scale(1.1);
+}
+
+.modal-header .eyebrow {
+  font-size: 12px;
+  letter-spacing: 1.8px;
+  color: #5a771e;
+  font-weight: 700;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.modal-header h2 {
+  font-size: 32px;
+  color: #173c30;
+  margin: 0 0 20px;
+}
+
+.modal-body p {
+  font-size: 17px;
+  line-height: 1.65;
+  color: #4a5c52;
+  margin-bottom: 16px;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 16px;
+  margin-top: 32px;
+}
+
+.modal-btn {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px 22px;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.25s ease;
+}
+
+.btn-primary {
+  background: #173c30;
+  color: #ffffff !important;
+}
+
+.btn-primary:hover {
+  background: #285641;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(23, 60, 48, 0.2);
+}
+
+.btn-secondary {
+  background: #5a771e;
+  color: #ffffff !important;
+}
+
+.btn-secondary:hover {
+  background: #3b5e40;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(90, 119, 30, 0.2);
+}
+
+/* Modal Inner Diagram & Typography Polish */
+.modal-diagram-container {
+  width: 100%;
+  margin-bottom: 24px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #d9dfd3;
+  box-shadow: 0 4px 14px rgba(23, 60, 48, 0.08);
+}
+
+.modal-diagram-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.modal-body {
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+/* Custom Scrollbar for Modal Body */
+.modal-body::-webkit-scrollbar {
+  width: 6px;
+}
+.modal-body::-webkit-scrollbar-thumb {
+  background-color: #c0d8b2;
+  border-radius: 4px;
+}
+
+/* Clean & Professional Modal Typography */
+.modal-subtitle {
+  font-size: 14px;
+  color: #56695f;
+  margin-top: -12px;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.modal-section {
+  margin-bottom: 20px;
+}
+
+.modal-section h3 {
+  font-size: 16px;
+  color: #173c30;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.modal-section p {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #4a5c52;
+  margin: 0;
+}
+
+.modal-list {
+  padding-left: 20px;
+  margin: 0;
+  color: #4a5c52;
+}
+
+.modal-list li {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.modal-list strong {
+  color: #173c30;
 }
