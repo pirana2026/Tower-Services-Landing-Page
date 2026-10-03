@@ -203,19 +203,38 @@ ye hai
 /* Smooth Background Shift when Service Cards Are Visible */
 /* Smooth Background Color Transition */
 /* Smooth Background Color Transition Setup */
+/* Smooth Background Color Transition Setup */
+/* Background Gradient Transition Setup using GPU-Accelerated Opacity */
 body {
-  transition: background-color 1.2s cubic-bezier(0.25, 1, 0.35, 1) !important;
-  will-change: background-color;
+  position: relative;
+  background-color: #ffffff;
+  background-image: linear-gradient(180deg, #ffffff 0%, #f4f6f0 100%);
+  transition: background-color 0.8s ease;
 }
 
-/* Stage 1: Cards (Drone, Bioacoustic, LULC) Dikhte hi Soft Organic Green */
-body.cards-visible-bg {
-  background-color: #b8f3bc !important;
+/* Fixed Overlay for Green Gradient (Smooth Opacity Blend) */
+/* Top to Bottom Pure Vertical Gradient Overlay */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  /* 180deg = Top to Bottom: Upar light green (#d2f7d5) -> niche soft green (#8ee088) */
+  background-image: linear-gradient(180deg, #d2f7d5 0%, #e5f3e4 50%, #f0e1a1 100%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: -10;
+  transition: opacity 0.8s ease;
+  will-change: opacity;
+}
+/* Stage 1: Cards & Middle Section par Overlay On (Opacity 1) */
+body.cards-visible-bg::before {
+  opacity: 1;
 }
 
-/* Stage 2: Try Now Buttons Dikhte hi Clean Light Shade (Higher Specificity) */
-body.try-buttons-visible-bg {
-  background-color: #ffffff !important;
+/* Stage 2: "FROM EXPLORATION TO ACTION" (#how) aate hi Overlay Off (Opacity 0) */
+body.how-visible-bg::before,
+body.cards-visible-bg.how-visible-bg::before {
+  opacity: 0 !important;
 }
 /* animate more wala text */
 

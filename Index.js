@@ -351,14 +351,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
 // this is scroll color change
-// Dual-Stage Background Color Switch (Cards -> Try Now Buttons)
+// Background Gradient Switch (Cards -> FROM EXPLORATION TO ACTION)
 document.addEventListener("DOMContentLoaded", () => {
   const serviceCards = document.querySelectorAll(".cards .card");
-  const tryButtons = document.querySelectorAll(".try-link");
+  const howSection = document.getElementById("how");
 
-  if (!serviceCards.length) return;
+  if (!serviceCards.length || !howSection) return;
 
-  // Observer for Service Cards (Drone, Bioacoustic, DIY LULC)
+  // Stage 1: Service Cards dikhte hi Soft Organic Green Overlay Activate
   const cardsObserver = new IntersectionObserver(
     (entries) => {
       const isCardVisible = entries.some((entry) => entry.isIntersecting);
@@ -371,24 +371,22 @@ document.addEventListener("DOMContentLoaded", () => {
     { threshold: 0.15 }
   );
 
-  // Observer specifically for "Try now" buttons
-  const tryObserver = new IntersectionObserver(
+  // Stage 2: "FROM EXPLORATION TO ACTION" (#how) dikhte hi Green Overlay Fade Out
+  const howObserver = new IntersectionObserver(
     (entries) => {
-      const isTryVisible = entries.some((entry) => entry.isIntersecting);
-      if (isTryVisible) {
-        document.body.classList.add("try-buttons-visible-bg");
+      const isHowVisible = entries.some((entry) => entry.isIntersecting);
+      if (isHowVisible) {
+        document.body.classList.add("how-visible-bg");
       } else {
-        document.body.classList.remove("try-buttons-visible-bg");
+        document.body.classList.remove("how-visible-bg");
       }
     },
-    { threshold: 0.3 }
+    { threshold: 0.05 } // 5% element dikhte hi triggers safely without flicker
   );
 
   serviceCards.forEach((card) => cardsObserver.observe(card));
-  tryButtons.forEach((btn) => tryObserver.observe(btn));
+  howObserver.observe(howSection);
 });
-
-
 
 // Text Scroll Reveal (Har Baar Scroll Karne Par Repeat Hoga)
 document.addEventListener("DOMContentLoaded", () => {
