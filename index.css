@@ -344,26 +344,31 @@ h3 {
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
 }
-/* Cards Base Setup */
+/* Clean Cards Base Setup (No Spinning Conic Circle) */
 .card {
   position: relative;
   padding: 27px 28px 0;
   border-radius: 12px;
+  border: 1px solid #c8d5be;
   overflow: hidden;
   z-index: 1;
   display: flex;
   flex-direction: column;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.4s ease,
+              border-color 0.3s ease;
+  will-change: transform;
+}
 
-  /* 0.6s Cubic Bezier for buttery motion */
-  transition: transform 0.6s cubic-bezier(0.2, 1, 0.3, 1), 
-              opacity 0.5s cubic-bezier(0.2, 1, 0.3, 1), 
-              box-shadow 0.4s ease;
-  transform-style: preserve-3d;
-  will-change: transform, opacity;
+/* Remove Rotating Conic Circle Layers */
+.card::before,
+.card::after {
+  display: none !important;
+  content: none !important;
 }
 
 .card:hover {
-  box-shadow: 0 20px 40px rgba(23, 60, 48, 0.22) !important;
+  box-shadow: 0 16px 36px rgba(23, 60, 48, 0.16) !important;
   border-color: #739450;
   z-index: 10;
 }
@@ -1193,12 +1198,143 @@ body {
 }
 
 /* =========================================================
-   SCROLL REVEAL ANIMATIONS FOR ABOUT US
+   MORE ABOUT US - COMPACT & ANIMATED
    ========================================================= */
 
+.about-us {
+  padding: 35px 0 45px;
+  border-top: 1px solid var(--line);
+}
+
+.about-us-container {
+  max-width: 1050px;
+  margin: 0 auto;
+}
+
+.about-us .eyebrow {
+  color: #5a771e;
+  font-weight: 700;
+  letter-spacing: 2px;
+  font-size: 12px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.about-us-card {
+  position: relative;
+  background: #e4eed8;
+  border: 1px solid #b8cf9f;
+  border-radius: 16px;
+  padding: 28px 32px;
+  text-align: center;
+  box-shadow: 0 10px 25px rgba(23, 60, 48, 0.08);
+  overflow: hidden;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), 
+              box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.4s ease;
+}
+
+.about-us-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 18px 35px rgba(23, 60, 48, 0.14);
+  border-color: #5a771e;
+}
+
+.about-card-glow {
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.4) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.about-title {
+  font-family: Georgia, serif;
+  font-size: clamp(28px, 3.2vw, 38px);
+  color: #173c30;
+  margin-bottom: 8px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+.about-subtitle {
+  font-size: 16px;
+  color: #3b5e40;
+  margin-bottom: 16px;
+  font-weight: 600;
+  line-height: 1.4;
+  max-width: 850px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.about-us-lead {
+  font-size: 15px;
+  line-height: 1.65;
+  color: #2c4236;
+  max-width: 950px;
+  margin: 0 auto 24px;
+}
+
+.about-us-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.about-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 15px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.btn-arrow {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.btn-core-stack {
+  background-color: #f4a261;
+  color: #173c30 !important;
+  border: 1px solid #e76f51;
+  box-shadow: 0 4px 12px rgba(231, 111, 81, 0.2);
+}
+
+.btn-core-stack:hover {
+  background-color: #e76f51;
+  color: #ffffff !important;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(231, 111, 81, 0.3);
+}
+
+.btn-explorer {
+  background-color: #173c30;
+  color: #ffffff !important;
+  border: 1px solid #173c30;
+  box-shadow: 0 4px 12px rgba(23, 60, 48, 0.2);
+}
+
+.btn-explorer:hover {
+  background-color: #285641;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(23, 60, 48, 0.3);
+}
+
+/* --- ANIMATION CLASSES --- */
 .animate-about-card {
   opacity: 0;
-  transform: translateY(35px) scale(0.98);
+  transform: translateY(30px) scale(0.98);
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
@@ -1211,7 +1347,7 @@ body {
 
 .animate-about-text {
   opacity: 0;
-  transform: translateY(20px);
+  transform: translateY(18px);
   filter: blur(4px);
   transition: opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.7s cubic-bezier(0.16, 1, 0.3, 1),
@@ -1229,56 +1365,3 @@ body {
 .animate-delay-2 { transition-delay: 0.3s; }
 .animate-delay-3 { transition-delay: 0.45s; }
 .animate-delay-4 { transition-delay: 0.6s; }
-
-/* Responsive adjustments */
-@media (max-width: 650px) {
-  .about-us-card {
-    padding: 32px 20px;
-  }
-  .about-us-actions {
-    flex-direction: column;
-    width: 100%;
-  }
-  .about-btn {
-    width: 100%;
-  }
-}
-
-/* 1. CoRE Stack - Light Orange Button */
-.btn-core-stack {
-  background-color: #f4a261; /* Soft Light Orange */
-  color: #173c30 !important;
-  border: 1px solid #e76f51;
-}
-
-.btn-core-stack:hover {
-  background-color: #e76f51;
-  color: #ffffff !important;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(231, 111, 81, 0.25);
-}
-
-/* 2. Explorer - Dark Theme Button */
-.btn-explorer {
-  background-color: #173c30;
-  color: #ffffff !important;
-  border: 1px solid #173c30;
-}
-
-.btn-explorer:hover {
-  background-color: #285641;
-  transform: translateY(-2px);
-  box-shadow: 0 6px 18px rgba(23, 60, 48, 0.25);
-}
-
-/* Mobile Friendly Alignment */
-@media (max-width: 650px) {
-  .about-us-actions {
-    flex-direction: column;
-    width: 100%;
-  }
-
-  .about-btn {
-    width: 100%;
-  }
-}

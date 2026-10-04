@@ -86,7 +86,7 @@ ye hai
 /* Shared Background Color Lock Variable */
 /* Header Base & Color Variable Lock */
 :root {
-  --header-bg: #e2ebd5;
+  --header-bg: #cae4a6;
 }
 
 .site-header {
@@ -476,4 +476,66 @@ body.cards-visible-bg.how-visible-bg::before {
 
 #more-about-us{
   margin-bottom:0px ;
+}
+
+
+/* Smooth Dark Gradient Layer for Footer */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  /* Top to Bottom: Dark Forest Green (#0f2a20) -> Deep Olive (#173c30) -> Dark Moss (#122b22) */
+  background-image: linear-gradient(180deg, #e8ebc8 0%, #eff1d4 50%, #79e979 100%);
+  opacity: 0;
+  pointer-events: none;
+  z-index: -9;
+  transition: opacity 0.8s ease;
+  will-change: opacity;
+}
+
+/* Footer dikhte hi Light Green Overlay off hoga aur Dark Gradient Overlay ON hoga */
+body.footer-visible-bg::before {
+  opacity: 0 !important;
+}
+
+body.footer-visible-bg::after {
+  opacity: 1 !important;
+}
+
+
+/* bioacaustic bird */
+
+/* Bioacoustic Card Position Lock */
+.card.bioacoustic-card {
+  position: relative;
+  overflow: visible !important;
+}
+
+/* Initial Hidden Position (Card ke piche) */
+.peeking-bird {
+  position: absolute;
+  top: 0;
+  right: 15px;
+  width: 110px;
+  height: auto;
+  z-index: -1;
+  transform: translateY(20px) scale(0.6) rotate(-10deg);
+  opacity: 0;
+  pointer-events: none;
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), 
+              opacity 0.35s ease;
+  will-change: transform, opacity;
+}
+
+.peeking-bird img {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 6px 14px rgba(23, 60, 48, 0.22));
+}
+
+/* Hover State: Card ke top se acoustic soundwaves ke sath pop-out karegi */
+.card.bioacoustic-card:hover .peeking-bird {
+  opacity: 1;
+  transform: translateY(-55px) scale(1) rotate(0deg);
 }

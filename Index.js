@@ -450,25 +450,84 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // About Us Section Scroll Reveal Trigger
 document.addEventListener("DOMContentLoaded", () => {
-  const aboutCard = document.querySelector(".animate-about-card");
-  const aboutTexts = document.querySelectorAll(".animate-about-text");
+  const aboutSection = document.getElementById("about");
 
-  if (!aboutCard) return;
+  if (!aboutSection) return;
 
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
+        const card = entry.target.querySelector(".animate-about-card");
+        const texts = entry.target.querySelectorAll(".animate-about-text");
+
         if (entry.isIntersecting) {
-          aboutCard.classList.add("is-visible");
-          aboutTexts.forEach((el) => el.classList.add("is-visible"));
+          if (card) card.classList.add("is-visible");
+          texts.forEach((el) => el.classList.add("is-visible"));
         } else {
-          aboutCard.classList.remove("is-visible");
-          aboutTexts.forEach((el) => el.classList.remove("is-visible"));
+          if (card) card.classList.remove("is-visible");
+          texts.forEach((el) => el.classList.remove("is-visible"));
         }
       });
     },
-    { threshold: 0.15 }
+    { threshold: 0.1 }
   );
 
-  observer.observe(aboutCard);
+  observer.observe(aboutSection);
+});
+
+// change footer color on scroll
+// Background Gradient Switch (Cards -> HOW -> Footer)
+document.addEventListener("DOMContentLoaded", () => {
+  const serviceCards = document.querySelectorAll(".cards .card");
+  const howSection = document.getElementById("how");
+  const footerSection = document.querySelector(".site-footer");
+
+  // 1. Service Cards Observer
+  if (serviceCards.length) {
+    const cardsObserver = new IntersectionObserver(
+      (entries) => {
+        const isCardVisible = entries.some((entry) => entry.isIntersecting);
+        if (isCardVisible) {
+          document.body.classList.add("cards-visible-bg");
+        } else {
+          document.body.classList.remove("cards-visible-bg");
+        }
+      },
+      { threshold: 0.15 }
+    );
+    serviceCards.forEach((card) => cardsObserver.observe(card));
+  }
+
+  // 2. HOW Section Observer (#how)
+  if (howSection) {
+    const howObserver = new IntersectionObserver(
+      (entries) => {
+        const isHowVisible = entries.some((entry) => entry.isIntersecting);
+        if (isHowVisible) {
+          document.body.classList.add("how-visible-bg");
+        } else {
+          document.body.classList.remove("how-visible-bg");
+        }
+      },
+      { threshold: 0.05 }
+    );
+    howObserver.observe(howSection);
+  }
+
+  // 3. Footer Observer (.site-footer) - Activates Dark Gradient
+  if (footerSection) {
+    const footerObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            document.body.classList.add("footer-visible-bg");
+          } else {
+            document.body.classList.remove("footer-visible-bg");
+          }
+        });
+      },
+      { threshold: 0.1 } // 10% footer screen par aate hi active ho jayega
+    );
+    footerObserver.observe(footerSection);
+  }
 });
