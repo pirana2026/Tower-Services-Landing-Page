@@ -447,3 +447,28 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
+
+// About Us Section Scroll Reveal Trigger
+document.addEventListener("DOMContentLoaded", () => {
+  const aboutCard = document.querySelector(".animate-about-card");
+  const aboutTexts = document.querySelectorAll(".animate-about-text");
+
+  if (!aboutCard) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          aboutCard.classList.add("is-visible");
+          aboutTexts.forEach((el) => el.classList.add("is-visible"));
+        } else {
+          aboutCard.classList.remove("is-visible");
+          aboutTexts.forEach((el) => el.classList.remove("is-visible"));
+        }
+      });
+    },
+    { threshold: 0.15 }
+  );
+
+  observer.observe(aboutCard);
+});
