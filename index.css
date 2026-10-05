@@ -360,13 +360,6 @@ h3 {
   will-change: transform;
 }
 
-/* Remove Rotating Conic Circle Layers */
-.card::before,
-.card::after {
-  display: none !important;
-  content: none !important;
-}
-
 .card:hover {
   box-shadow: 0 16px 36px rgba(23, 60, 48, 0.16) !important;
   border-color: #739450;
@@ -377,48 +370,56 @@ h3 {
 .c3 { background: #edeadd; } */
 
 .c1 {
-  background: linear-gradient(90deg, #d8e8c2 0%, #ffffff 50%, #d8e8c2 100%) !important;
+  background-image: linear-gradient(90deg, #d8e8c2 0%, #ffffff 50%, #d8e8c2 100%) !important;
   background-size: 200% 100% !important;
 }
 
 .c2 {
-  background: linear-gradient(90deg, #c3ded3 0%, #ffffff 50%, #c3ded3 100%) !important;
+  background-image: linear-gradient(90deg, #c3ded3 0%, #ffffff 50%, #c3ded3 100%) !important;
   background-size: 200% 100% !important;
 }
 
 .c3 {
-  background: linear-gradient(90deg, #e3dbc3 0%, #ffffff 50%, #e3dbc3 100%) !important;
+  background-image: linear-gradient(90deg, #e3dbc3 0%, #ffffff 50%, #e3dbc3 100%) !important;
   background-size: 200% 100% !important;
 }
 
-/* Rotating Border Glow Layer */
+/* Neon Border Ring (sirf 2px ring, overflow pe depend nahi karta) */
+@property --neon-angle {
+  syntax: "<angle>";
+  initial-value: 0deg;
+  inherits: false;
+}
+
 .card::before {
   content: "";
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
+  inset: 0;
+  padding: 2px;
+  border-radius: 11px;
   background: conic-gradient(
+    from var(--neon-angle),
     transparent 20%,
     #d6f08a 50%,
     #5a771e 70%,
     transparent 100%
   );
-  animation: rotateNeon 4s linear infinite;
-  z-index: -2;
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask:
+    linear-gradient(#000 0 0) content-box exclude,
+    linear-gradient(#000 0 0);
+  animation: spinNeon 4s linear infinite;
+  pointer-events: none;
+  z-index: 2;
 }
 
-/* Inner Solid Card Overlay (Sirf 2px Border Dikhega) */
-.card::after {
-  content: "";
-  position: absolute;
-  inset: 2px;
-  background: inherit;
-  background-size: 200% 100% !important;
-  animation: moveCardGradient 4s linear infinite;
-  border-radius: 10px;
-  z-index: -1;
+@keyframes spinNeon {
+  to {
+    --neon-angle: 360deg;
+  }
 }
 
 
@@ -988,8 +989,8 @@ min-height: 420px;
 /* Screen par aane par ek baar reveal honge */
 .reveal-enabled .cards .card.is-visible {
   visibility: visible;
-  animation: serviceReveal 0.65s ease both;
-  animation-delay: var(--reveal-delay, 0ms);
+  animation: serviceReveal 0.65s ease both, moveCardGradient 4s linear infinite;
+  animation-delay: var(--reveal-delay, 0ms), 0s;
 }
 
 @keyframes serviceReveal {
@@ -1035,9 +1036,6 @@ body {
   border-radius: 16px;
   border: 1px solid #d9dfd3;
 }
-
-
-
 
 .resources {
   padding: 20px 0;
@@ -1365,3 +1363,9 @@ body {
 .animate-delay-2 { transition-delay: 0.3s; }
 .animate-delay-3 { transition-delay: 0.45s; }
 .animate-delay-4 { transition-delay: 0.6s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .card::before {
+    animation: none;
+  }
+}
