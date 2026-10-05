@@ -516,7 +516,7 @@ body.footer-visible-bg::after {
   position: absolute;
   top: 0;
   right: 15px;
-  width: 110px;
+  width: 80px;
   height: auto;
   z-index: 5; /* neon border ring (z-index 2) ke upar */
   transform: translateY(20px) scale(0.6) rotate(-10deg);
@@ -537,6 +537,132 @@ body.footer-visible-bg::after {
 /* Hover State: Card ke top se acoustic soundwaves ke sath pop-out karegi */
 .card.bioacoustic-card:hover .peeking-bird {
   opacity: 1;
-  transform: translateY(-55px) scale(1) rotate(0deg);
+  transform: translateY(-40px) scale(1) rotate(0deg);
 }
 
+
+
+/* ===== Drone card: hover par drone upar aayega ===== */
+.card.drone-card {
+  position: relative;
+  overflow: visible !important;
+}
+
+.peeking-drone {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  width: 95px;
+  z-index: 5; /* neon border ring (z-index 2) ke upar */
+  opacity: 0;
+  transform: translateY(25px) scale(0.6) rotate(8deg);
+  pointer-events: none;
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 0.35s ease;
+  will-change: transform, opacity;
+}
+
+.peeking-drone svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: drop-shadow(0 6px 14px rgba(23, 60, 48, 0.22));
+}
+
+.card.drone-card:hover .peeking-drone {
+  opacity: 1;
+  transform: translateY(-36px) scale(1) rotate(0deg);
+  /* pop-out khatam hone ke baad halka sa hovering */
+  animation: droneHover 2.2s ease-in-out 0.5s infinite;
+}
+
+@keyframes droneHover {
+  0%, 100% { transform: translateY(-36px) scale(1) rotate(0deg); }
+  50%      { transform: translateY(-43px) scale(1) rotate(-2deg); }
+}
+
+/* Propellers tezi se ghoomte hue dikhein */
+.peeking-drone .prop {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: propSpin 0.12s linear infinite;
+}
+.peeking-drone .prop-b {
+  animation-delay: -0.06s;
+}
+
+@keyframes propSpin {
+  0%, 100% { transform: scaleX(1); }
+  50%      { transform: scaleX(0.4); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .peeking-drone .prop,
+  .card.drone-card:hover .peeking-drone {
+    animation: none;
+  }
+}
+
+
+/* ===== DIY LULC card: hover par satellite upar aayega ===== */
+.card.lulc-card {
+  position: relative;
+  overflow: visible !important;
+}
+
+.peeking-satellite {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  width: 95px;
+  z-index: 5; /* neon border ring (z-index 2) ke upar */
+  opacity: 0;
+  transform: translateY(25px) scale(0.6) rotate(-14deg);
+  pointer-events: none;
+  transition: transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1),
+              opacity 0.35s ease;
+  will-change: transform, opacity;
+}
+
+.peeking-satellite svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  overflow: visible;
+  filter: drop-shadow(0 6px 14px rgba(23, 60, 48, 0.22));
+}
+
+.card.lulc-card:hover .peeking-satellite {
+  opacity: 1;
+  transform: translateY(-36px) scale(1) rotate(-8deg);
+  animation: satFloat 3s ease-in-out 0.5s infinite;
+}
+
+@keyframes satFloat {
+  0%, 100% { transform: translateY(-36px) scale(1) rotate(-8deg); }
+  50%      { transform: translateY(-43px) scale(1) rotate(-3deg); }
+}
+
+/* Signal arcs ek ke baad ek chamakte hain */
+.peeking-satellite .signal {
+  opacity: 0;
+  animation: signalPulse 1.4s ease-in-out infinite;
+}
+.peeking-satellite .s2 {
+  animation-delay: 0.35s;
+}
+
+@keyframes signalPulse {
+  0%, 100% { opacity: 0; }
+  40%, 60% { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .peeking-satellite .signal {
+    animation: none;
+    opacity: 1;
+  }
+  .card.lulc-card:hover .peeking-satellite {
+    animation: none;
+  }
+}

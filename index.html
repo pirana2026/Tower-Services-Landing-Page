@@ -97,7 +97,27 @@
         </div>
         <div class="cards">
           <!-- Drone -->
-          <article class="card c1">
+          <article class="card c1 drone-card">
+            <div class="peeking-drone" aria-hidden="true">
+              <svg viewBox="0 0 140 70" xmlns="http://www.w3.org/2000/svg">
+                <!-- legs -->
+                <path d="M58 40 L50 57 M82 40 L90 57 M44 57 H58 M82 57 H96" fill="none" stroke="#173c30" stroke-width="3" stroke-linecap="round"/>
+                <!-- arm -->
+                <line x1="30" y1="30" x2="110" y2="30" stroke="#173c30" stroke-width="5" stroke-linecap="round"/>
+                <!-- motors -->
+                <rect x="23" y="21" width="14" height="11" rx="3" fill="#2c4a3d"/>
+                <rect x="103" y="21" width="14" height="11" rx="3" fill="#2c4a3d"/>
+                <!-- propellers -->
+                <ellipse class="prop" cx="30" cy="17" rx="25" ry="3.5" fill="#5a771e" opacity="0.6"/>
+                <ellipse class="prop prop-b" cx="110" cy="17" rx="25" ry="3.5" fill="#5a771e" opacity="0.6"/>
+                <!-- body -->
+                <rect x="50" y="22" width="40" height="19" rx="9" fill="#173c30"/>
+                <rect x="60" y="27" width="20" height="5" rx="2.5" fill="#d6f08a"/>
+                <!-- camera -->
+                <circle cx="70" cy="47" r="7" fill="#2c4a3d"/>
+                <circle cx="70" cy="47" r="3.5" fill="#d6f08a"/>
+              </svg>
+            </div>
             <div class="card-top">
               <span>FOREST INTELLIGENCE</span>
               <span>1</span>
@@ -164,7 +184,31 @@
           </article>
 
           <!-- DIY LULC -->
-          <article class="card c3">
+          <article class="card c3 lulc-card">
+            <div class="peeking-satellite" aria-hidden="true">
+              <svg viewBox="0 0 140 70" xmlns="http://www.w3.org/2000/svg">
+                <!-- signal arcs -->
+                <path class="signal s1" d="M62 11 Q70 4 78 11" fill="none" stroke="#5a771e" stroke-width="2.5" stroke-linecap="round"/>
+                <path class="signal s2" d="M56 8 Q70 -4 84 8" fill="none" stroke="#5a771e" stroke-width="2.5" stroke-linecap="round"/>
+                <!-- antenna -->
+                <line x1="70" y1="26" x2="70" y2="15" stroke="#173c30" stroke-width="2.5" stroke-linecap="round"/>
+                <circle cx="70" cy="14" r="3" fill="#d6f08a" stroke="#173c30" stroke-width="1.5"/>
+                <!-- connectors -->
+                <line x1="48" y1="38" x2="58" y2="38" stroke="#173c30" stroke-width="3"/>
+                <line x1="82" y1="38" x2="92" y2="38" stroke="#173c30" stroke-width="3"/>
+                <!-- solar panels -->
+                <rect x="6" y="27" width="42" height="22" rx="2" fill="#2f6f8f" stroke="#173c30" stroke-width="2"/>
+                <path d="M20 27 V49 M34 27 V49 M6 38 H48" stroke="#9cc7d8" stroke-width="1.2"/>
+                <rect x="92" y="27" width="42" height="22" rx="2" fill="#2f6f8f" stroke="#173c30" stroke-width="2"/>
+                <path d="M106 27 V49 M120 27 V49 M92 38 H134" stroke="#9cc7d8" stroke-width="1.2"/>
+                <!-- body -->
+                <rect x="58" y="26" width="24" height="24" rx="5" fill="#173c30"/>
+                <rect x="58" y="26" width="24" height="7" rx="3" fill="#f4a261"/>
+                <!-- sensor -->
+                <circle cx="70" cy="56" r="6" fill="#2c4a3d"/>
+                <circle cx="70" cy="56" r="3" fill="#d6f08a"/>
+              </svg>
+            </div>
             <div class="card-top">
               <span>LANDSCAPE MAPPING</span>
               <span>3</span>
