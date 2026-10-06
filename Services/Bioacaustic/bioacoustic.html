@@ -5,57 +5,75 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="Discover Continuous Ecological Monitoring (CEM), with views for monitoring spots, species and the monitoring network.">
   <title>Bioacoustic · Tower Services</title>
-  <!-- Detail pages use their own styles and script. -->
   <link rel="stylesheet" href="../services.css">
-  <script src="scripts/services.js" defer></script>
- <link rel="icon" type="image/png" href="../../resources/images/logo.png">
+  <script src="../services.js" defer></script>
+  <link rel="icon" type="image/png" href="../../resources/images/logo.png">
+</head>
 <body data-service="bioacoustic">
   <header class="site-header">
     <div class="wrap header-inner">
       <a class="brand" href="https://core-stack.org/" aria-label="CoRE Stack website">
         <img class="brand-logo" src="../../resources/images/logo.png" alt="CoRE Stack logo">
-        <span>CoRE Stack<small>TOWER SERVICES</small></span>
+        <span>CoRE Stack<small>Tower Services</small></span>
       </a>
       <nav aria-label="Main navigation">
-        <a href="../../index.html#services">Services</a>
-        <a href="../../index.html#more">More Tools</a>
-        <a class="nav-doc" href="https://docs.core-stack.org/infra/tower-services/" target="_blank" rel="noopener noreferrer">Documentation ↗</a>
+        <a class="nav-link" href="../../index.html#services">Services</a>
+        <a class="nav-link" href="../../index.html#more">More Tools</a>
+        <a class="nav-doc" href="../../index.html#about">About Us</a>
       </nav>
     </div>
+    <svg class="header-branch-border" viewBox="0 0 1200 32" preserveAspectRatio="none" aria-hidden="true">
+      <path d="M0,0 L1200,0 L1200,16 Q900,10 600,16 T300,12 T0,8 Z" fill="#cae4a6"/>
+      <path d="M0,8 Q150,22 300,12 T600,16 T900,10 T1200,16 L1200,32 L0,32 Z" fill="#f6f7f0"/>
+      <path d="M0,8 Q150,22 300,12 T600,16 T900,10 T1200,16" fill="none" stroke="#6b9347" stroke-width="4" stroke-linecap="round"/>
+      <path d="M120,13 C115,7 107,8 110,15 Z" fill="#84ab5c"/><path d="M302,12 C307,6 315,8 311,15 Z" fill="#6b9347"/>
+      <path d="M750,12 C745,6 737,7 740,14 Z" fill="#84ab5c"/><path d="M902,10 C907,4 915,6 911,13 Z" fill="#6b9347"/>
+    </svg>
   </header>
+
   <main class="wrap">
-    <a class="back" href="../../index.html#services">← Back</a>
-    <div class="service-layout">
-      <section aria-labelledby="service-title">
-        <p class="eyebrow">ECOLOGICAL MONITORING</p>
+    <a class="back" href="../../index.html#services"><span aria-hidden="true">←</span> Back to services</a>
+
+    <section class="service-hero" aria-labelledby="service-title">
+      <div>
+        <p class="eyebrow">Ecological monitoring</p>
         <h1 class="service-name" id="service-title">Bioacoustic</h1>
-        <h2>About this service</h2>
-        <p class="about-copy">Discover Continuous Ecological Monitoring (CEM), with views for monitoring spots, species and the monitoring network.</p>
-        <p class="about-copy">Use the application to explore the ecological information available for your monitoring context.</p>
-        <div class="resource-links">
-          <a class="resource-link" href="https://docs.core-stack.org/infra/tower-services/deployed-architecture/#services-and-repos" target="_blank" rel="noopener noreferrer" aria-label="Bioacoustic in the Tower Services documentation">Documentation <span aria-hidden="true">↗</span></a>
-          <a class="resource-link" href="https://github.com/xHrid/continuous-ecological-monitoring-toolkit" target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+        <p class="lead">Explore ecological monitoring through spots, species and networks.</p>
+        <div class="service-actions">
+          <a class="try-button" href="https://www.cse.iitd.ernet.in/act4dws5/bio-master/" target="_blank" rel="noopener noreferrer">Try Bioacoustic <span aria-hidden="true">↗</span></a>
+          <button type="button" class="method-button" id="openMethod">Methodology <span aria-hidden="true">→</span></button>
         </div>
-        <a class="try-button" href="https://www.cse.iitd.ernet.in/act4dws5/bio-master/" target="_blank" rel="noopener noreferrer">Try Bioacoustic <span aria-hidden="true">↗</span></a>
         <p class="access">Opens the CEM master application.</p>
+      </div>
+      <div class="hero-art"><img src="../../resources/images/Bioacoustic.png" alt="Bioacoustic preview"></div>
+    </section>
+
+    <div class="service-layout">
+      <section class="intro" aria-label="About Bioacoustic">
+        <div class="about-card">
+          <h2>About this service</h2>
+          <p class="about-copy">Discover Continuous Ecological Monitoring (CEM), with views for monitoring spots, species and the monitoring network.</p>
+          <p class="about-copy">Use the application to explore the ecological information available for your monitoring context.</p>
+        </div>
+        <div class="resource-links">
+          <a class="resource-link" href="https://docs.core-stack.org/infra/tower-services/deployed-architecture/#services-and-repos" target="_blank" rel="noopener noreferrer">Documentation <span aria-hidden="true">↗</span></a>
+          <a class="resource-link" href="https://github.com/xHrid/continuous-ecological-monitoring-toolkit" target="_blank" rel="noopener noreferrer">GitHub Repository <span aria-hidden="true">↗</span></a>
+        </div>
         <div class="usage-guide">
-  <h3>How to use it?</h3>
-  <ol>
-    <li>Open the Bioacoustic (CEM) application.</li>
-    <li>Explore the available monitoring spots, species and network.</li>
-    <li>Follow the guidance in the app to explore the monitoring data.</li>
-  </ol>
-</div>
-      </section>
-      <section class="video-section" aria-labelledby="video-title">
-        <div class="video-heading"><h2 id="video-title">Video tutorial</h2><span>BIOACOUSTIC</span></div>
-        <!-- services.js inserts the actual YouTube iframe here. -->
-        <div class="video-stage" data-video-stage data-video-title="Bioacoustic">
-          <div class="video-empty">
-            <span class="video-symbol" aria-hidden="true">▷</span>
-            <strong>Tutorial coming soon</strong>
-            <p>The service walkthrough will appear here when it is available.</p>
+          <h3>How to use it</h3>
+          <div class="timeline-steps">
+            <div class="timeline-step"><span class="step-num">1</span><div class="step-text"><strong>Open:</strong> Launch the Bioacoustic (CEM) application.</div></div>
+            <div class="timeline-step"><span class="step-num">2</span><div class="step-text"><strong>Explore:</strong> Browse the monitoring spots, species and network views.</div></div>
+            <div class="timeline-step"><span class="step-num">3</span><div class="step-text"><strong>Understand:</strong> Follow the in-app guidance to explore the monitoring data.</div></div>
           </div>
+        </div>
+      </section>
+
+      <section class="video-section" aria-labelledby="video-title">
+        <div class="video-heading"><h2 id="video-title">Video tutorial</h2><span class="video-tag">Bioacoustic</span></div>
+        <!-- services.js inserts the YouTube iframe here -->
+        <div class="video-stage" data-video-stage data-video-title="Bioacoustic">
+          <div class="video-empty"><span class="video-symbol" aria-hidden="true">▷</span><strong>Tutorial coming soon</strong><p>The walkthrough will appear here when it is available.</p></div>
         </div>
         <div class="video-caption">
           <h3>Explore monitoring spots, species and networks.</h3>
@@ -66,6 +84,23 @@
       </section>
     </div>
   </main>
-  <footer class="wrap"><span>CoRE Stack · Tower Services</span></footer>
+
+  <div class="modal-overlay" id="methodModal" aria-hidden="true">
+    <div class="modal-container">
+      <button type="button" class="modal-close-btn" id="closeMethod" aria-label="Close">&times;</button>
+      <p class="eyebrow">Methodology</p>
+      <h2>How Bioacoustic runs</h2>
+      <p>The CEM master page is served through Nginx at /bio-master as a Docker app. It shares Airflow and STACD with the other services whenever a job needs orchestration.</p>
+      <img class="modal-diagram-img" src="../../resources/images/architecture-diagram.png" alt="Tower Services compute architecture">
+      <div class="modal-footer">
+        <a class="modal-btn" href="https://docs.core-stack.org/infra/tower-services/deployed-architecture/" target="_blank" rel="noopener noreferrer">Deployed Architecture ↗</a>
+        <a class="modal-btn" href="https://github.com/xHrid/continuous-ecological-monitoring-toolkit" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="wrap"><span>CoRE Stack · Tower Services</span><a href="https://docs.core-stack.org/infra/tower-services/" target="_blank" rel="noopener noreferrer">CoRE Stack docs ↗</a></div>
+  </footer>
 </body>
 </html>

@@ -307,7 +307,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  for (let i = 0; i < 25; i++) {
+  for (let i = 0; i < 35; i++) {
     leaves.push(new Leaf());
   }
 
@@ -411,39 +411,43 @@ document.addEventListener("DOMContentLoaded", () => {
   animatedTexts.forEach((el) => textObserver.observe(el));
 });
 
-// stacd button 
-// STACD Popup Modal Trigger
-document.addEventListener("DOMContentLoaded", () => {
-  const openBtn = document.getElementById("openStacdModal");
-  const closeBtn = document.getElementById("closeStacdModal");
-  const modalOverlay = document.getElementById("stacdModalOverlay");
+// Reusable popup modal (used by STACD and Infra)
+function setupModal(openBtnId, overlayId, closeBtnId) {
+  const openBtn = document.getElementById(openBtnId);
+  const closeBtn = document.getElementById(closeBtnId);
+  const overlay = document.getElementById(overlayId);
 
-  if (!openBtn || !modalOverlay) return;
+  if (!openBtn || !overlay) return;
 
   function openModal() {
-    modalOverlay.classList.add("is-open");
-    modalOverlay.setAttribute("aria-hidden", "false");
+    overlay.classList.add("is-open");
+    overlay.setAttribute("aria-hidden", "false");
   }
 
   function closeModal() {
-    modalOverlay.classList.remove("is-open");
-    modalOverlay.setAttribute("aria-hidden", "true");
+    overlay.classList.remove("is-open");
+    overlay.setAttribute("aria-hidden", "true");
   }
 
   openBtn.addEventListener("click", openModal);
   if (closeBtn) closeBtn.addEventListener("click", closeModal);
 
-  // Close when clicking outside the container (on backdrop)
-  modalOverlay.addEventListener("click", (e) => {
-    if (e.target === modalOverlay) closeModal();
+  // Close when clicking on the backdrop
+  overlay.addEventListener("click", (e) => {
+    if (e.target === overlay) closeModal();
   });
 
-  // Close on Escape key press
+  // Close on Escape
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && modalOverlay.classList.contains("is-open")) {
+    if (e.key === "Escape" && overlay.classList.contains("is-open")) {
       closeModal();
     }
   });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  setupModal("openStacdModal", "stacdModalOverlay", "closeStacdModal");
+  setupModal("openInfraModal", "infraModalOverlay", "closeInfraModal");
 });
 
 

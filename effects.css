@@ -666,3 +666,44 @@ body.footer-visible-bg::after {
     animation: none;
   }
 }
+
+
+/* =========================================================
+   INFRA MODAL EXTRAS
+   ========================================================= */
+
+/* Infra link is now a <button>: keep the same pill look */
+button.corner-infra-link {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+.modal-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.modal-table th,
+.modal-table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid #d9dfd3;
+  color: #4a5c52;
+  line-height: 1.5;
+  vertical-align: top;
+}
+.modal-table th {
+  background: #eef4e4;
+  color: #173c30;
+  font-size: 13px;
+  letter-spacing: 0.4px;
+}
+.modal-table td strong { color: #173c30; }
+
+.modal-section code {
+  background: #eef4e4;
+  color: #173c30;
+  padding: 1px 6px;
+  border-radius: 4px;
+  font-size: 13px;
+}
