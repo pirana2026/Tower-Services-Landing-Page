@@ -1,43 +1,29 @@
 /* Add your YouTube URL or 11-character ID. Leave empty until the tutorial is ready. */
-const SERVICE_VIDEOS = {
-  drone: "https://www.youtube.com/watch?v=pwxeI1C284w",
-  bioacoustic: "https://www.youtube.com/watch?v=6w0aUQSSL_E",
-  "diy-lulc": "https://www.youtube.com/watch?v=I24Iw4L3Rrs"
-};
 
-function getYouTubeId(value) {
-  const input = String(value || "").trim();
-  if (/^[A-Za-z0-9_-]{11}$/.test(input)) return input;
-  try {
-    const url = new URL(input);
-    if (!["https:", "http:"].includes(url.protocol)) return null;
-    const host = url.hostname.toLowerCase();
-    let id = null;
-    if (host === "youtu.be") id = url.pathname.split("/")[1];
-    else if (["youtube.com","www.youtube.com","m.youtube.com","youtube-nocookie.com","www.youtube-nocookie.com"].includes(host)) {
-      const parts = url.pathname.split("/").filter(Boolean);
-      if (parts[0] === "watch") id = url.searchParams.get("v");
-      else if (["embed","shorts","live"].includes(parts[0])) id = parts[1];
-    }
-    return id && /^[A-Za-z0-9_-]{11}$/.test(id) ? id : null;
-  } catch { return null; }
-}
+/* Path to your own video, relative to the service page (e.g. services/drone/drone.html). */
+const SERVICE_VIDEOS = {
+  drone: "../../resources/videos/drone.mp4",
+  bioacoustic: "../../resources/videos/bioacoustic.mp4",
+  "diy-lulc": "../../resources/videos/diy-lulc.mp4"
+};
 
 function initVideo() {
   const stage = document.querySelector("[data-video-stage]");
   if (!stage) return;
-  const value = SERVICE_VIDEOS[document.body.dataset.service];
-  const id = getYouTubeId(value);
-  if (!id) { if (value) console.warn("Invalid YouTube URL"); return; }
-  const iframe = document.createElement("iframe");
-  iframe.src = `https://www.youtube-nocookie.com/embed/${id}?controls=1&playsinline=1&rel=0`;
-  iframe.title = `${stage.dataset.videoTitle} - YouTube tutorial`;
-  iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
-  iframe.allowFullscreen = true;
-  iframe.referrerPolicy = "strict-origin-when-cross-origin";
-  stage.replaceChildren(iframe);
+  const src = SERVICE_VIDEOS[document.body.dataset.service];
+  if (!src) return;                       // empty hai to "Tutorial coming soon" dikhega
+
+  const video = document.createElement("video");
+  video.controls = true;
+  video.playsInline = true;
+  video.preload = "metadata";             // page khulte hi poori video download nahi hogi
+  video.title = `${stage.dataset.videoTitle} - tutorial`;
+  video.src = src;
+
   const help = document.querySelector("[data-video-help]");
-  if (help) help.hidden = false;
+  video.addEventListener("error", () => { if (help) help.hidden = false; });
+
+  stage.replaceChildren(video);
 }
 
 function initModal() {

@@ -68,7 +68,7 @@ background-size:48px 48px,48px 48px,100% 100%,100% 100%,100% 100%}
 .video-heading h2{font:700 17px Arial,sans-serif;margin:0}
 .video-tag{font-size:11px;font-weight:700;letter-spacing:1.2px;padding:4px 12px;border-radius:20px;background:var(--lime);text-transform:uppercase}
 .video-stage{aspect-ratio:16/9;background:#112820;display:grid;place-items:center}
-.video-stage iframe{width:100%;height:100%;border:0}
+.video-stage iframe,.video-stage video{width:100%;height:100%;border:0;background:#000;object-fit:contain}
 .video-empty{text-align:center;color:#c8d3cb;padding:20px}
 .video-symbol{display:block;font-size:46px;color:var(--lime)}
 .video-empty p{margin:4px 0 0;font-size:14px}
