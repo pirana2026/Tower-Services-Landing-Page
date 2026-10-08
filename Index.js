@@ -1,9 +1,3 @@
-/* =========================================================
-   Tower Services · Landing page behaviour
-   Sections: reveal flag · helpers · hero title · falling leaves
-   · card tilt · scroll reveals · background shifts · modals
-   ========================================================= */
-
 const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 const canHover = window.matchMedia("(hover: hover) and (pointer: fine)");
 const hasObserver = "IntersectionObserver" in window;
@@ -15,7 +9,9 @@ if (hasObserver && !reduceMotion.matches) {
 
 /* ---------- Helpers ---------- */
 
-/** Toggle `is-visible` on elements while they are on screen. */
+const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
+/** Toggle `is-visible` on elements while they are on screen (or once only). */
 function observeVisibility(elements, { threshold = 0.2, once = false } = {}) {
   if (!elements.length) return;
 
@@ -61,12 +57,22 @@ function toggleBodyClass(targets, className, threshold) {
   targets.forEach((el) => observer.observe(el));
 }
 
+/** Call `onChange(isOnScreen)` whenever `element` enters or leaves the viewport. */
+function watchOnScreen(element, onChange) {
+  if (!hasObserver) return;
+  new IntersectionObserver(([entry]) => onChange(entry.isIntersecting)).observe(element);
+}
+
 /* ---------- Hero title: types "Tower Services" letter by letter ---------- */
 
 async function initHeroTitle() {
   const title = document.getElementById("tower-title");
   const heroImage = document.querySelector(".hero-image");
   if (!title || !heroImage || reduceMotion.matches) return;
+
+  const TYPING_DELAY = 100;
+  const HOLD_TIME = 3000;
+  const RESTART_DELAY = 300;
 
   const text = title.textContent.trim();
   title.setAttribute("aria-label", text);
@@ -80,10 +86,12 @@ async function initHeroTitle() {
   });
   title.replaceChildren(...letters);
 
-  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
-  const TYPING_DELAY = 100;
-  const HOLD_TIME = 3000;
-  const RESTART_DELAY = 300;
+  // Don't burn CPU on the typing loop while the hero is scrolled away.
+  let onScreen = true;
+  watchOnScreen(heroImage, (isVisible) => (onScreen = isVisible));
+
+  const setAll = (opacity) => letters.forEach((span) => (span.style.opacity = opacity));
+  const shouldStop = () => !title.isConnected || reduceMotion.matches;
 
   // Start typing only after the hero finished sliding in.
   const slideIns = heroImage
@@ -91,19 +99,24 @@ async function initHeroTitle() {
     .filter((animation) => animation.animationName === "heroFromRight");
   await Promise.allSettled(slideIns.map((animation) => animation.finished));
 
-  while (title.isConnected && !reduceMotion.matches) {
-    letters.forEach((span) => (span.style.opacity = "0"));
+  while (!shouldStop()) {
+    if (!onScreen) {
+      await wait(300);
+      continue;
+    }
+
+    setAll("0");
     await wait(RESTART_DELAY);
 
     for (const span of letters) {
-      if (!title.isConnected || reduceMotion.matches) break;
+      if (shouldStop()) break;
       span.style.opacity = "1";
       await wait(TYPING_DELAY);
     }
     await wait(HOLD_TIME);
   }
 
-  letters.forEach((span) => (span.style.opacity = "1"));
+  setAll("1");
 }
 
 /* ---------- Falling leaves inside the hero ---------- */
@@ -120,11 +133,19 @@ function initLeaves() {
     "rgba(214, 240, 138, 0.75)",
     "rgba(90, 150, 60, 0.55)",
   ];
-  const LEAF_COUNT = window.innerWidth < 650 ? 18 : 35;
+  const LEAF_COUNT = window.innerWidth < 650 ? 18 : 33;
+
+  // All sizes below are in CSS pixels; the canvas is scaled for sharp retina screens.
+  let width = 0;
+  let height = 0;
 
   function resize() {
-    canvas.width = hero.offsetWidth;
-    canvas.height = hero.offsetHeight;
+    const ratio = window.devicePixelRatio || 1;
+    width = hero.offsetWidth;
+    height = hero.offsetHeight;
+    canvas.width = width * ratio;
+    canvas.height = height * ratio;
+    ctx.setTransform(ratio, 0, 0, ratio, 0, 0);
   }
 
   class Leaf {
@@ -133,8 +154,8 @@ function initLeaves() {
     }
 
     reset(initial = false) {
-      this.x = Math.random() * canvas.width;
-      this.y = initial ? Math.random() * canvas.height : -15;
+      this.x = Math.random() * width;
+      this.y = initial ? Math.random() * height : -15;
       this.size = Math.random() * 5 + 4;
       this.speedY = Math.random() * 0.7 + 0.3;
       this.speedX = Math.random() * 0.5 - 0.25;
@@ -157,8 +178,7 @@ function initLeaves() {
       this.flipX += this.flipSpeedX;
       this.flipY += this.flipSpeedY;
 
-      const outside =
-        this.y > canvas.height + 15 || this.x < -20 || this.x > canvas.width + 20;
+      const outside = this.y > height + 15 || this.x < -20 || this.x > width + 20;
       if (outside) this.reset();
     }
 
@@ -181,36 +201,37 @@ function initLeaves() {
   resize();
   const leaves = Array.from({ length: LEAF_COUNT }, () => new Leaf());
 
-  let running = true;
+  // One animation loop at a time: `frameId` doubles as the "is running" flag.
+  let frameId = null;
+
   function frame() {
-    if (!running) return;
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    ctx.clearRect(0, 0, width, height);
     leaves.forEach((leaf) => {
       leaf.update();
       leaf.draw();
     });
-    requestAnimationFrame(frame);
+    frameId = requestAnimationFrame(frame);
   }
-  frame();
 
-  // Keep the canvas matched to the hero, and pause when it is off-screen.
+  function start() {
+    if (frameId === null) frame();
+  }
+
+  function stop() {
+    cancelAnimationFrame(frameId);
+    frameId = null;
+  }
+
+  start();
+
+  // Keep the canvas matched to the hero, and pause while it is off-screen.
   if ("ResizeObserver" in window) {
     new ResizeObserver(resize).observe(hero);
   } else {
     window.addEventListener("resize", resize);
   }
 
-  if (hasObserver) {
-    new IntersectionObserver(([entry]) => {
-      const shouldRun = entry.isIntersecting;
-      if (shouldRun && !running) {
-        running = true;
-        frame();
-      } else if (!shouldRun) {
-        running = false;
-      }
-    }).observe(hero);
-  }
+  watchOnScreen(hero, (isVisible) => (isVisible ? start() : stop()));
 }
 
 /* ---------- Service cards ---------- */
@@ -225,16 +246,19 @@ function initCardReveal() {
   observeVisibility(cards, { threshold: 0.15 });
 }
 
-/** Gentle 3D tilt that follows the mouse. Skipped on touch screens. */
+/**
+ * Tilt angles follow the mouse. JS only writes two CSS variables;
+ * the transform itself (and the dimmed neighbours) live in index.css.
+ */
 function initCardTilt() {
-  const grid = document.querySelector(".cards");
   const cards = document.querySelectorAll(".cards .card");
-  if (!grid || !cards.length || !canHover.matches || reduceMotion.matches) return;
+  if (!cards.length || !canHover.matches || reduceMotion.matches) return;
 
-  const REST = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1) translateY(0)";
-  let frameId = null;
+  const TILT_DIVISOR = 45; // higher = gentler tilt
 
   cards.forEach((card) => {
+    let frameId = null;
+
     card.addEventListener("mousemove", (event) => {
       const rect = card.getBoundingClientRect();
       const x = event.clientX - rect.left - rect.width / 2;
@@ -242,24 +266,15 @@ function initCardTilt() {
 
       cancelAnimationFrame(frameId);
       frameId = requestAnimationFrame(() => {
-        card.style.transform =
-          `perspective(1000px) rotateX(${y / 45}deg) rotateY(${-x / 45}deg) scale(1.025) translateY(-4px)`;
-        card.style.opacity = "1";
-
-        cards.forEach((other) => {
-          if (other === card) return;
-          other.style.transform = "perspective(1000px) scale(0.98)";
-          other.style.opacity = "0.85";
-        });
+        card.style.setProperty("--tilt-x", `${y / TILT_DIVISOR}deg`);
+        card.style.setProperty("--tilt-y", `${-x / TILT_DIVISOR}deg`);
       });
     });
-  });
 
-  grid.addEventListener("mouseleave", () => {
-    cancelAnimationFrame(frameId);
-    cards.forEach((card) => {
-      card.style.transform = REST;
-      card.style.opacity = "1";
+    card.addEventListener("mouseleave", () => {
+      cancelAnimationFrame(frameId);
+      card.style.removeProperty("--tilt-x");
+      card.style.removeProperty("--tilt-y");
     });
   });
 }
@@ -287,18 +302,15 @@ function initAboutReveal() {
 
   // Card and its texts reveal together, once the section is in view.
   const parts = about.querySelectorAll(".animate-about-card, .animate-about-text");
+
   if (!hasObserver) {
     parts.forEach((el) => el.classList.add("is-visible"));
     return;
   }
 
-  const observer = new IntersectionObserver(
-    ([entry]) => {
-      parts.forEach((el) => el.classList.toggle("is-visible", entry.isIntersecting));
-    },
-    { threshold: 0.1 }
-  );
-  observer.observe(about);
+  watchOnScreen(about, (isVisible) => {
+    parts.forEach((el) => el.classList.toggle("is-visible", isVisible));
+  });
 }
 
 /* ---------- Page background shifts while scrolling ---------- */
@@ -311,11 +323,16 @@ function initBackgroundShifts() {
 
 /* ---------- Modals (STACD + Infrastructure) ---------- */
 
+const FOCUSABLE =
+  'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
 function setupModal(openBtnId, overlayId, closeBtnId) {
   const openBtn = document.getElementById(openBtnId);
   const overlay = document.getElementById(overlayId);
   const closeBtn = document.getElementById(closeBtnId);
   if (!openBtn || !overlay) return;
+
+  const isOpen = () => overlay.classList.contains("is-open");
 
   function open() {
     overlay.classList.add("is-open");
@@ -334,12 +351,35 @@ function setupModal(openBtnId, overlayId, closeBtnId) {
   openBtn.addEventListener("click", open);
   if (closeBtn) closeBtn.addEventListener("click", close);
 
+  // Click on the dark backdrop closes it; clicks inside the dialog do not.
   overlay.addEventListener("click", (event) => {
     if (event.target === overlay) close();
   });
 
   document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && overlay.classList.contains("is-open")) close();
+    if (!isOpen()) return;
+
+    if (event.key === "Escape") {
+      close();
+      return;
+    }
+
+    // Keep Tab / Shift+Tab inside the open dialog.
+    if (event.key === "Tab") {
+      const items = Array.from(overlay.querySelectorAll(FOCUSABLE));
+      if (!items.length) return;
+
+      const first = items[0];
+      const last = items[items.length - 1];
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    }
   });
 }
 

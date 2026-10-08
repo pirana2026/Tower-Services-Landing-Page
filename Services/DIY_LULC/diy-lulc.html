@@ -123,7 +123,7 @@
             <li>The app <strong>polls</strong> the DAG until it ends in <code>success</code> or <code>failed</code>.</li>
             <li>On success you get map tiles on screen and a GeoTIFF on request. STACD registers the STAC record, and the run is saved with its scheme.</li>
           </ol>
-          <img class="modal-diagram-img method-diagram" src="../../resources/images/architecture-diagram.png" alt="Tower Services compute architecture">
+          <img class="modal-diagram-img method-diagram" src="../../resources/images/lulc-architecture.png" alt="DIY LULC architecture: browser, Nginx, DIY LULC app, Airflow and STACD, Google Earth Engine, data/diy-lulc, FileBrowser">
           <p class="method-note"><strong>Where it sits:</strong> the CoRE Stack cluster has several GPU-equipped compute nodes run as one cluster. Kubernetes orchestrates every service's containers, all compute goes through Airflow, and STACD records every output as a STAC item.</p>
         </article>
 

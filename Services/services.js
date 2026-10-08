@@ -1,17 +1,7 @@
-/* =========================================================
-   Service pages: tutorial video + methodology popup
-   ========================================================= */
-
-/*
-  Tutorial videos, keyed by the page's <body data-service="...">.
-  Paths are relative to the service page (e.g. Services/Drone/drone.html).
-  A service without an entry shows the "Tutorial coming soon" placeholder.
-  To add Bioacoustic later, upload the file and add:
-    bioacoustic: "../../resources/videos/bioacoustic.mp4"
-*/
 const SERVICE_VIDEOS = {
   drone: "../../resources/videos/drone.mp4",
   "diy-lulc": "../../resources/videos/diy-lulc.mp4",
+  bioacoustic: "../../resources/videos/bioacoustic.mp4",
 };
 
 function initVideo() {

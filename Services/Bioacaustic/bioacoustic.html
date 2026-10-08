@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="theme-color" content="#cae4a6">
-    <meta name="description" content="Discover Continuous Ecological Monitoring (CEM), with views for monitoring spots, species and the monitoring network.">
+    <meta name="description" content="Turn field audio into bird species, activity patterns and soundscape health. Continuous Ecological Monitoring (CEM) with views for monitoring spots, species and the monitoring network.">
     <title>Bioacoustic · Tower Services</title>
     <link rel="stylesheet" href="../services.css">
     <script src="../services.js" defer></script>
@@ -37,9 +37,9 @@
 
       <section class="service-hero" aria-labelledby="service-title">
         <div>
-          <p class="eyebrow">Ecological monitoring</p>
+          <p class="eyebrow">Continuous ecological monitoring</p>
           <h1 class="service-name" id="service-title">Bioacoustic</h1>
-          <p class="lead">Explore ecological monitoring through spots, species and networks.</p>
+          <p class="lead">Turn field audio into bird species, activity patterns and soundscape health.</p>
           <div class="service-actions">
             <a class="try-button" href="https://www.cse.iitd.ernet.in/act4dws5/bio-master/" target="_blank" rel="noopener noreferrer">Try Bioacoustic <span aria-hidden="true">↗</span></a>
             <button type="button" class="method-button" id="openMethod" aria-haspopup="dialog">Methodology <span aria-hidden="true">→</span></button>
@@ -53,8 +53,13 @@
         <section class="intro" aria-label="About Bioacoustic">
           <div class="about-card">
             <h2>About this service</h2>
-            <p class="about-copy">Discover Continuous Ecological Monitoring (CEM), with views for monitoring spots, species and the monitoring network.</p>
-            <p class="about-copy">Use the application to explore the ecological information available for your monitoring context.</p>
+            <p class="about-copy">Bioacoustic is the Continuous Ecological Monitoring (CEM) application. Recorders left in the field listen for birds, BirdNET names the species in every short window of audio, and the app turns those detections into views for monitoring spots, species and the monitoring network.</p>
+            <p class="about-copy">Detections are cleaned before anyone reads them. Rain and noise are filtered out, unreliable species are dropped, and the result feeds soundscape indices, daily activity patterns, migration checks and a test of whether birds follow the sun. The full method is under Methodology.</p>
+            <div class="stat-row">
+              <div class="stat"><span class="stat-value">4</span><span class="stat-label">stratified monitoring sites in the study</span></div>
+              <div class="stat"><span class="stat-value">3 s</span><span class="stat-label">audio window named by BirdNET</span></div>
+              <div class="stat"><span class="stat-value">6,000+</span><span class="stat-label">species the classifier knows</span></div>
+            </div>
           </div>
           <div class="resource-links">
             <a class="resource-link" href="https://docs.core-stack.org/infra/tower-services/deployed-architecture/#services-and-repos" target="_blank" rel="noopener noreferrer">Documentation <span aria-hidden="true">↗</span></a>
@@ -63,9 +68,11 @@
           <div class="usage-guide">
             <h3>How to use it</h3>
             <div class="timeline-steps">
-              <div class="timeline-step"><span class="step-num">1</span><div class="step-text"><strong>Open:</strong> Launch the Bioacoustic (CEM) application.</div></div>
-              <div class="timeline-step"><span class="step-num">2</span><div class="step-text"><strong>Explore:</strong> Browse the monitoring spots, species and network views.</div></div>
-              <div class="timeline-step"><span class="step-num">3</span><div class="step-text"><strong>Understand:</strong> Follow the in-app guidance to explore the monitoring data.</div></div>
+              <div class="timeline-step"><span class="step-num">1</span><div class="step-text"><strong>Open the app:</strong> Launch the Bioacoustic (CEM) application. It opens on a map of monitoring spots.</div></div>
+              <div class="timeline-step"><span class="step-num">2</span><div class="step-text"><strong>Pick a spot:</strong> Select a monitoring spot on the map to see what was heard there, including how many species were noticed.</div></div>
+              <div class="timeline-step"><span class="step-num">3</span><div class="step-text"><strong>Look at species:</strong> Switch to the species view to see which birds were detected.</div></div>
+              <div class="timeline-step"><span class="step-num">4</span><div class="step-text"><strong>See the network:</strong> Open the network view to see how the monitoring spots fit together.</div></div>
+              <div class="timeline-step"><span class="step-num">5</span><div class="step-text"><strong>Know what you are reading:</strong> Open Methodology on this page to see how recordings become detections and how detections become indices, regularity and migration results.</div></div>
             </div>
           </div>
         </section>
@@ -77,8 +84,8 @@
             <div class="video-empty"><span class="video-symbol" aria-hidden="true">▷</span><strong>Tutorial coming soon</strong><p>The walkthrough will appear here when it is available.</p></div>
           </div>
           <div class="video-caption">
-            <h3>Explore monitoring spots, species and networks.</h3>
-            <p>A walkthrough of Bioacoustic.</p>
+            <h3>From field recordings to bird activity.</h3>
+            <p>A walkthrough of Bioacoustic: monitoring spots, species and the monitoring network.</p>
             <p class="video-help" data-video-help hidden>The video could not be loaded. Check your connection and try again.</p>
             <noscript><p>Enable JavaScript to load the tutorial player.</p></noscript>
           </div>
@@ -90,9 +97,178 @@
       <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="methodTitle">
         <button type="button" class="modal-close-btn" id="closeMethod" aria-label="Close">&times;</button>
         <p class="eyebrow">Methodology</p>
-        <h2 id="methodTitle">How Bioacoustic runs</h2>
-        <p>The CEM master page is served through Nginx at /bio-master as a Docker app. It shares Airflow and STACD with the other services whenever a job needs orchestration.</p>
-        <img class="modal-diagram-img" src="../../resources/images/architecture-diagram.png" alt="Tower Services compute architecture">
+        <h2 id="methodTitle">How Bioacoustic works</h2>
+        <p class="method-sub">From field audio to bird-activity metrics · BirdNET detection · five-step filtering · acoustic indices</p>
+
+        <div class="method-flow" role="img" aria-label="Five stages: record, pre-process, detect, filter, analyse">
+          <div class="flow-step"><span class="flow-num">1</span><span class="flow-title">Record</span><span class="flow-sub">Song Meter 2, four sites, 2 min on / 4 min off</span></div>
+          <div class="flow-step"><span class="flow-num">2</span><span class="flow-title">Pre-process</span><span class="flow-sub">Segment, denoise, flag rain</span></div>
+          <div class="flow-step"><span class="flow-num">3</span><span class="flow-title">Detect</span><span class="flow-sub">BirdNET, 3-second windows</span></div>
+          <div class="flow-step"><span class="flow-num">4</span><span class="flow-title">Filter</span><span class="flow-sub">Five steps, two clean datasets</span></div>
+          <div class="flow-step"><span class="flow-num">5</span><span class="flow-title">Analyse</span><span class="flow-sub">Indices, AR, HA, migration, solar</span></div>
+        </div>
+
+        <article class="method-section">
+          <h3>Where it runs</h3>
+          <ul class="method-list">
+            <li>CEM is a <strong>Docker app</strong> (frontend + backend) behind Nginx at <code>/bio-master</code>. The browser only talks to the app.</li>
+            <li>Long processing goes to the shared <strong>Airflow + STACD</strong> job runner. The app triggers the DAG and polls until it ends in <code>success</code> or <code>failed</code>.</li>
+            <li>On success, results are written under <code>data/bio-master/</code> and can be browsed in <strong>FileBrowser</strong>.</li>
+          </ul>
+          <img class="modal-diagram-img method-diagram" src="../../resources/images/cem-architecture.png" alt="CEM architecture: browser, Nginx, CEM app, Airflow and STACD, BirdNET pipeline, data/bio-master, FileBrowser">
+        </article>
+
+        <article class="method-section">
+          <h3>Notation used throughout</h3>
+          <table class="method-table">
+            <thead><tr><th>Symbol</th><th>Meaning</th></tr></thead>
+            <tbody>
+              <tr><td><code>s</code></td><td>a bird species</td></tr>
+              <tr><td><code>j</code></td><td>a recording location (site)</td></tr>
+              <tr><td><code>k ∈ D = {1, …, n}</code></td><td>a day in the study period</td></tr>
+              <tr><td><code>h ∈ H = {1, …, 24}</code></td><td>an hour of the day</td></tr>
+            </tbody>
+          </table>
+          <div class="formula">c<sub>s,j,k,h</sub></div>
+          <p class="formula-key">The number of detections of species <em>s</em> at site <em>j</em> on day <em>k</em> during hour <em>h</em>. Every metric below is a sum or a correlation over this one quantity.</p>
+        </article>
+
+        <article class="method-section">
+          <h3>1 · Study design</h3>
+          <ul class="method-list">
+            <li><strong>Four stratified sites</strong> at Sanjay Van, Delhi NCR, chosen to differ in vegetation composition, canopy structure and habitat, so comparisons across sites mean something.</li>
+            <li><strong>Song Meter 2 recorders</strong>, placed to maximise ambient sound capture and minimise anthropogenic noise.</li>
+            <li><strong>2:4 duty cycle</strong>: 2 minutes recording, 4 minutes sleep. Chosen from a pilot across sites with no measurable loss in species detection or index reliability, and a longer field life.</li>
+          </ul>          <p class="method-note">Full equipment specifications, recording parameters and placement details are in the paper's appendix.</p>
+        </article>
+
+        <article class="method-section">
+          <h3>2 · Pre-processing</h3>
+          <ul class="method-list">
+            <li><strong>Segmentation:</strong> each 2-minute file is one segment.</li>
+          </ul>          <div class="formula">T<sub>seg</sub> = 120 s,&nbsp;&nbsp; f<sub>s</sub> = 48,000 Hz</div>
+          <ul class="method-list">
+            <li><strong>Noise reduction:</strong> SNR-scaled noise subtraction in the time domain plus spectral gating in the frequency domain, applied through a short-time Fourier transform.</li>
+          </ul>          <div class="formula">STFT → spectral gate → iSTFT</div>
+          <ul class="method-list">
+            <li><strong>Rainfall removal:</strong> heavy rain is broadband noise that inflates the Acoustic Diversity Index. A <strong>Random Forest on 40 MFCCs</strong> per 10-second chunk labels rain as None / Low / Medium / High, and High segments are dropped before indices are computed.</li>
+          </ul>
+          <div class="stat-row">
+            <div class="stat"><span class="stat-value">94.17%</span><span class="stat-label">overall accuracy</span></div>
+            <div class="stat"><span class="stat-value">0.96</span><span class="stat-label">F1 on the Heavy class</span></div>
+            <div class="stat"><span class="stat-value">3,012</span><span class="stat-label">chunks from 251 files, 20% held out</span></div>
+          </div>
+          <p class="method-note"><strong>Why it matters:</strong> without the rain filter, ADI produced false-positive biodiversity signals during the monsoon; with it, index values across the dataset were corrected.</p>
+        </article>
+
+        <article class="method-section">
+          <h3>3 · Detection: BirdNET</h3>
+          <ul class="method-list">
+            <li>An open-source classifier from Cornell and Chemnitz, trained on <strong>more than 6,000 species</strong>.</li>
+            <li>Slides a <strong>3-second window</strong> over each segment and returns, per window, a species and a confidence in [0, 1].</li>
+            <li>Published weights are used unchanged; <strong>nothing is trained here</strong>.</li>
+            <li>Every detection becomes one row in the project's <code>aggregate.csv</code>: species, confidence, file, site, date, hour.</li>
+          </ul>
+          <div class="formula">c<sub>s,j,k,h</sub> = #{ d ∈ D<sub>s</sub> : site j, day k, hour h }</div>
+          <p class="method-note"><strong>The confidence floor is a generation parameter.</strong> It is set when BirdNET runs. A window below it is never written, so lowering the threshold later cannot recover it. Each site's effective floor is the maximum across its files, and it is recorded in the job log.</p>
+        </article>
+
+        <article class="method-section">
+          <h3>4 · Filtering: five steps to a reliable table</h3>
+          <table class="method-table">
+            <thead><tr><th>Step</th><th>Rule</th></tr></thead>
+            <tbody>
+              <tr><td><strong>1 Taxonomic verification</strong></td><td>Keep only species on the regional eBird / Merlin checklist.<div class="formula">S<sub>verified</sub> = { s ∈ S<sub>raw</sub> : s ∈ S<sub>eBird</sub> }</div></td></tr>
+              <tr><td><strong>2 Confidence threshold</strong></td><td>Drop low-confidence windows.<div class="formula">D<sub>filtered</sub> = { d ∈ D<sub>s</sub> : conf(d) &gt; 0.3 }</div></td></tr>
+              <tr><td><strong>3 Minimum activity</strong></td><td>A species needs enough detections overall.<div class="formula">C<sub>s</sub> = ∑<sub>j</sub>∑<sub>k</sub>∑<sub>h</sub> c<sub>s,j,k,h</sub> &gt; 10</div></td></tr>
+              <tr><td><strong>4 Temporal consistency</strong></td><td>And enough days with substantial activity.<div class="formula">K<sub>s</sub> = | { k : C<sub>s,k</sub> &gt; 10 } | ≥ 5</div></td></tr>
+              <tr><td><strong>5 Rainfall removal</strong></td><td>Heavy-rain segments excluded before index computation (see Pre-processing).</td></tr>
+            </tbody>
+          </table>
+          <p class="method-note"><code>C<sub>s,k</sub></code> is the daily total for species <em>s</em>, summed over sites and hours.</p>
+          <table class="method-table">
+            <thead><tr><th>Dataset</th><th>Steps and use</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Quality-filtered</strong></td><td>Steps 1–3. The default for every analysis: indices, regularity and affinity.</td></tr>
+              <tr><td><strong>Temporally filtered</strong></td><td>Steps 1–4. Used where day-to-day structure matters: migration and solar alignment.</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="method-section">
+          <h3>5 · Acoustic indices: the soundscape without species</h3>
+          <div class="metric-grid">
+            <div class="metric-card"><span class="metric-name">ADI</span><span class="metric-full">Acoustic Diversity Index</span><div class="formula">ADI = −∑<sub>i=1</sub><sup>N</sup> p<sub>i</sub> log p<sub>i</sub>,&nbsp; p<sub>i</sub> = E<sub>i</sub> / ∑<sub>j=1</sub><sup>N</sup> E<sub>j</sub></div><p>Shannon entropy of energy across N frequency bands. Higher = energy spread evenly, typical of many vocalising species.</p></div>
+            <div class="metric-card"><span class="metric-name">ACI</span><span class="metric-full">Acoustic Complexity Index</span><div class="formula">ACI = ∑<sub>t=1</sub><sup>T−1</sup> |S(f,t+1) − S(f,t)| / ∑<sub>t=1</sub><sup>T</sup> S(f,t)</div><p>Frame-to-frame change in amplitude, averaged over bins. High = rapid modulation, like birdsong; low = steady noise.</p></div>
+            <div class="metric-card"><span class="metric-name">AEI</span><span class="metric-full">Acoustic Evenness Index</span><div class="formula">AEI = 1 − G,&nbsp; G = ∑<sub>i</sub>∑<sub>j</sub> |E<sub>i</sub> − E<sub>j</sub>| / (2N ∑<sub>i</sub> E<sub>i</sub>)</div><p>Complement of the Gini coefficient of band energy. Penalises one band dominating.</p></div>
+            <div class="metric-card"><span class="metric-name">NDSI</span><span class="metric-full">Normalized Difference Soundscape Index</span><div class="formula">NDSI = (E<sub>Bio</sub> − E<sub>Anthro</sub>) / (E<sub>Bio</sub> + E<sub>Anthro</sub>)</div><p>Biophony (2–11 kHz) against anthrophony (1–2 kHz). −1 is all traffic, +1 is all birds and insects.</p></div>
+          </div>
+          <p class="method-note"><strong>Urban masking.</strong> At Sites 2 and 3 a high AEI did not mean a balanced soundscape but white-noise saturation from distant traffic. NDSI is what penalises that; no single index is read alone.</p>
+        </article>
+
+        <article class="method-section">
+          <h3>6 · Activity Regularity and Habitat Affinity</h3>
+          <ul class="method-list">
+            <li>The same idea twice: <strong>correlate consecutive days</strong>. AR asks <em>when</em> a bird calls; HA asks <em>where</em>. Both use the quality-filtered dataset.</li>
+          </ul>
+          <div class="metric-grid">
+            <div class="metric-card"><span class="metric-name">AR</span><span class="metric-full">Activity Regularity: same hourly schedule day to day?</span><div class="formula">X<sub>s,j,k</sub> = [c<sub>1</sub>, …, c<sub>24</sub>]<br>ρ<sub>s,j,k</sub> = Spearman(X<sub>s,j,k</sub>, X<sub>s,j,k+1</sub>)<br>AR<sub>s</sub> = (1/M<sub>s</sub>) ∑<sub>j=1</sub><sup>M<sub>s</sub></sup> ρ̄<sub>s,j</sub>,&nbsp; ρ̄<sub>s,j</sub> = (1/N<sub>j</sub>) ∑<sub>k</sub> ρ<sub>s,j,k</sub></div><p>Hourly profile of day k against day k+1. Pairs are used only when both days have at least one detection.</p></div>
+            <div class="metric-card"><span class="metric-name">HA</span><span class="metric-full">Habitat Affinity: same sites day to day?</span><div class="formula">Y<sub>s,k</sub> = [c<sub>j1</sub>, …, c<sub>jm</sub>]<br>ρ<sub>s,k</sub> = Spearman(Y<sub>s,k</sub>, Y<sub>s,k+1</sub>)<br>HA<sub>s</sub> = (1/N<sub>s</sub>) ∑<sub>k=1</sub><sup>n−1</sup> ρ<sub>s,k</sub></div><p>Per-site counts of day k against day k+1. Pairs are used only when both days vary across sites.</p></div>
+          </div>
+          <p class="method-note">High values mean stable, predictable behaviour, a signature of resource-rich habitat.</p>
+        </article>
+
+        <article class="method-section">
+          <h3>7 · Migratory classification</h3>
+          <ul class="method-list">
+            <li>Three complementary views of the daily series <code>C<sub>s,k</sub> = ∑<sub>j</sub>∑<sub>h</sub> c<sub>s,j,k,h</sub></code>, on the <strong>temporally filtered</strong> dataset.</li>
+          </ul>
+          <div class="metric-grid three">
+            <div class="metric-card"><span class="metric-name">SCI</span><span class="metric-full">Seasonal Concentration Index</span><div class="formula">SCI<sub>s</sub> = RS<sub>max,s</sub> / ∑<sub>k</sub> C<sub>s,k</sub><br>RS<sub>max,s</sub> = max<sub>t</sub> ∑<sub>k=t</sub><sup>t+59</sup> C<sub>s,k</sub></div><p>Share of all detections inside the busiest 60-day window. Near 1 = migrant-like.</p></div>
+            <div class="metric-card"><span class="metric-name">K</span><span class="metric-full">Residual kurtosis</span><div class="formula">K<sub>s</sub> = (1/N) ∑<sub>i=1</sub><sup>N</sup> ((r<sub>i</sub> − r̄)/σ)<sup>4</sup><br>r<sub>k</sub> = C<sub>s,k</sub> − Ĉ<sub>s,k</sub> (after a linear trend)</div><p>How peaked the residuals are after removing a linear trend. High = a few days of unusual bursts, like an arrival.</p></div>
+            <div class="metric-card"><span class="metric-name">PMR</span><span class="metric-full">Peak-to-Median Ratio</span><div class="formula">PMR<sub>s</sub> = C<sub>max,s</sub> / (Med<sub>s</sub> + ε)<br>C<sub>max,s</sub> = max<sub>k</sub> C<sub>s,k</sub>,&nbsp; Med<sub>s</sub> = median<sub>k</sub> C<sub>s,k</sub></div><p>The busiest day against a typical day. Large = extreme spikes relative to normal activity.</p></div>
+          </div>
+          <p class="method-label">Decision rule</p>
+          <div class="formula">migratory ⇔ SCI<sub>s</sub> &gt; τ<sub>SCI</sub> ∧ K<sub>s</sub> &gt; τ<sub>K</sub> ∧ PMR<sub>s</sub> &gt; τ<sub>PMR</sub></div>
+          <p class="formula-key">Thresholds were set by inspecting species with known migratory behaviour, so the criteria separate the two groups cleanly. Everything else is resident.</p>
+          <p class="method-note"><strong>The silent resident.</strong> Coppersmith Barbet scored SCI = 0.97 because it only calls in May. eBird sightings showed it present but silent, so a call-to-sighting check is needed before calling anything a migrant.</p>
+        </article>
+
+        <article class="method-section">
+          <h3>8 · Solar alignment: do birds follow the light?</h3>
+          <ul class="method-list">
+            <li>Correlate each day's <strong>peak calling hour</strong> with that day's sunrise or sunset, on the temporally filtered dataset.</li>
+            <li>Solar events are in decimal hours, from site coordinates (φ, λ). Peak hour is taken in each window, H<sub>morning</sub> = {5…9} and H<sub>evening</sub> = {17…20}.</li>
+          </ul>
+          <div class="formula">SR<sub>k</sub> = Hour<sub>sr</sub> + Minute<sub>sr</sub>/60 + Second<sub>sr</sub>/3600,&nbsp; SS<sub>k</sub> likewise</div>          <div class="formula">P<sub>s,k</sub><sup>(m)</sup> = arg max<sub>h∈H<sub>morning</sub></sub> c<sub>s,h,k</sub>,&nbsp;&nbsp; P<sub>s,k</sub><sup>(e)</sup> = arg max<sub>h∈H<sub>evening</sub></sub> c<sub>s,h,k</sub></div>          <div class="formula">ΔT<sub>sr</sub> = P<sub>s,k</sub><sup>(m)</sup> − SR<sub>k</sub>,&nbsp;&nbsp; ΔT<sub>ss</sub> = P<sub>s,k</sub><sup>(e)</sup> − SS<sub>k</sub></div>          <div class="formula">ρ<sub>s</sub><sup>(m)</sup> = Pearson({P<sub>s,k</sub><sup>(m)</sup>}, {SR<sub>k</sub>}),&nbsp;&nbsp; ρ<sub>s</sub><sup>(e)</sup> = Pearson({P<sub>s,k</sub><sup>(e)</sup>}, {SS<sub>k</sub>})</div>
+          <p class="formula-key">The lags ΔT are expected to stay constant if light drives the bird. Correlation is over days with a detection in that window.</p>
+          <table class="method-table">
+            <thead><tr><th>Result</th><th>Reading</th></tr></thead>
+            <tbody>
+              <tr><td><strong>High ρ(m)</strong></td><td>Peak morning calling tracks sunrise as it shifts through the season: dawn drives the bird.</td></tr>
+              <tr><td><strong>High ρ(e)</strong></td><td>The same for dusk.</td></tr>
+              <tr><td><strong>Low ρ</strong></td><td>Peak timing is set by something other than light: food, weather, competition.</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="method-section">
+          <h3>Limitations and what they imply</h3>
+          <table class="method-table">
+            <thead><tr><th>Limitation</th><th>What it means</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Acoustics hears calls, not birds</strong></td><td>A silent bird is invisible. Seasonal vocal patterns can make residents look migratory; eBird sightings are used as a cross-check.</td></tr>
+              <tr><td><strong>The confidence floor is permanent</strong></td><td>Detections below the run's threshold are never written. Sites processed at different thresholds have different floors, flagged in the index.</td></tr>
+              <tr><td><strong>Timestamps come from filenames</strong></td><td>Date and hour are read from <code>SPOT_YYYYMMDD_HHMMSS</code> names. A file that breaks the convention keeps its detections but loses its place in time.</td></tr>
+              <tr><td><strong>Urban noise distorts indices</strong></td><td>Traffic hum inflates AEI; rain inflates ADI. Both are handled (NDSI, the rain classifier) but neither correction is perfect.</td></tr>
+              <tr><td><strong>Season length</strong></td><td>SCI needs at least 60 days of recordings and the migration rule needs a full season; short deployments can only describe, not classify.</td></tr>
+              <tr><td><strong>Thresholds are chosen, not learned</strong></td><td>0.3 confidence, 10 detections, 5 days, and the migration τ values were set by inspection against known species, so they may need re-tuning for a new region.</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <p class="method-credit">Methodology by Mannat, Rajasree Ponnada and Yuvika Chaudhary, supervised by Prof. Aaditeshwar Seth, IIT Delhi.</p>
+
         <div class="modal-footer">
           <a class="modal-btn" href="https://docs.core-stack.org/infra/tower-services/deployed-architecture/" target="_blank" rel="noopener noreferrer">Deployed Architecture ↗</a>
           <a class="modal-btn" href="https://github.com/xHrid/continuous-ecological-monitoring-toolkit" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
