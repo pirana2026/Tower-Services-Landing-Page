@@ -1,249 +1,219 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Turn a drone orthomosaic into a map of tree species. Detect individual tree crowns, group look-alike crowns, name each group once and export a species map, CSV tables and a STAC record.">
-  <title>Drone · Tower Services</title>
-  <link rel="stylesheet" href="../services.css">
-  <script src="../services.js" defer></script>
-  <link rel="icon" type="image/png" href="../../resources/images/logo.png">
-  <style>
-    /* Methodology popup (Drone) */
-    .method-sub{margin:-6px 0 18px;font-size:14px;font-weight:500;color:var(--muted)}
-    .method-flow{display:flex;gap:10px;align-items:stretch;margin:0 0 22px}
-    .flow-step{position:relative;flex:1;min-width:0;padding:14px 10px 12px;text-align:center;background:#f1f7ea;border:1px solid #c8d5be;border-radius:12px}
-    .flow-step:not(:last-child)::after{content:"→";position:absolute;right:-13px;top:50%;transform:translateY(-50%);font-size:16px;font-weight:700;color:var(--green);z-index:1}
-    .flow-num{display:grid;place-items:center;width:26px;height:26px;margin:0 auto 8px;border-radius:50%;background:var(--green);color:#fff;font-size:13px;font-weight:700}
-    .flow-title{display:block;font-size:14px;font-weight:700;color:var(--ink)}
-    .flow-sub{display:block;margin-top:2px;font-size:12px;line-height:1.35;color:var(--muted)}
-    .method-section{margin:0 0 22px}
-    .method-section h3{margin:0 0 10px;font-size:16px;font-weight:700;color:var(--ink)}
-    .method-section p{margin:0 0 10px;font-size:15px;line-height:1.6}
-    .method-list{margin:0;padding-left:20px;color:#4a5c52}
-    .method-list li{margin-bottom:8px;font-size:14.5px;line-height:1.6}
-    .method-list strong{color:var(--ink)}
-    .method-list code,.method-table code{padding:1px 6px;border-radius:4px;background:#eef4e4;color:var(--ink);font-size:13px}
-    .method-table{width:100%;border-collapse:collapse;font-size:14px}
-    .method-table th,.method-table td{padding:9px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line);color:#4a5c52;line-height:1.5}
-    .method-table th{background:#eef4e4;color:var(--ink);font-size:13px;letter-spacing:.4px}
-    .method-table td:first-child{white-space:nowrap}
-    .method-table strong{color:var(--ink)}
-    .method-note{margin-top:12px;padding:12px 14px;font-size:14px;line-height:1.55;background:#f1f7ea;border-left:4px solid var(--green);border-radius:6px;color:#2c4236}
-    .method-diagram{margin-top:12px}
-    @media(max-width:700px){
-      .method-flow{flex-direction:column}
-      .flow-step:not(:last-child)::after{content:"↓";right:auto;left:50%;top:auto;bottom:-14px;transform:translateX(-50%)}
-      .method-table{display:block;overflow-x:auto}
-    }
-  </style>
-</head>
-<body data-service="drone">
-  <header class="site-header">
-    <div class="wrap header-inner">
-      <a class="brand" href="https://core-stack.org/" aria-label="CoRE Stack website">
-        <img class="brand-logo" src="../../resources/images/logo.png" alt="CoRE Stack logo">
-        <span>CoRE Stack<small>Tower Services</small></span>
-      </a>
-      <nav aria-label="Main navigation">
-        <a class="nav-link" href="../../index.html#services">Services</a>
-        <a class="nav-link" href="../../index.html#more">More Tools</a>
-        <a class="nav-doc" href="../../index.html#about">About Us</a>
-      </nav>
-    </div>
-    <svg class="header-branch-border" viewBox="0 0 1200 32" preserveAspectRatio="none" aria-hidden="true">
-      <path d="M0,0 L1200,0 L1200,16 Q900,10 600,16 T300,12 T0,8 Z" fill="#cae4a6"/>
-      <path d="M0,8 Q150,22 300,12 T600,16 T900,10 T1200,16 L1200,32 L0,32 Z" fill="#f6f7f0"/>
-      <path d="M0,8 Q150,22 300,12 T600,16 T900,10 T1200,16" fill="none" stroke="#6b9347" stroke-width="4" stroke-linecap="round"/>
-      <path d="M120,13 C115,7 107,8 110,15 Z" fill="#84ab5c"/><path d="M302,12 C307,6 315,8 311,15 Z" fill="#6b9347"/>
-      <path d="M750,12 C745,6 737,7 740,14 Z" fill="#84ab5c"/><path d="M902,10 C907,4 915,6 911,13 Z" fill="#6b9347"/>
-    </svg>
-  </header>
-
-  <main class="wrap">
-    <a class="back" href="../../index.html#services"><span aria-hidden="true">←</span> Back to services</a>
-
-    <section class="service-hero" aria-labelledby="service-title">
-      <div>
-        <p class="eyebrow">Forest intelligence</p>
-        <h1 class="service-name" id="service-title">Drone</h1>
-        <p class="lead">Turn drone imagery into individual tree crowns and species maps.</p>
-        <div class="service-actions">
-          <a class="try-button" href="https://www.cse.iitd.ernet.in/act4dws5/drone/" target="_blank" rel="noopener noreferrer">Try Drone Application <span aria-hidden="true">↗</span></a>
-          <button type="button" class="method-button" id="openMethod">Methodology <span aria-hidden="true">→</span></button>
-        </div>
-        <p class="access">🔒 Google sign-in required for access.</p>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#cae4a6">
+    <meta name="description" content="Turn a drone orthomosaic into a map of tree species. Detect individual tree crowns, group look-alike crowns, name each group once and export a species map, CSV tables and a STAC record.">
+    <title>Drone · Tower Services</title>
+    <link rel="stylesheet" href="../services.css">
+    <script src="../services.js" defer></script>
+    <link rel="icon" type="image/png" href="../../resources/images/logo.png">
+  </head>
+  <body data-service="drone">
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="brand" href="https://core-stack.org/" aria-label="CoRE Stack website">
+          <img class="brand-logo" src="../../resources/images/logo.png" alt="CoRE Stack logo">
+          <span>CoRE Stack<small>Tower Services</small></span>
+        </a>
+        <nav aria-label="Main navigation">
+          <a class="nav-link" href="../../index.html#services">Services</a>
+          <a class="nav-link" href="../../index.html#more">More Tools</a>
+          <a class="nav-doc nav-link" href="../../index.html#about">About Us</a>
+        </nav>
       </div>
-      <div class="hero-art"><img src="../../resources/images/Drone.png" alt="Drone preview"></div>
-    </section>
+      <svg class="header-branch-border" viewBox="0 0 1200 32" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,0 L1200,0 L1200,16 Q900,10 600,16 T300,12 T0,8 Z" fill="#cae4a6"/>
+        <path d="M0,8 Q150,22 300,12 T600,16 T900,10 T1200,16 L1200,32 L0,32 Z" fill="#f6f7f0"/>
+        <path d="M0,8 Q150,22 300,12 T600,16 T900,10 T1200,16" fill="none" stroke="#6b9347" stroke-width="4" stroke-linecap="round"/>
+        <path d="M120,13 C115,7 107,8 110,15 Z" fill="#84ab5c"/><path d="M302,12 C307,6 315,8 311,15 Z" fill="#6b9347"/>
+        <path d="M750,12 C745,6 737,7 740,14 Z" fill="#84ab5c"/><path d="M902,10 C907,4 915,6 911,13 Z" fill="#6b9347"/>
+      </svg>
+    </header>
 
-    <div class="service-layout">
-      <section class="intro" aria-label="About Drone">
-        <div class="about-card">
-          <h2>About this service</h2>
-          <p class="about-copy">Upload one stitched drone photo of your site (a GeoTIFF orthomosaic) and Drone outlines every tree crown it can see. Look-alike crowns are grouped together, you name each group once, and every tree in that group gets the species you typed.</p>
-          <p class="about-copy">Every run is saved on its own, so you can change the settings and try again whenever you like. Download a species map for Google Earth or any GIS tool, CSV tables with every crown and its species, and a STAC record.</p>
-        </div>
-        <div class="resource-links">
-          <a class="resource-link" href="https://docs.core-stack.org/infra/tower-services/deployed-architecture/#services-and-repos" target="_blank" rel="noopener noreferrer">Documentation <span aria-hidden="true">↗</span></a>
-          <a class="resource-link" href="https://github.com/anunay1206/drone_docker" target="_blank" rel="noopener noreferrer">GitHub Repository <span aria-hidden="true">↗</span></a>
-        </div>
-        <div class="usage-guide">
-          <h3>How to use it</h3>
-          <div class="timeline-steps">
-            <div class="timeline-step"><span class="step-num">1</span><div class="step-text"><strong>Create a project:</strong> Sign in with Google, then start a new project for your site.</div></div>
-            <div class="timeline-step"><span class="step-num">2</span><div class="step-text"><strong>Upload orthomosaics:</strong> Add a GeoTIFF (.tif or .tiff) with its coordinates built in, from your computer or a Google Drive link shared as "Anyone with the link". A ground resolution finer than 8 cm per pixel works best, and a project takes up to 10 orthomosaics and 5 GB. If the file has no coordinates, the app asks for the EPSG code.</div></div>
-            <div class="timeline-step"><span class="step-num">3</span><div class="step-text"><strong>Detect and group:</strong> Pick a detector model and settings, then run the analysis. Drone outlines the crowns and groups look-alike ones. The elbow, silhouette and Davies-Bouldin charts suggest how many groups to use, and the t-SNE crown map shows how clean those groups are.</div></div>
-            <div class="timeline-step"><span class="step-num">4</span><div class="step-text"><strong>Check and tune:</strong> Compare the red outlines on the detection overlay with the trees you can see. If results look poor, open the Guide tab, change the suggested setting and run again.</div></div>
-            <div class="timeline-step"><span class="step-num">5</span><div class="step-text"><strong>Name and export:</strong> Type a species for each group, then export the species map (KMZ), CSV tables and STAC record. Every run gets its own read-only folder in FileBrowser.</div></div>
+    <main class="wrap">
+      <a class="back" href="../../index.html#services"><span aria-hidden="true">←</span> Back to services</a>
+
+      <section class="service-hero" aria-labelledby="service-title">
+        <div>
+          <p class="eyebrow">Forest intelligence</p>
+          <h1 class="service-name" id="service-title">Drone</h1>
+          <p class="lead">Turn drone imagery into individual tree crowns and species maps.</p>
+          <div class="service-actions">
+            <a class="try-button" href="https://www.cse.iitd.ernet.in/act4dws5/drone/" target="_blank" rel="noopener noreferrer">Try Drone Application <span aria-hidden="true">↗</span></a>
+            <button type="button" class="method-button" id="openMethod" aria-haspopup="dialog">Methodology <span aria-hidden="true">→</span></button>
           </div>
+          <p class="access">🔒 Google sign-in required for access.</p>
         </div>
+        <div class="hero-art"><img src="../../resources/images/Drone.png" alt="Drone preview"></div>
       </section>
 
-      <section class="video-section" aria-labelledby="video-title">
-        <div class="video-heading"><h2 id="video-title">Watch it in action</h2><span class="video-tag">Drone</span></div>
-        <!-- services.js inserts the YouTube iframe here -->
-        <div class="video-stage" data-video-stage data-video-title="Drone">
-          <div class="video-empty"><span class="video-symbol" aria-hidden="true">▷</span><strong>Tutorial coming soon</strong><p>The walkthrough will appear here when it is available.</p></div>
-        </div>
-        <div class="video-caption">
-          <h3>From a drone orthomosaic to a tree species map.</h3>
-          <p>A 9 min 50 s walkthrough of Drone, from signing in to exporting and finding your files.</p>
-         <p class="video-help" data-video-help hidden>The video could not be loaded. Check your connection and try again.</p>
-          <noscript><p>Enable JavaScript to load the tutorial player.</p></noscript>
-        </div>
-      </section>
-    </div>
-  </main>
+      <div class="service-layout">
+        <section class="intro" aria-label="About Drone">
+          <div class="about-card">
+            <h2>About this service</h2>
+            <p class="about-copy">Upload one stitched drone photo of your site (a GeoTIFF orthomosaic) and Drone outlines every tree crown it can see. Look-alike crowns are grouped together, you name each group once, and every tree in that group gets the species you typed.</p>
+            <p class="about-copy">Every run is saved on its own, so you can change the settings and try again whenever you like. Download a species map for Google Earth or any GIS tool, CSV tables with every crown and its species, and a STAC record.</p>
+          </div>
+          <div class="resource-links">
+            <a class="resource-link" href="https://docs.core-stack.org/infra/tower-services/deployed-architecture/#services-and-repos" target="_blank" rel="noopener noreferrer">Documentation <span aria-hidden="true">↗</span></a>
+            <a class="resource-link" href="https://github.com/anunay1206/drone_docker" target="_blank" rel="noopener noreferrer">GitHub Repository <span aria-hidden="true">↗</span></a>
+          </div>
+          <div class="usage-guide">
+            <h3>How to use it</h3>
+            <div class="timeline-steps">
+              <div class="timeline-step"><span class="step-num">1</span><div class="step-text"><strong>Create a project:</strong> Sign in with Google, then start a new project for your site.</div></div>
+              <div class="timeline-step"><span class="step-num">2</span><div class="step-text"><strong>Upload orthomosaics:</strong> Add a GeoTIFF (.tif or .tiff) with its coordinates built in, from your computer or a Google Drive link shared as "Anyone with the link". A ground resolution finer than 8 cm per pixel works best, and a project takes up to 10 orthomosaics and 5 GB. If the file has no coordinates, the app asks for the EPSG code.</div></div>
+              <div class="timeline-step"><span class="step-num">3</span><div class="step-text"><strong>Detect and group:</strong> Pick a detector model and settings, then run the analysis. Drone outlines the crowns and groups look-alike ones. The elbow, silhouette and Davies-Bouldin charts suggest how many groups to use, and the t-SNE crown map shows how clean those groups are.</div></div>
+              <div class="timeline-step"><span class="step-num">4</span><div class="step-text"><strong>Check and tune:</strong> Compare the red outlines on the detection overlay with the trees you can see. If results look poor, open the Guide tab, change the suggested setting and run again.</div></div>
+              <div class="timeline-step"><span class="step-num">5</span><div class="step-text"><strong>Name and export:</strong> Type a species for each group, then export the species map (KMZ), CSV tables and STAC record. Every run gets its own read-only folder in FileBrowser.</div></div>
+            </div>
+          </div>
+        </section>
 
-  <div class="modal-overlay" id="methodModal" aria-hidden="true">
-    <div class="modal-container">
-      <button type="button" class="modal-close-btn" id="closeMethod" aria-label="Close">&times;</button>
-      <p class="eyebrow">Methodology</p>
-      <h2>How Drone runs</h2>
-      <p class="method-sub">Detectree2 crown detection · clustering · species labelling · Airflow + STACD</p>
-
-      <!-- Diagram first -->
-      <div class="method-flow" role="img" aria-label="Pipeline: upload, detect, group, name, export">
-        <div class="flow-step"><span class="flow-num">1</span><span class="flow-title">Upload</span><span class="flow-sub">GeoTIFF orthomosaic of your site</span></div>
-        <div class="flow-step"><span class="flow-num">2</span><span class="flow-title">Detect</span><span class="flow-sub">Detectree2 outlines every tree crown</span></div>
-        <div class="flow-step"><span class="flow-num">3</span><span class="flow-title">Group</span><span class="flow-sub">Look-alike crowns are clustered</span></div>
-        <div class="flow-step"><span class="flow-num">4</span><span class="flow-title">Name</span><span class="flow-sub">You type a species for each group</span></div>
-        <div class="flow-step"><span class="flow-num">5</span><span class="flow-title">Export</span><span class="flow-sub">Map, tables and STAC record</span></div>
+        <section class="video-section" aria-labelledby="video-title">
+          <div class="video-heading"><h2 id="video-title">Watch it in action</h2><span class="video-tag">Drone</span></div>
+          <!-- services.js swaps this placeholder for the tutorial video when one is set -->
+          <div class="video-stage" data-video-stage data-video-title="Drone">
+            <div class="video-empty"><span class="video-symbol" aria-hidden="true">▷</span><strong>Tutorial coming soon</strong><p>The walkthrough will appear here when it is available.</p></div>
+          </div>
+          <div class="video-caption">
+            <h3>From a drone orthomosaic to a tree species map.</h3>
+            <p>A 9 min 50 s walkthrough of Drone, from signing in to exporting and finding your files.</p>
+            <p class="video-help" data-video-help hidden>The video could not be loaded. Check your connection and try again.</p>
+            <noscript><p>Enable JavaScript to load the tutorial player.</p></noscript>
+          </div>
+        </section>
       </div>
+    </main>
 
-      <article class="method-section">
-        <h3>Overview</h3>
-        <ul class="method-list">
-          <li>Drone is a <strong>Docker app</strong> (frontend + backend) behind Nginx at <code>/drone</code>.</li>
-          <li>The <strong>backend</strong> triggers the compute job; the heavy work does not run in the web page.</li>
-          <li><strong>Everything is saved per run</strong>, so you can change settings and run again without losing earlier results.</li>
-        </ul>
-      </article>
+    <div class="modal-overlay" id="methodModal" aria-hidden="true">
+      <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="methodTitle">
+        <button type="button" class="modal-close-btn" id="closeMethod" aria-label="Close">&times;</button>
+        <p class="eyebrow">Methodology</p>
+        <h2 id="methodTitle">How Drone runs</h2>
+        <p class="method-sub">Detectree2 crown detection · clustering · species labelling · Airflow + STACD</p>
 
-      <article class="method-section">
-        <h3>How a run executes</h3>
-        <ol class="method-list">
-          <li>You sign in with Google, create a project and upload an orthomosaic.</li>
-          <li>You pick the detector weights and settings and start the run.</li>
-          <li>The backend <strong>triggers an Airflow DAG</strong> generated by STACD.</li>
-          <li>Airflow runs the detection and clustering tasks on the cluster.</li>
-          <li>The backend <strong>polls</strong> the DAG until it ends in <code>success</code> or <code>failed</code>.</li>
-          <li>On success, results are written to <code>data/drone/</code> and you browse them in <strong>FileBrowser</strong>.</li>
-        </ol>
-        <img class="modal-diagram-img method-diagram" src="../../resources/images/architecture-diagram.png" alt="Tower Services compute architecture">
-      </article>
+        <div class="method-flow" role="img" aria-label="Pipeline: upload, detect, group, name, export">
+          <div class="flow-step"><span class="flow-num">1</span><span class="flow-title">Upload</span><span class="flow-sub">GeoTIFF orthomosaic of your site</span></div>
+          <div class="flow-step"><span class="flow-num">2</span><span class="flow-title">Detect</span><span class="flow-sub">Detectree2 outlines every tree crown</span></div>
+          <div class="flow-step"><span class="flow-num">3</span><span class="flow-title">Group</span><span class="flow-sub">Look-alike crowns are clustered</span></div>
+          <div class="flow-step"><span class="flow-num">4</span><span class="flow-title">Name</span><span class="flow-sub">You type a species for each group</span></div>
+          <div class="flow-step"><span class="flow-num">5</span><span class="flow-title">Export</span><span class="flow-sub">Map, tables and STAC record</span></div>
+        </div>
 
-      <article class="method-section">
-        <h3>Crown detector: Detectree2</h3>
-        <ul class="method-list">
-          <li>Open-source tree-crown detector: <strong>Mask R-CNN</strong> instance segmentation, built on Meta's detectron2.</li>
-          <li>Each tile returns a <strong>crown outline</strong> and a <strong>confidence score</strong>.</li>
-          <li>Published weights are used as they are. <strong>Nothing is trained here.</strong></li>
-          <li>Weights are mounted <strong>read-only</strong> and can be picked per project:</li>
-        </ul>
-        <table class="method-table" style="margin-top:10px">
-          <thead><tr><th>Weights</th><th>Best for</th></tr></thead>
-          <tbody>
-            <tr><td><code>urban_cambridge</code></td><td>Urban trees, Cambridge UK. <strong>Default.</strong></td></tr>
-            <tr><td><code>paracou</code></td><td>Tropical canopy, Paracou UAV.</td></tr>
-            <tr><td><code>randresize</code></td><td>Random-resize full model.</td></tr>
-            <tr><td><code>flexi</code></td><td>Generalist: urban and closed canopy.</td></tr>
-            <tr><td><code>tropical_closed</code></td><td>Dense tropical forest only.</td></tr>
-          </tbody>
-        </table>
-      </article>
+        <article class="method-section">
+          <h3>Overview</h3>
+          <ul class="method-list">
+            <li>Drone is a <strong>Docker app</strong> (frontend + backend) behind Nginx at <code>/drone</code>.</li>
+            <li>The <strong>backend</strong> triggers the compute job; the heavy work does not run in the web page.</li>
+            <li><strong>Everything is saved per run</strong>, so you can change settings and run again without losing earlier results.</li>
+          </ul>
+        </article>
 
-      <article class="method-section">
-        <h3>Preparing the image</h3>
-        <ul class="method-list">
-          <li>The detector was trained at one ground resolution, so every survey is first brought to <strong>6.7 cm/px</strong>.</li>
-          <li>Scale = native GSD ÷ target, <strong>capped at 1.0</strong>, so a coarse survey is never upsampled.</li>
-          <li>Native GSD is read from the raster's own geotransform, never assumed.</li>
-          <li>The run log records native GSD, scale and effective GSD for every file.</li>
-          <li>The image is cut into <code>tile_size</code> metre tiles with a <code>buffer</code> overlap.</li>
-          <li>At most <strong>6 crowns per tile</strong> are kept; extras are dropped.</li>
-        </ul>
-      </article>
+        <article class="method-section">
+          <h3>How a run executes</h3>
+          <ol class="method-list">
+            <li>You sign in with Google, create a project and upload an orthomosaic.</li>
+            <li>You pick the detector weights and settings and start the run.</li>
+            <li>The backend <strong>triggers an Airflow DAG</strong> generated by STACD.</li>
+            <li>Airflow runs the detection and clustering tasks on the cluster.</li>
+            <li>The backend <strong>polls</strong> the DAG until it ends in <code>success</code> or <code>failed</code>.</li>
+            <li>On success, results are written to <code>data/drone/</code> and you browse them in <strong>FileBrowser</strong>.</li>
+          </ol>
+          <img class="modal-diagram-img method-diagram" src="../../resources/images/architecture-diagram.png" alt="Tower Services compute architecture">
+        </article>
 
-      <article class="method-section">
-        <h3>From tiles back to one crown map</h3>
-        <ol class="method-list">
-          <li><strong>Project:</strong> tile pixel masks become map coordinates.</li>
-          <li><strong>Stitch:</strong> per-tile layers are joined into one, in the orthomosaic's own coordinates.</li>
-          <li><strong>Confidence filter:</strong> crowns under <code>conf_threshold</code> (0.85 by default) are dropped.</li>
-          <li><strong>Area filter:</strong> only crowns between 4 and 2000 m² are kept.</li>
-          <li><strong>Clean-up:</strong> duplicates from the tile overlap are removed at an IoU of 0.9.</li>
-        </ol>
-      </article>
+        <article class="method-section">
+          <h3>Crown detector: Detectree2</h3>
+          <ul class="method-list">
+            <li>Open-source tree-crown detector: <strong>Mask R-CNN</strong> instance segmentation, built on Meta's detectron2.</li>
+            <li>Each tile returns a <strong>crown outline</strong> and a <strong>confidence score</strong>.</li>
+            <li>Published weights are used as they are. <strong>Nothing is trained here.</strong></li>
+            <li>Weights are mounted <strong>read-only</strong> and can be picked per project:</li>
+          </ul>
+          <table class="method-table">
+            <thead><tr><th>Weights</th><th>Best for</th></tr></thead>
+            <tbody>
+              <tr><td><code>urban_cambridge</code></td><td>Urban trees, Cambridge UK. <strong>Default.</strong></td></tr>
+              <tr><td><code>paracou</code></td><td>Tropical canopy, Paracou UAV.</td></tr>
+              <tr><td><code>randresize</code></td><td>Random-resize full model.</td></tr>
+              <tr><td><code>flexi</code></td><td>Generalist: urban and closed canopy.</td></tr>
+              <tr><td><code>tropical_closed</code></td><td>Dense tropical forest only.</td></tr>
+            </tbody>
+          </table>
+        </article>
 
-      <article class="method-section">
-        <h3>Grouping and species labels</h3>
-        <ul class="method-list">
-          <li>The detector <strong>only finds crowns</strong>. Species come from the clustering and labelling that follow.</li>
-          <li>Look-alike crowns are grouped into <strong>k</strong> clusters, and you get sample pictures of each group.</li>
-          <li>The <strong>elbow</strong>, <strong>silhouette</strong> (higher is better) and <strong>Davies-Bouldin</strong> (lower is better) charts suggest k. The red dashed line is the app's suggestion.</li>
-          <li>The <strong>t-SNE map</strong> shows each crown as a dot. Tight, separate patches of colour mean clean groups; mixed colours mean you should try another k.</li>
-          <li>You <strong>name each group once</strong>, and every tree in that group gets that species.</li>
-        </ul>
-      </article>
+        <article class="method-section">
+          <h3>Preparing the image</h3>
+          <ul class="method-list">
+            <li>The detector was trained at one ground resolution, so every survey is first brought to <strong>6.7 cm/px</strong>.</li>
+            <li>Scale = native GSD ÷ target, <strong>capped at 1.0</strong>, so a coarse survey is never upsampled.</li>
+            <li>Native GSD is read from the raster's own geotransform, never assumed.</li>
+            <li>The run log records native GSD, scale and effective GSD for every file.</li>
+            <li>The image is cut into <code>tile_size</code> metre tiles with a <code>buffer</code> overlap.</li>
+            <li>At most <strong>6 crowns per tile</strong> are kept; extras are dropped.</li>
+          </ul>
+        </article>
 
-      <article class="method-section">
-        <h3>Key settings to tune</h3>
-        <table class="method-table">
-          <thead><tr><th>Setting</th><th>Default</th><th>When to change it</th></tr></thead>
-          <tbody>
-            <tr><td><code>tile_size</code></td><td>10 m</td><td>Big crowns are missed or cut: raise it.</td></tr>
-            <tr><td><code>conf_threshold</code></td><td>0.85</td><td>Far fewer trees than you can see: lower it.</td></tr>
-            <tr><td><code>area_max</code></td><td>2000 m²</td><td>A lawn or field is marked as one tree: lower it.</td></tr>
-            <tr><td>Max crowns per tile</td><td>6</td><td>Dense areas look emptier than sparse ones: raise it.</td></tr>
-            <tr><td>Overlap merge threshold</td><td>IoU 0.9</td><td>One outline covers several trees, or one tree is outlined twice.</td></tr>
-            <tr><td>Full coverage</td><td>Off</td><td>Nothing is found along an edge: turn it on.</td></tr>
-          </tbody>
-        </table>
-        <p class="method-note"><strong>Example:</strong> on one site, the default settings found 19 crowns. With <code>tile_size</code> 20, <code>conf_threshold</code> 0.5 and <code>area_max</code> 200, the same image gave 154 crowns.</p>
-      </article>
+        <article class="method-section">
+          <h3>From tiles back to one crown map</h3>
+          <ol class="method-list">
+            <li><strong>Project:</strong> tile pixel masks become map coordinates.</li>
+            <li><strong>Stitch:</strong> per-tile layers are joined into one, in the orthomosaic's own coordinates.</li>
+            <li><strong>Confidence filter:</strong> crowns under <code>conf_threshold</code> (0.85 by default) are dropped.</li>
+            <li><strong>Area filter:</strong> only crowns between 4 and 2000 m² are kept.</li>
+            <li><strong>Clean-up:</strong> duplicates from the tile overlap are removed at an IoU of 0.9.</li>
+          </ol>
+        </article>
 
-      <article class="method-section">
-        <h3>Outputs</h3>
-        <ul class="method-list">
-          <li><strong>Species map (KMZ):</strong> opens in Google Earth or any GIS tool.</li>
-          <li><strong>CSV tables and GeoJSON:</strong> every crown with its species.</li>
-          <li><strong>STAC record:</strong> so the dataset can be catalogued and found later.</li>
-          <li><strong>FileBrowser folder:</strong> a read-only, shareable link to every file of the run. Each run keeps its own folder, so runs never mix.</li>
-        </ul>
-      </article>
+        <article class="method-section">
+          <h3>Grouping and species labels</h3>
+          <ul class="method-list">
+            <li>The detector <strong>only finds crowns</strong>. Species come from the clustering and labelling that follow.</li>
+            <li>Look-alike crowns are grouped into <strong>k</strong> clusters, and you get sample pictures of each group.</li>
+            <li>The <strong>elbow</strong>, <strong>silhouette</strong> (higher is better) and <strong>Davies-Bouldin</strong> (lower is better) charts suggest k. The red dashed line is the app's suggestion.</li>
+            <li>The <strong>t-SNE map</strong> shows each crown as a dot. Tight, separate patches of colour mean clean groups; mixed colours mean you should try another k.</li>
+            <li>You <strong>name each group once</strong>, and every tree in that group gets that species.</li>
+          </ul>
+        </article>
 
-      <div class="modal-footer">
-        <a class="modal-btn" href="https://docs.core-stack.org/infra/tower-services/deployed-architecture/" target="_blank" rel="noopener noreferrer">Deployed Architecture ↗</a>
-        <a class="modal-btn" href="https://github.com/anunay1206/drone_docker" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        <article class="method-section">
+          <h3>Key settings to tune</h3>
+          <table class="method-table">
+            <thead><tr><th>Setting</th><th>Default</th><th>When to change it</th></tr></thead>
+            <tbody>
+              <tr><td><code>tile_size</code></td><td>10 m</td><td>Big crowns are missed or cut: raise it.</td></tr>
+              <tr><td><code>conf_threshold</code></td><td>0.85</td><td>Far fewer trees than you can see: lower it.</td></tr>
+              <tr><td><code>area_max</code></td><td>2000 m²</td><td>A lawn or field is marked as one tree: lower it.</td></tr>
+              <tr><td>Max crowns per tile</td><td>6</td><td>Dense areas look emptier than sparse ones: raise it.</td></tr>
+              <tr><td>Overlap merge threshold</td><td>IoU 0.9</td><td>One outline covers several trees, or one tree is outlined twice.</td></tr>
+              <tr><td>Full coverage</td><td>Off</td><td>Nothing is found along an edge: turn it on.</td></tr>
+            </tbody>
+          </table>
+          <p class="method-note"><strong>Example:</strong> on one site, the default settings found 19 crowns. With <code>tile_size</code> 20, <code>conf_threshold</code> 0.5 and <code>area_max</code> 200, the same image gave 154 crowns.</p>
+        </article>
+
+        <article class="method-section">
+          <h3>Outputs</h3>
+          <ul class="method-list">
+            <li><strong>Species map (KMZ):</strong> opens in Google Earth or any GIS tool.</li>
+            <li><strong>CSV tables and GeoJSON:</strong> every crown with its species.</li>
+            <li><strong>STAC record:</strong> so the dataset can be catalogued and found later.</li>
+            <li><strong>FileBrowser folder:</strong> a read-only, shareable link to every file of the run. Each run keeps its own folder, so runs never mix.</li>
+          </ul>
+        </article>
+
+        <div class="modal-footer">
+          <a class="modal-btn" href="https://docs.core-stack.org/infra/tower-services/deployed-architecture/" target="_blank" rel="noopener noreferrer">Deployed Architecture ↗</a>
+          <a class="modal-btn" href="https://github.com/anunay1206/drone_docker" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+        </div>
       </div>
     </div>
-  </div>
 
-  <footer class="site-footer">
-    <div class="wrap"><span>CoRE Stack · Tower Services</span><a href="https://docs.core-stack.org/infra/tower-services/" target="_blank" rel="noopener noreferrer">CoRE Stack docs ↗</a></div>
-  </footer>
-</body>
+    <footer class="site-footer">
+      <div class="wrap"><span>CoRE Stack · Tower Services</span><a href="https://docs.core-stack.org/infra/tower-services/" target="_blank" rel="noopener noreferrer">CoRE Stack docs ↗</a></div>
+    </footer>
+  </body>
 </html>
-

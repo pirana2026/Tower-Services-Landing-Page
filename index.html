@@ -3,95 +3,83 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#cae4a6" />
     <title>Explore · Tower Services</title>
-    <meta
-      name="description"
-      content="Discover CoRE Stack services for tree crowns, ecological monitoring and land-cover mapping."
-    />
+    <meta name="description" content="Discover CoRE Stack services for tree crowns, ecological monitoring and land-cover mapping."/>
     <link rel="stylesheet" href="index.css" />
-    <link rel="stylesheet" href="effects.css" />
-    <link rel="icon" type="image/png" href="resources/images/logo.png">
-   <script src="Index.js"></script>
+    <link rel="icon" type="image/png" href="resources/images/logo.png" />
+    <script src="Index.js"></script>
   </head>
   <body>
-<header class="site-header">
-  <div class="wrap header-inner">
-    <a class="brand" href="https://core-stack.org/" aria-label="CoRE Stack website">
-      <img class="brand-logo" src="resources/images/logo.png" alt="CoRE Stack logo">
-      <span>
-        CoRE Stack
-        <br>
-        <span class="our-services">Tower Services</span>
-      </span>
-    </a>
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="brand" href="https://core-stack.org/" aria-label="CoRE Stack website">
+          <img class="brand-logo" src="resources/images/logo.png" alt="CoRE Stack logo">
+          <span>
+            CoRE Stack
+            <br>
+            <span class="our-services">Tower Services</span>
+          </span>
+        </a>
 
-    <nav aria-label="Main navigation">
-      <a class="nav-link" href="index.html#services">Services</a>
-      <a class="nav-link" href="index.html#more">More Tools</a>
-      <a class="nav-doc nav-link" href="index.html#about">
-        About Us
-      </a>
-    </nav>
-  </div>
+        <nav aria-label="Main navigation">
+          <a class="nav-link" href="index.html#services">Services</a>
+          <a class="nav-link" href="index.html#more">More Tools</a>
+          <a class="nav-doc nav-link" href="index.html#about">
+            About Us
+          </a>
+        </nav>
+      </div>
 
-<!-- Organic Green Vine / Branch Bottom Border SVG (Exact Mask & Expanded Canvas) -->
-  <svg class="header-branch-border" viewBox="0 0 1200 32" preserveAspectRatio="none" aria-hidden="true">
-    <!-- Top Header Green Fill (Uses Header CSS Variable) -->
-    <path d="M0,0 L1200,0 L1200,16 Q900,10 600,16 T300,12 T0,8 Z" fill="var(--header-bg)" />
-    
-    <!-- Bottom Area Fill (Pure White) -->
-    <path d="M0,8 Q150,22 300,12 T600,16 T900,10 T1200,16 L1200,32 L0,32 Z" fill="#ffffff" />
-    
-    <!-- Continuous Visible Stem Line Across Entire Width -->
-    <path d="M0,8 Q150,22 300,12 T600,16 T900,10 T1200,16" fill="none" stroke="#6b9347" stroke-width="4" stroke-linecap="round" />
-    
-    <!-- Rich Fixed Leaf Accents Along the Stem -->
-    <path d="M120,13 C115,7 107,8 110,15 C115,15 123,13 120,13 Z" fill="#84ab5c" />
-    <path d="M125,14 C130,8 138,10 134,17 C129,16 121,16 125,14 Z" fill="#6b9347" />
-    <path d="M295,12 C290,6 282,7 285,14 C290,14 298,12 295,12 Z" fill="#84ab5c" />
-    <path d="M302,12 C307,6 315,8 311,15 C306,14 298,14 302,12 Z" fill="#6b9347" />
-    <path d="M480,13 C475,7 467,8 470,15 C475,15 483,13 480,13 Z" fill="#84ab5c" />
-    <path d="M605,16 C610,9 618,11 614,18 C609,17 601,17 605,16 Z" fill="#6b9347" />
-    <path d="M750,12 C745,6 737,7 740,14 C745,14 753,12 750,12 Z" fill="#84ab5c" />
-    <path d="M895,10 C890,4 882,5 885,12 C890,12 898,10 895,10 Z" fill="#84ab5c" />
-    <path d="M902,10 C907,4 915,6 911,13 C906,12 898,12 902,10 Z" fill="#6b9347" />
-    <path d="M1080,14 C1075,8 1067,9 1070,16 C1075,16 1083,14 1080,14 Z" fill="#84ab5c" />
-  </svg>
-</header>
+      <!-- Leafy vine under the header -->
+      <svg class="header-branch-border" viewBox="0 0 1200 32" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,0 L1200,0 L1200,16 Q900,10 600,16 T300,12 T0,8 Z" fill="var(--header-bg)" />
+        <path d="M0,8 Q150,22 300,12 T600,16 T900,10 T1200,16 L1200,32 L0,32 Z" fill="#ffffff" />
+        <path d="M0,8 Q150,22 300,12 T600,16 T900,10 T1200,16" fill="none" stroke="#6b9347" stroke-width="4" stroke-linecap="round" />
+        <path d="M120,13 C115,7 107,8 110,15 C115,15 123,13 120,13 Z" fill="#84ab5c" />
+        <path d="M125,14 C130,8 138,10 134,17 C129,16 121,16 125,14 Z" fill="#6b9347" />
+        <path d="M295,12 C290,6 282,7 285,14 C290,14 298,12 295,12 Z" fill="#84ab5c" />
+        <path d="M302,12 C307,6 315,8 311,15 C306,14 298,14 302,12 Z" fill="#6b9347" />
+        <path d="M480,13 C475,7 467,8 470,15 C475,15 483,13 480,13 Z" fill="#84ab5c" />
+        <path d="M605,16 C610,9 618,11 614,18 C609,17 601,17 605,16 Z" fill="#6b9347" />
+        <path d="M750,12 C745,6 737,7 740,14 C745,14 753,12 750,12 Z" fill="#84ab5c" />
+        <path d="M895,10 C890,4 882,5 885,12 C890,12 898,10 895,10 Z" fill="#84ab5c" />
+        <path d="M902,10 C907,4 915,6 911,13 C906,12 898,12 902,10 Z" fill="#6b9347" />
+        <path d="M1080,14 C1075,8 1067,9 1070,16 C1075,16 1083,14 1080,14 Z" fill="#84ab5c" />
+      </svg>
+    </header>
 
     <main id="main">
       <section class="hero wrap">
         <canvas id="bg-particles"></canvas>
         <div class="hero-copy">
-          <h2>A closer look at<br />our living planet with<em> Tower Services</em></h2>
+          <h1 class="hero-title">A closer look at<br />our living planet with<em> Tower Services</em></h1>
           <p class="lead">
             Explore tools that turn environmental data into understanding. From
             individual tree crowns to the landscapes we share.
           </p>
-          <a class="button lime" href="#services"
-            >Explore the services <span>↘</span></a
-          >
+          <a class="button lime" href="#services">Explore the services <span>↘</span></a          >
           <div class="hero-meta">
             <span>Projects</span> Where technology meet Nature.
           </div>
         </div>
         <div class="hero-image">
-  <div class="hero-image-content">
-    <p class="eyebrow">TECHNOLOGY FOR NATURE</p>
+          <div class="hero-image-content">
+            <p class="eyebrow">TECHNOLOGY FOR NATURE</p>
 
-    <h2 id="tower-title">Tower Services</h2>
+            <h2 id="tower-title">Tower Services</h2>
 
-    <p class="hero-image-description">
-      Tower Services is the group of small Docker apps that run compute: Drone, Bioacoustic (CEM), DIY LULC, and others. Each service does one job (tree crowns, audio, land cover). They share Airflow and STACD when a job needs orchestration.
-    </p>
+            <p class="hero-image-description">
+              Tower Services is the group of small Docker apps that run compute: Drone, Bioacoustic (CEM), DIY LULC, and others. Each service does one job (tree crowns, audio, land cover). They share Airflow and STACD when a job needs orchestration.
+            </p>
 
-  </div>
-</div>
+          </div>
+        </div>
       </section>
-      <section class="catalog wrap grid" id="services">
-        <button type="button" class="corner-infra-link" id="openInfraModal" aria-label="Open Infra Methodology">
-    Infrastructure ↗
-  </button>
+      <section class="catalog wrap" id="services">
+        <button type="button" class="corner-infra-link" id="openInfraModal" aria-haspopup="dialog">
+          Infrastructure ↗
+        </button>
         <div class="section-heading">
           <div>
             <p class="eyebrow">THE SERVICE COLLECTION</p>
@@ -126,12 +114,7 @@
               <span>1</span>
             </div>
 
-            <img
-  class="service-image"
-  src="resources/images/Drone.png"
-  alt="Forest canopy ka aerial view"
-  loading="lazy"
->
+            <img class="service-image" src="resources/images/Drone.png" alt="Aerial view of a forest canopy captured by drone" width="800" height="500" loading="lazy" decoding="async">
             <h3>Drone</h3>
             <p>
               Turn drone imagery into individual tree crowns and species maps.
@@ -140,12 +123,7 @@
             <div class="card-actions">
               <a class="explore-link" href="Services/Drone/drone.html"> Explore → </a>
 
-              <a
-                class="try-link"
-                href="https://www.cse.iitd.ernet.in/act4dws5/drone/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a class="try-link" href="https://www.cse.iitd.ernet.in/act4dws5/drone/" target="_blank" rel="noopener noreferrer">
                 Use the Service ↗
               </a>
             </div>
@@ -153,20 +131,15 @@
 
           <!-- Bioacoustic -->
           <article class="card c2 bioacoustic-card">
-            <div class="peeking-bird">
-    <img src="resources/images/bird.png" alt="Bioacoustic peeking bird" />
-  </div>
+            <div class="peeking-bird" aria-hidden="true">
+              <img src="resources/images/bird.png" alt="" />
+            </div>
             <div class="card-top">
               <span>CONTINUOUS ECOLOGICAL MONITORING</span>
               <span>2</span>
             </div>
 
-            <img
-  class="service-image"
-  src="resources/images/Bioacoustic.png"
-  alt="Forest canopy ka aerial view"
-  loading="lazy"
->
+            <img class="service-image" src="resources/images/Bioacoustic.png" alt="Forest scene used for bioacoustic monitoring" width="800" height="500" loading="lazy" decoding="async">
             <h3>Bioacoustic</h3>
             <p>
               Explore ecological monitoring through spots, species and networks.
@@ -175,12 +148,7 @@
             <div class="card-actions">
               <a class="explore-link" href="Services/Bioacaustic/bioacoustic.html"> Explore → </a>
 
-              <a
-                class="try-link"
-                href="https://www.cse.iitd.ernet.in/act4dws5/bio-master/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a class="try-link" href="https://www.cse.iitd.ernet.in/act4dws5/bio-master/" target="_blank" rel="noopener noreferrer">
                 Use the Service ↗
               </a>
             </div>
@@ -217,200 +185,186 @@
               <span>3</span>
             </div>
 
-            <img
-  class="service-image"
-  src="resources/images/LULC.png"
-  alt="Forest canopy ka aerial view"
-  loading="lazy"
->
+            <img class="service-image" src="resources/images/LULC.png" alt="Land-use and land-cover map of an Indian landscape" width="800" height="500" loading="lazy" decoding="async">
             <h3>DIY LULC</h3>
             <p>Explore 10 m land-use and land-cover mapping over India.</p>
 
             <div class="card-actions">
               <a class="explore-link" href="Services/DIY_LULC/diy-lulc.html"> Explore → </a>
 
-              <a
-                class="try-link"
-                href="https://www.cse.iitd.ernet.in/act4dws5/diy-lulc/"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
+              <a class="try-link" href="https://www.cse.iitd.ernet.in/act4dws5/diy-lulc/" target="_blank" rel="noopener noreferrer">
                 Use the Service ↗
               </a>
             </div>
           </article>
         </div>
       </section>
-  <section class="resources wrap" id="more">
-      <div class="resources-info">
-        <p class="eyebrow animate-text">SUPPORTING YOUR WORK</p>
-        <h2 class="animate-text animate-delay-1">Behind every insight.</h2>
-        <p class="animate-text animate-delay-2">Shared tools and guidance for working with the services.</p>
+      <section class="resources wrap" id="more">
+        <div class="resources-info">
+          <p class="eyebrow animate-text">SUPPORTING YOUR WORK</p>
+          <h2 class="animate-text animate-delay-1">Behind every insight.</h2>
+          <p class="animate-text animate-delay-2">Shared tools and guidance for working with the services.</p>
+        </div>
+
+        <div class="resource-center-action">
+          <button type="button" class="stacd-standalone-icon" id="openStacdModal" aria-label="Open STACD information" aria-haspopup="dialog">
+            <img src="resources/images/StacD2.png" alt="" />
+          </button>
+        </div>
+
+        <div class="resource-links">
+          <a href="https://www.cse.iitd.ernet.in/act4dws5/file/" target="_blank" rel="noopener">
+            <span>
+              <strong>FileBrowser</strong>
+              <small>Browse and download compute outputs</small>
+            </span>
+            <span class="arrow-icon">↗</span>
+          </a>
+          <a href="https://www.cse.iitd.ernet.in/act4dws5/airflow/home" target="_blank" rel="noopener">
+            <span>
+              <strong>Airflow + STACD</strong>
+              <small>Workflow orchestration · operator sign-in</small>
+            </span>
+            <span class="arrow-icon">↗</span>
+          </a>
+          <a href="https://docs.core-stack.org/infra/tower-services/" target="_blank" rel="noopener">
+            <span>
+              <strong>Documentation</strong>
+              <small>Guides, architecture and developer resources</small>
+            </span>
+            <span class="arrow-icon">↗</span>
+          </a>
+        </div>
+      </section>
+
+      <!-- STACD modal -->
+      <div class="modal-overlay" id="stacdModalOverlay" aria-hidden="true">
+        <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="stacdModalTitle">
+          <button type="button" class="modal-close-btn" id="closeStacdModal" aria-label="Close Modal">&times;</button>
+
+          <div class="modal-header">
+            <span class="eyebrow">RESEARCH & ORCHESTRATION</span>
+            <h2 id="stacdModalTitle">STACD Overview</h2>
+            <p class="modal-subtitle">SpatioTemporal Asset Catalog with DAGs · IIT Delhi Research</p>
+          </div>
+
+          <div class="modal-body">
+            <article class="modal-section">
+              <h3>What is STACD?</h3>
+              <p>
+                Geospatial datasets have complex lineages that are crucial for reproducibility and understanding data provenance, yet current metadata standards like STAC (SpatioTemporal Asset Catalog) provide limited support for capturing complete processing workflows. We propose STACD (STAC extension with DAGs), an extension to STAC specifications that incorporates Directed Acyclic Graph (DAG) representations along with defining algorithms and version changes in the workflows. We also provide a reference implementation on Apache Airflow to demonstrate STACD capabilities such as selective recomputation when some datasets or algorithms in a DAG are updated, complete lineage construction for a dataset, and opportunities for improved collaboration and distributed processing that arise with this standard.
+              </p>
+            </article>
+            <div class="modal-diagram-container">
+              <img src="resources/images/stacd_workflow.png" alt="STACD workflow diagram" class="modal-diagram-img" />
+            </div>
+
+            <article class="modal-section">
+              <h3>Key Features</h3>
+              <ul class="modal-list">
+                <li><strong>Selective Recomputation:</strong> When an algorithm is updated, STACD re-runs only the affected steps instead of processing the entire workflow again.</li>
+                <li><strong>Automated Workflows:</strong> Developers define pipelines using simple YAML configurations, which automatically compile into executable Apache Airflow DAGs.</li>
+                <li><strong>Full Data Provenance:</strong> Tracks dataset versions and history across multiple computational tools and isolated Docker containers.</li>
+              </ul>
+            </article>
+
+            <article class="modal-section">
+              <h3>Real-World Impact</h3>
+              <p>
+                STACD serves as the data orchestration backbone for the <strong>CoRE Stack</strong> project at IIT Delhi, powering drone canopy processing, bioacoustics monitoring, and landscape mapping across more than 1,000 villages in India.
+              </p>
+            </article>
+          </div>
+
+          <div class="modal-footer">
+            <a href="https://dl.acm.org/doi/10.1145/3759536.3763803" target="_blank" rel="noopener noreferrer" class="modal-btn btn-primary">
+              Research Paper ↗
+            </a>
+            <a href="https://drive.google.com/file/d/14LTqk47Nfjp4DOOyME3SMxElkxdvmTr1/view" target="_blank" rel="noopener noreferrer" class="modal-btn btn-secondary">
+              Read Thesis PDF ↗
+            </a>
+            <a href="https://github.com/SaharshLaud/STACD_framework/tree/dev" target="_blank" rel="noopener noreferrer" class="modal-btn btn-secondary">
+              Github Repo ↗
+            </a>
+          </div>
+        </div>
       </div>
 
-      <!-- Center Middle Circular Icon Link -->
-      <div class="resource-center-action">
-        <button type="button" class="stacd-standalone-icon" id="openStacdModal" aria-label="Open STACD Information">
-          <img src="resources/images/StacD2.png" alt="STACD Icon" />
-        </button>
+      <!-- Infrastructure modal -->
+      <div class="modal-overlay" id="infraModalOverlay" aria-hidden="true">
+        <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="infraModalTitle">
+          <button type="button" class="modal-close-btn" id="closeInfraModal" aria-label="Close Modal">&times;</button>
+
+          <div class="modal-header">
+            <span class="eyebrow">INFRASTRUCTURE &amp; METHODOLOGY</span>
+            <h2 id="infraModalTitle">How Tower Services Run</h2>
+            <p class="modal-subtitle">GPU compute nodes · Kubernetes · Airflow + STACD</p>
+          </div>
+
+          <div class="modal-body">
+            <article class="modal-section">
+              <h3>Overview</h3>
+              <p>
+                All services share one compute backbone. <strong>GPU-equipped compute nodes</strong> run the heavy workloads,
+                <strong>Kubernetes</strong> orchestrates containers across those nodes, <strong>Airflow</strong> runs every
+                compute job as a DAG, and <strong>STACD</strong> generates those DAGs so services do not hand-write them.
+                Users never talk to Airflow directly: they use a service UI, and the service triggers the job and tracks it.
+              </p>
+            </article>
+
+            <div class="modal-diagram-container">
+              <img src="resources/images/architecture-diagram.png" alt="Tower Services compute architecture diagram" class="modal-diagram-img" />
+            </div>
+
+            <article class="modal-section">
+              <h3>How a Compute Job Runs</h3>
+              <ol class="modal-list">
+                <li>The user works in a service's UI, reached through Nginx.</li>
+                <li>The service <strong>triggers</strong> an Airflow DAG generated by STACD.</li>
+                <li>Airflow hands the tasks to <strong>Kubernetes</strong>, which schedules them on <strong>GPU nodes</strong>.</li>
+                <li>The service <strong>polls</strong> the DAG run until it ends in <code>success</code> or <code>failed</code>.</li>
+                <li>On success, output is written to <code>data/&lt;app-name&gt;/</code>.</li>
+                <li>The user browses and downloads results in the shared <strong>FileBrowser</strong>.</li>
+              </ol>
+            </article>
+
+            <article class="modal-section">
+              <h3>Components</h3>
+              <table class="modal-table">
+                <thead><tr><th>Component</th><th>Role</th></tr></thead>
+                <tbody>
+                  <tr><td><strong>GPU compute nodes</strong></td><td>Execute the heavy workloads (detection, classification, etc.)</td></tr>
+                  <tr><td><strong>Kubernetes</strong></td><td>Schedules and manages containers across nodes</td></tr>
+                  <tr><td><strong>Airflow</strong></td><td>Runs every compute job as a DAG and tracks its status</td></tr>
+                  <tr><td><strong>STACD</strong></td><td>Generates Airflow DAGs for services</td></tr>
+                  <tr><td><strong>Nginx</strong></td><td>Only public entry point; routes by path prefix</td></tr>
+                  <tr><td><strong>FileBrowser</strong></td><td>Shared UI to view and download outputs</td></tr>
+                </tbody>
+              </table>
+            </article>
+
+            <article class="modal-section">
+              <h3>Design Principles</h3>
+              <ul class="modal-list">
+                <li><strong>One path for all compute:</strong> every job goes through Airflow, so runs are tracked and reproducible.</li>
+                <li><strong>Separation of concerns:</strong> UI services trigger jobs; they do not run them.</li>
+                <li><strong>Uniform outputs:</strong> one folder per app under <code>data/</code>.</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="modal-footer">
+            <a href="https://docs.core-stack.org/infra/tower-services/deployed-architecture/" target="_blank" rel="noopener noreferrer" class="modal-btn btn-primary">
+              Deployed Architecture ↗
+            </a>
+            <a href="https://docs.core-stack.org/infra/tower-services/" target="_blank" rel="noopener noreferrer" class="modal-btn btn-secondary">
+              Tower Services Docs ↗
+            </a>
+          </div>
+        </div>
       </div>
 
-      <div class="resource-links">
-        <a href="https://www.cse.iitd.ernet.in/act4dws5/file/" target="_blank" rel="noopener">
-          <span>
-            <strong>FileBrowser</strong>
-            <small>Browse and download compute outputs</small>
-          </span>
-          <span class="arrow-icon">↗</span>
-        </a>
-        <a href="https://www.cse.iitd.ernet.in/act4dws5/airflow/home" target="_blank" rel="noopener">
-          <span>
-            <strong>Airflow + STACD</strong>
-            <small>Workflow orchestration · operator sign-in</small>
-          </span>
-          <span class="arrow-icon">↗</span>
-        </a>
-        <a href="https://docs.core-stack.org/infra/tower-services/" target="_blank" rel="noopener">
-          <span>
-            <strong>Documentation</strong>
-            <small>Guides, architecture and developer resources</small>
-          </span>
-          <span class="arrow-icon">↗</span>
-        </a>
-      </div>
-    </section>
-
-    <!-- STACD Modal Overlay & Popup Box (Modal markup placed cleanly) -->
-<!-- STACD Modal Overlay & Popup Box (Clean & Professional English) -->
-<div class="modal-overlay" id="stacdModalOverlay" aria-hidden="true">
-  <div class="modal-container">
-    <button type="button" class="modal-close-btn" id="closeStacdModal" aria-label="Close Modal">&times;</button>
-    
-    <div class="modal-header">
-      <span class="eyebrow">RESEARCH & ORCHESTRATION</span>
-      <h2>STACD Overview</h2>
-      <p class="modal-subtitle">SpatioTemporal Asset Catalog with DAGs · IIT Delhi Research</p>
-    </div>
-
-    <div class="modal-body">
-      <!-- Diagram Image -->
-
-      <article class="modal-section">
-        <h3>What is STACD?</h3>
-        <p>
-         Geospatial datasets have complex lineages that are crucial for reproducibility and understanding data provenance, yet current metadata standards like STAC (SpatioTemporal Asset Catalog) provide limited support for capturing complete processing workflows. We propose STACD (STAC extension with DAGs), an extension to STAC specifications that incorporates Directed Acyclic Graph (DAG) representations along with defining algorithms and version changes in the workflows. We also provide a reference implementation on Apache Airflow to demonstrate STACD capabilities such as selective recomputation when some datasets or algorithms in a DAG are updated, complete lineage construction for a dataset, and opportunities for improved collaboration and distributed processing that arise with this standard.
-        </p>
-      </article>
-      <div class="modal-diagram-container">
-        <img src="resources/images/stacd_workflow.png" alt="STACD Workflow Diagram" class="modal-diagram-img" />
-      </div>
-
-      <article class="modal-section">
-        <h3>Key Features</h3>
-        <ul class="modal-list">
-          <li><strong>Selective Recomputation:</strong> When an algorithm is updated, STACD re-runs only the affected steps instead of processing the entire workflow again.</li>
-          <li><strong>Automated Workflows:</strong> Developers define pipelines using simple YAML configurations, which automatically compile into executable Apache Airflow DAGs.</li>
-          <li><strong>Full Data Provenance:</strong> Tracks dataset versions and history across multiple computational tools and isolated Docker containers.</li>
-        </ul>
-      </article>
-
-      <article class="modal-section">
-        <h3>Real-World Impact</h3>
-        <p>
-          STACD serves as the data orchestration backbone for the <strong>CoRE Stack</strong> project at IIT Delhi, powering drone canopy processing, bioacoustics monitoring, and landscape mapping across more than 1,000 villages in India.
-        </p>
-      </article>
-    </div>
-
-    <div class="modal-footer">
-      <a href="https://dl.acm.org/doi/10.1145/3759536.3763803" target="_blank" rel="noopener noreferrer" class="modal-btn btn-primary">
-        Research Paper ↗
-      </a>
-      <a href="https://drive.google.com/file/d/14LTqk47Nfjp4DOOyME3SMxElkxdvmTr1/view" target="_blank" rel="noopener noreferrer" class="modal-btn btn-secondary">
-        Read Thesis PDF ↗
-      </a>
-      <a href="https://github.com/SaharshLaud/STACD_framework/tree/dev" target="_blank" rel="noopener noreferrer" class="modal-btn btn-secondary">
-        Github Repo ↗
-      </a>
-    </div>
-  </div>
-</div>
-
-<!-- INFRA / METHODOLOGY Modal (same structure as STACD modal) -->
-<div class="modal-overlay" id="infraModalOverlay" aria-hidden="true">
-  <div class="modal-container">
-    <button type="button" class="modal-close-btn" id="closeInfraModal" aria-label="Close Modal">&times;</button>
-
-    <div class="modal-header">
-      <span class="eyebrow">INFRASTRUCTURE &amp; METHODOLOGY</span>
-      <h2>How Tower Services Run</h2>
-      <p class="modal-subtitle">GPU compute nodes · Kubernetes · Airflow + STACD</p>
-    </div>
-
-    <div class="modal-body">
-      <article class="modal-section">
-        <h3>Overview</h3>
-        <p>
-          All services share one compute backbone. <strong>GPU-equipped compute nodes</strong> run the heavy workloads,
-          <strong>Kubernetes</strong> orchestrates containers across those nodes, <strong>Airflow</strong> runs every
-          compute job as a DAG, and <strong>STACD</strong> generates those DAGs so services do not hand-write them.
-          Users never talk to Airflow directly: they use a service UI, and the service triggers the job and tracks it.
-        </p>
-      </article>
-
-      <div class="modal-diagram-container">
-        <img src="resources/images/architecture-diagram.png" alt="Tower Services compute architecture diagram" class="modal-diagram-img" />
-      </div>
-
-      <article class="modal-section">
-        <h3>How a Compute Job Runs</h3>
-        <ol class="modal-list">
-          <li>The user works in a service's UI, reached through Nginx.</li>
-          <li>The service <strong>triggers</strong> an Airflow DAG generated by STACD.</li>
-          <li>Airflow hands the tasks to <strong>Kubernetes</strong>, which schedules them on <strong>GPU nodes</strong>.</li>
-          <li>The service <strong>polls</strong> the DAG run until it ends in <code>success</code> or <code>failed</code>.</li>
-          <li>On success, output is written to <code>data/&lt;app-name&gt;/</code>.</li>
-          <li>The user browses and downloads results in the shared <strong>FileBrowser</strong>.</li>
-        </ol>
-      </article>
-
-      <article class="modal-section">
-        <h3>Components</h3>
-        <table class="modal-table">
-          <thead><tr><th>Component</th><th>Role</th></tr></thead>
-          <tbody>
-            <tr><td><strong>GPU compute nodes</strong></td><td>Execute the heavy workloads (detection, classification, etc.)</td></tr>
-            <tr><td><strong>Kubernetes</strong></td><td>Schedules and manages containers across nodes</td></tr>
-            <tr><td><strong>Airflow</strong></td><td>Runs every compute job as a DAG and tracks its status</td></tr>
-            <tr><td><strong>STACD</strong></td><td>Generates Airflow DAGs for services</td></tr>
-            <tr><td><strong>Nginx</strong></td><td>Only public entry point; routes by path prefix</td></tr>
-            <tr><td><strong>FileBrowser</strong></td><td>Shared UI to view and download outputs</td></tr>
-          </tbody>
-        </table>
-      </article>
-
-      <article class="modal-section">
-        <h3>Design Principles</h3>
-        <ul class="modal-list">
-          <li><strong>One path for all compute:</strong> every job goes through Airflow, so runs are tracked and reproducible.</li>
-          <li><strong>Separation of concerns:</strong> UI services trigger jobs; they do not run them.</li>
-          <li><strong>Uniform outputs:</strong> one folder per app under <code>data/</code>.</li>
-        </ul>
-      </article>
-    </div>
-
-    <div class="modal-footer">
-      <a href="https://docs.core-stack.org/infra/tower-services/deployed-architecture/" target="_blank" rel="noopener noreferrer" class="modal-btn btn-primary">
-        Deployed Architecture ↗
-      </a>
-      <a href="https://docs.core-stack.org/infra/tower-services/" target="_blank" rel="noopener noreferrer" class="modal-btn btn-secondary">
-        Tower Services Docs ↗
-      </a>
-    </div>
-  </div>
-</div>
-
-       <section class="how" id="how">
+      <section class="how" id="how">
         <div class="wrap">
           <div class="section-heading">
             <div>
@@ -445,55 +399,45 @@
           </div>
         </div>
       </section>
-    <section class="about-us wrap" id="about">
-  <div class="about-us-container">
-    <p class="eyebrow animate-about-text">MORE ABOUT US</p>
-    
-    <div class="about-us-card animate-about-card">
-      <div class="about-card-glow"></div>
-      <h2 class="about-title animate-about-text animate-delay-1">CoRE Stack</h2>
-      <h4 class="about-subtitle animate-about-text animate-delay-2">
-        Establishing a Collaboration Network on Commoning Technologies for Resilience and Equality.
-      </h4>
-      <p class="about-us-lead animate-about-text animate-delay-3">
-        CoRE Stack is an open initiative dedicated to empowering communities and researchers with spatial data tools for sustainable land and natural resource management.
-        CoRE Stack is a digital public good that helps communities manage landscapes and natural resources sustainably.
-        It promotes community participation, scientific decision-making, resilience, and equality.
-        It uses responsible AI, ethical practices, and open-source tools for transparency and accountability.
-        The platform is developed and managed by CommonsTech Foundation for climate action and sustainable development.
-      </p>
+      <section class="about-us wrap" id="about">
+        <div class="about-us-container">
+          <p class="eyebrow animate-about-text">MORE ABOUT US</p>
 
-      <div class="about-us-actions animate-about-text animate-delay-4">
-        <a 
-          href="https://core-stack.org/" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          class="about-btn btn-core-stack"
-        >
-          CoRE Stack <span class="btn-arrow">↗</span>
-        </a>
+          <div class="about-us-card animate-about-card">
+            <div class="about-card-glow"></div>
+            <h2 class="about-title animate-about-text animate-delay-1">CoRE Stack</h2>
+            <h4 class="about-subtitle animate-about-text animate-delay-2">
+              Establishing a Collaboration Network on Commoning Technologies for Resilience and Equality.
+            </h4>
+            <p class="about-us-lead animate-about-text animate-delay-3">
+              CoRE Stack is an open initiative dedicated to empowering communities and researchers with spatial data tools for sustainable land and natural resource management.
+              CoRE Stack is a digital public good that helps communities manage landscapes and natural resources sustainably.
+              It promotes community participation, scientific decision-making, resilience, and equality.
+              It uses responsible AI, ethical practices, and open-source tools for transparency and accountability.
+              The platform is developed and managed by CommonsTech Foundation for climate action and sustainable development.
+            </p>
 
-        <a 
-          href="https://www.explorer.core-stack.org/" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          class="about-btn btn-explorer"
-        >
-          Explorer <span class="btn-arrow">↗</span>
+            <div class="about-us-actions animate-about-text animate-delay-4">
+              <a href="https://core-stack.org/" target="_blank" rel="noopener noreferrer" class="about-btn btn-core-stack">
+                CoRE Stack <span class="btn-arrow">↗</span>
+              </a>
+
+              <a href="https://www.explorer.core-stack.org/" target="_blank" rel="noopener noreferrer" class="about-btn btn-explorer">
+                Explorer <span class="btn-arrow">↗</span>
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <a class="brand" href="index.html">Tower Services</a>
+        <span>Tools for understanding our living planet.</span>
+        <a href="https://docs.core-stack.org/infra/tower-services/" target="_blank" rel="noopener">
+          CoRE Stack docs ↗
         </a>
       </div>
-    </div>
-  </div>
-</section>
-    </main>
-   <footer class="site-footer">
-  <div class="wrap footer-inner">
-    <a class="brand" href="index.html">Tower Services</a>
-    <span>Tools for understanding our living planet.</span>
-    <a href="https://docs.core-stack.org/infra/tower-services/" target="_blank" rel="noopener">
-      CoRE Stack docs ↗
-    </a>
-  </div>
-</footer>
+    </footer>
   </body>
 </html>

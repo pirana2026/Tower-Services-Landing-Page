@@ -1,243 +1,131 @@
-(() => {
-  const reduceMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
-  );
+/* =========================================================
+   Tower Services · Landing page behaviour
+   Sections: reveal flag · helpers · hero title · falling leaves
+   · card tilt · scroll reveals · background shifts · modals
+   ========================================================= */
 
-  if (
-    !("IntersectionObserver" in window) ||
-    reduceMotion.matches
-  ) {
+const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+const canHover = window.matchMedia("(hover: hover) and (pointer: fine)");
+const hasObserver = "IntersectionObserver" in window;
+
+// Runs immediately (script is in <head>) so cards never flash before they hide.
+if (hasObserver && !reduceMotion.matches) {
+  document.documentElement.classList.add("reveal-enabled");
+}
+
+/* ---------- Helpers ---------- */
+
+/** Toggle `is-visible` on elements while they are on screen. */
+function observeVisibility(elements, { threshold = 0.2, once = false } = {}) {
+  if (!elements.length) return;
+
+  // Very old browsers: just show everything.
+  if (!hasObserver) {
+    elements.forEach((el) => el.classList.add("is-visible"));
     return;
   }
 
-  // Content render hone se pehle reveal state enable karo.
-  document.documentElement.classList.add("reveal-enabled");
-
- 
- 
-  document.addEventListener("DOMContentLoaded", () => {
-    const cards = document.querySelectorAll(".cards .card");
-
-    const observer = new IntersectionObserver((entries) => {
+  const observer = new IntersectionObserver(
+    (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
           entry.target.classList.add("is-visible");
-        } else {
+          if (once) observer.unobserve(entry.target);
+        } else if (!once) {
           entry.target.classList.remove("is-visible");
         }
       });
-    }, {
-      threshold: 0.15
-    });
-
-    cards.forEach((card, index) => {
-      card.style.setProperty(
-        "--reveal-delay",
-        `${index * 180}ms`
-      );
-
-      observer.observe(card);
-    });
-  });
-})();
-
-
-
-// animate Tower 
-
-// Reveal the title after the right hero finishes sliding in.
-document.addEventListener("DOMContentLoaded", async () => {
-  const title = document.getElementById("tower-title");
-  const hero = document.querySelector(".hero-image");
-
-  if (!title || !hero) return;
-
-  const reduceMotion = window.matchMedia(
-    "(prefers-reduced-motion: reduce)"
+    },
+    { threshold }
   );
 
-  // Reduced-motion users see the complete title immediately.
-  if (reduceMotion.matches) return;
+  elements.forEach((el) => observer.observe(el));
+}
+
+/** Add `className` to <body> while any of `targets` is on screen. */
+function toggleBodyClass(targets, className, threshold) {
+  if (!hasObserver || !targets.length) return;
+
+  const visible = new Set();
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) visible.add(entry.target);
+        else visible.delete(entry.target);
+      });
+      document.body.classList.toggle(className, visible.size > 0);
+    },
+    { threshold }
+  );
+
+  targets.forEach((el) => observer.observe(el));
+}
+
+/* ---------- Hero title: types "Tower Services" letter by letter ---------- */
+
+async function initHeroTitle() {
+  const title = document.getElementById("tower-title");
+  const heroImage = document.querySelector(".hero-image");
+  if (!title || !heroImage || reduceMotion.matches) return;
 
   const text = title.textContent.trim();
-
-  // Keep the complete heading accessible to screen readers.
   title.setAttribute("aria-label", text);
 
-  const characters = Array.from(text).map((character) => {
+  const letters = Array.from(text).map((char) => {
     const span = document.createElement("span");
-
-    span.textContent = character;
+    span.textContent = char;
     span.style.opacity = "0";
     span.setAttribute("aria-hidden", "true");
-
     return span;
   });
+  title.replaceChildren(...letters);
 
-  title.replaceChildren(...characters);
+  const wait = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+  const TYPING_DELAY = 100;
+  const HOLD_TIME = 3000;
+  const RESTART_DELAY = 300;
 
-  // Wait for the actual slide animation, not a fixed delay.
-  const slideAnimations = hero.getAnimations().filter(
-    (animation) => animation.animationName === "heroFromRight"
-  );
+  // Start typing only after the hero finished sliding in.
+  const slideIns = heroImage
+    .getAnimations()
+    .filter((animation) => animation.animationName === "heroFromRight");
+  await Promise.allSettled(slideIns.map((animation) => animation.finished));
 
-  await Promise.allSettled(
-    slideAnimations.map((animation) => animation.finished)
-  );
-
-  // Reveal one character every 75 milliseconds.
-    const wait = (ms) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
-
-  const typingSpeed = 100; // Har character ke beech delay
-  const holdTime = 3000;   // Poora title kitni der dikhe
-  const restartDelay = 300;
-
-  repeat:
   while (title.isConnected && !reduceMotion.matches) {
-    // Har cycle ki shuruaat mein characters hide karo.
-    characters.forEach((span) => {
-      span.style.opacity = "0";
-    });
+    letters.forEach((span) => (span.style.opacity = "0"));
+    await wait(RESTART_DELAY);
 
-    await wait(restartDelay);
-
-    // Characters ek-ek karke reveal karo.
-    for (const character of characters) {
-      if (reduceMotion.matches || !title.isConnected) {
-        break repeat;
-      }
-
-      character.style.opacity = "1";
-      await wait(typingSpeed);
+    for (const span of letters) {
+      if (!title.isConnected || reduceMotion.matches) break;
+      span.style.opacity = "1";
+      await wait(TYPING_DELAY);
     }
-
-    // Poora title dikhane ke baad loop dobara chalega.
-    await wait(holdTime);
+    await wait(HOLD_TIME);
   }
 
-  // Reduced motion enable hone par full title dikhao.
-  characters.forEach((span) => {
-    span.style.opacity = "1";
-  });
-});
+  letters.forEach((span) => (span.style.opacity = "1"));
+}
 
+/* ---------- Falling leaves inside the hero ---------- */
 
-// // Smooth 60FPS Card Hover & Focus Effect
-// document.addEventListener("DOMContentLoaded", () => {
-//   const cards = document.querySelectorAll(".card");
-//   const cardsGrid = document.querySelector(".cards") || document.querySelector(".grid");
-
-//   let animationFrameId = null;
-
-//   cards.forEach((card) => {
-//     card.addEventListener("mousemove", (e) => {
-//       const rect = card.getBoundingClientRect();
-//       const x = e.clientX - rect.left - rect.width / 2;
-//       const y = e.clientY - rect.top - rect.height / 2;
-
-//       // Unnecessary DOM reflows bachane ke liye requestAnimationFrame
-//       if (animationFrameId) cancelAnimationFrame(animationFrameId);
-
-//       animationFrameId = requestAnimationFrame(() => {
-//         // Active card: Gentle 3D Tilt + Smooth 1.05 Scale
-//         card.style.transform = `perspective(1000px) rotateX(${y / 40}deg) rotateY(${-x / 40}deg) scale(1.05) translateY(-6px)`;
-//         card.style.opacity = "1";
-
-//         // Non-hovered cards: Smoothly shrink to 0.95 without abrupt snapping
-//         cards.forEach((otherCard) => {
-//           if (otherCard !== card) {
-//             otherCard.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(0.95) translateY(0px)";
-//             otherCard.style.opacity = "0.75";
-//           }
-//         });
-//       });
-//     });
-//   });
-
-//   // Jab mouse poore grid/cards container se bahar nikal jaye tabhi sab normal scale hongi
-//   if (cardsGrid) {
-//     cardsGrid.addEventListener("mouseleave", () => {
-//       if (animationFrameId) cancelAnimationFrame(animationFrameId);
-      
-//       cards.forEach((anyCard) => {
-//         anyCard.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1) translateY(0px)";
-//         anyCard.style.opacity = "1";
-//       });
-//     });
-//   }
-// });
-
-// Extremely Smooth & Subtle Card Mousemove Track
-document.addEventListener("DOMContentLoaded", () => {
-  const cards = document.querySelectorAll(".card");
-  const cardsGrid = document.querySelector(".cards") || document.querySelector(".grid");
-
-  let animationFrameId = null;
-
-  cards.forEach((card) => {
-    card.addEventListener("mousemove", (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left - rect.width / 2;
-      const y = e.clientY - rect.top - rect.height / 2;
-
-      if (animationFrameId) cancelAnimationFrame(animationFrameId);
-
-      animationFrameId = requestAnimationFrame(() => {
-        // Active card: Subtle 1.025 Scale + Soft Tilt
-        card.style.transform = `perspective(1000px) rotateX(${y / 45}deg) rotateY(${-x / 45}deg) scale(1.025) translateY(-4px)`;
-        card.style.opacity = "1";
-
-        // Non-hovered cards: Soft 0.98 scale
-        cards.forEach((otherCard) => {
-          if (otherCard !== card) {
-            otherCard.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(0.98) translateY(0px)";
-            otherCard.style.opacity = "0.85";
-          }
-        });
-      });
-    });
-  });
-
-  if (cardsGrid) {
-    cardsGrid.addEventListener("mouseleave", () => {
-      if (animationFrameId) cancelAnimationFrame(animationFrameId);
-      
-      cards.forEach((anyCard) => {
-        anyCard.style.transform = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1) translateY(0px)";
-        anyCard.style.opacity = "1";
-      });
-    });
-  }
-});
-
-
-// START: this is js for falling leaves 
-
-
-
-// Hero Section Bound Falling Leaves
-document.addEventListener("DOMContentLoaded", () => {
+function initLeaves() {
   const canvas = document.getElementById("bg-particles");
-  const heroSection = document.querySelector(".hero");
-  if (!canvas || !heroSection) return;
+  const hero = document.querySelector(".hero");
+  if (!canvas || !hero || reduceMotion.matches) return;
 
   const ctx = canvas.getContext("2d");
-  let leaves = [];
-
-  function resizeCanvas() {
-    canvas.width = heroSection.offsetWidth;
-    canvas.height = heroSection.offsetHeight;
-  }
-  resizeCanvas();
-  window.addEventListener("resize", resizeCanvas);
-
-  const colors = [
+  const COLORS = [
     "rgba(168, 209, 132, 0.7)",
     "rgba(132, 178, 101, 0.6)",
     "rgba(214, 240, 138, 0.75)",
-    "rgba(90, 150, 60, 0.55)"
+    "rgba(90, 150, 60, 0.55)",
   ];
+  const LEAF_COUNT = window.innerWidth < 650 ? 18 : 35;
+
+  function resize() {
+    canvas.width = hero.offsetWidth;
+    canvas.height = hero.offsetHeight;
+  }
 
   class Leaf {
     constructor() {
@@ -248,291 +136,228 @@ document.addEventListener("DOMContentLoaded", () => {
       this.x = Math.random() * canvas.width;
       this.y = initial ? Math.random() * canvas.height : -15;
       this.size = Math.random() * 5 + 4;
-      
       this.speedY = Math.random() * 0.7 + 0.3;
       this.speedX = Math.random() * 0.5 - 0.25;
-      
       this.rotation = Math.random() * Math.PI * 2;
       this.rotationSpeed = (Math.random() - 0.5) * 0.03;
-
       this.flipX = Math.random() * Math.PI * 2;
       this.flipY = Math.random() * Math.PI * 2;
       this.flipSpeedX = Math.random() * 0.03 + 0.01;
       this.flipSpeedY = Math.random() * 0.02 + 0.01;
-
-      this.oscillation = Math.random() * Math.PI * 2;
-      this.oscillationSpeed = Math.random() * 0.02 + 0.01;
-
-      this.color = colors[Math.floor(Math.random() * colors.length)];
+      this.sway = Math.random() * Math.PI * 2;
+      this.swaySpeed = Math.random() * 0.02 + 0.01;
+      this.color = COLORS[Math.floor(Math.random() * COLORS.length)];
     }
 
     update() {
       this.y += this.speedY;
-      this.oscillation += this.oscillationSpeed;
-      this.x += Math.sin(this.oscillation) * 0.6 + this.speedX;
-
+      this.sway += this.swaySpeed;
+      this.x += Math.sin(this.sway) * 0.6 + this.speedX;
       this.rotation += this.rotationSpeed;
       this.flipX += this.flipSpeedX;
       this.flipY += this.flipSpeedY;
 
-      // Hero section ki height cross karte hi reset ho jayegi
-      if (this.y > canvas.height + 15 || this.x < -20 || this.x > canvas.width + 20) {
-        this.reset(false);
-      }
+      const outside =
+        this.y > canvas.height + 15 || this.x < -20 || this.x > canvas.width + 20;
+      if (outside) this.reset();
     }
 
     draw() {
+      const s = this.size;
       ctx.save();
       ctx.translate(this.x, this.y);
-      
       ctx.rotate(this.rotation);
       ctx.scale(Math.sin(this.flipX), Math.cos(this.flipY));
-
       ctx.beginPath();
-      ctx.moveTo(0, -this.size);
-      ctx.bezierCurveTo(
-        this.size / 2, -this.size / 2,
-        this.size / 2, this.size / 2,
-        0, this.size
-      );
-      ctx.bezierCurveTo(
-        -this.size / 2, this.size / 2,
-        -this.size / 2, -this.size / 2,
-        0, -this.size
-      );
-
+      ctx.moveTo(0, -s);
+      ctx.bezierCurveTo(s / 2, -s / 2, s / 2, s / 2, 0, s);
+      ctx.bezierCurveTo(-s / 2, s / 2, -s / 2, -s / 2, 0, -s);
       ctx.fillStyle = this.color;
       ctx.fill();
       ctx.restore();
     }
   }
 
-  for (let i = 0; i < 35; i++) {
-    leaves.push(new Leaf());
-  }
+  resize();
+  const leaves = Array.from({ length: LEAF_COUNT }, () => new Leaf());
 
-  function animate() {
+  let running = true;
+  function frame() {
+    if (!running) return;
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     leaves.forEach((leaf) => {
       leaf.update();
       leaf.draw();
     });
-    requestAnimationFrame(animate);
+    requestAnimationFrame(frame);
+  }
+  frame();
+
+  // Keep the canvas matched to the hero, and pause when it is off-screen.
+  if ("ResizeObserver" in window) {
+    new ResizeObserver(resize).observe(hero);
+  } else {
+    window.addEventListener("resize", resize);
   }
 
-  animate();
-});
+  if (hasObserver) {
+    new IntersectionObserver(([entry]) => {
+      const shouldRun = entry.isIntersecting;
+      if (shouldRun && !running) {
+        running = true;
+        frame();
+      } else if (!shouldRun) {
+        running = false;
+      }
+    }).observe(hero);
+  }
+}
 
-// END: end of js of falling leaves
+/* ---------- Service cards ---------- */
 
-// Slow Staggered Scroll Reveal for Resources
-document.addEventListener("DOMContentLoaded", () => {
-  const resourceLinks = document.querySelectorAll(".resource-links a");
-  if (!resourceLinks.length) return;
+function initCardReveal() {
+  const cards = document.querySelectorAll(".cards .card");
+  if (!cards.length || !document.documentElement.classList.contains("reveal-enabled")) return;
 
-  resourceLinks.forEach((link, index) => {
-    link.classList.add("reveal-resource");
-    // Har item ke beech 250ms ka slow gap taaki ek-ek karke clear dikhe
-    link.style.transitionDelay = `${index * 300}ms`;
+  cards.forEach((card, index) => {
+    card.style.setProperty("--reveal-delay", `${index * 180}ms`);
   });
+  observeVisibility(cards, { threshold: 0.15 });
+}
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add("is-visible");
-      }
-    });
-  }, {
-    threshold: 0.15
-  });
+/** Gentle 3D tilt that follows the mouse. Skipped on touch screens. */
+function initCardTilt() {
+  const grid = document.querySelector(".cards");
+  const cards = document.querySelectorAll(".cards .card");
+  if (!grid || !cards.length || !canHover.matches || reduceMotion.matches) return;
 
-  resourceLinks.forEach((link) => observer.observe(link));
-});
+  const REST = "perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1) translateY(0)";
+  let frameId = null;
 
+  cards.forEach((card) => {
+    card.addEventListener("mousemove", (event) => {
+      const rect = card.getBoundingClientRect();
+      const x = event.clientX - rect.left - rect.width / 2;
+      const y = event.clientY - rect.top - rect.height / 2;
 
-// this is scroll color change
-// Background Gradient Switch (Cards -> FROM EXPLORATION TO ACTION)
-document.addEventListener("DOMContentLoaded", () => {
-  const serviceCards = document.querySelectorAll(".cards .card");
-  const howSection = document.getElementById("how");
+      cancelAnimationFrame(frameId);
+      frameId = requestAnimationFrame(() => {
+        card.style.transform =
+          `perspective(1000px) rotateX(${y / 45}deg) rotateY(${-x / 45}deg) scale(1.025) translateY(-4px)`;
+        card.style.opacity = "1";
 
-  if (!serviceCards.length || !howSection) return;
-
-  // Stage 1: Service Cards dikhte hi Soft Organic Green Overlay Activate
-  const cardsObserver = new IntersectionObserver(
-    (entries) => {
-      const isCardVisible = entries.some((entry) => entry.isIntersecting);
-      if (isCardVisible) {
-        document.body.classList.add("cards-visible-bg");
-      } else {
-        document.body.classList.remove("cards-visible-bg");
-      }
-    },
-    { threshold: 0.15 }
-  );
-
-  // Stage 2: "FROM EXPLORATION TO ACTION" (#how) dikhte hi Green Overlay Fade Out
-  const howObserver = new IntersectionObserver(
-    (entries) => {
-      const isHowVisible = entries.some((entry) => entry.isIntersecting);
-      if (isHowVisible) {
-        document.body.classList.add("how-visible-bg");
-      } else {
-        document.body.classList.remove("how-visible-bg");
-      }
-    },
-    { threshold: 0.05 } // 5% element dikhte hi triggers safely without flicker
-  );
-
-  serviceCards.forEach((card) => cardsObserver.observe(card));
-  howObserver.observe(howSection);
-});
-
-// Text Scroll Reveal (Har Baar Scroll Karne Par Repeat Hoga)
-document.addEventListener("DOMContentLoaded", () => {
-  const animatedTexts = document.querySelectorAll(".animate-text");
-  if (!animatedTexts.length) return;
-
-  const textObserver = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("is-visible"); // View mein aane par show
-        } else {
-          entry.target.classList.remove("is-visible"); // View se bahar jaane par reset
-        }
+        cards.forEach((other) => {
+          if (other === card) return;
+          other.style.transform = "perspective(1000px) scale(0.98)";
+          other.style.opacity = "0.85";
+        });
       });
-    },
-    {
-      threshold: 0.2, // 20% visible hote hi animation repeat trigger hoga
-    }
-  );
-
-  animatedTexts.forEach((el) => textObserver.observe(el));
-});
-
-// Reusable popup modal (used by STACD and Infra)
-function setupModal(openBtnId, overlayId, closeBtnId) {
-  const openBtn = document.getElementById(openBtnId);
-  const closeBtn = document.getElementById(closeBtnId);
-  const overlay = document.getElementById(overlayId);
-
-  if (!openBtn || !overlay) return;
-
-  function openModal() {
-    overlay.classList.add("is-open");
-    overlay.setAttribute("aria-hidden", "false");
-  }
-
-  function closeModal() {
-    overlay.classList.remove("is-open");
-    overlay.setAttribute("aria-hidden", "true");
-  }
-
-  openBtn.addEventListener("click", openModal);
-  if (closeBtn) closeBtn.addEventListener("click", closeModal);
-
-  // Close when clicking on the backdrop
-  overlay.addEventListener("click", (e) => {
-    if (e.target === overlay) closeModal();
+    });
   });
 
-  // Close on Escape
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && overlay.classList.contains("is-open")) {
-      closeModal();
-    }
+  grid.addEventListener("mouseleave", () => {
+    cancelAnimationFrame(frameId);
+    cards.forEach((card) => {
+      card.style.transform = REST;
+      card.style.opacity = "1";
+    });
   });
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  setupModal("openStacdModal", "stacdModalOverlay", "closeStacdModal");
-  setupModal("openInfraModal", "infraModalOverlay", "closeInfraModal");
-});
+/* ---------- Scroll reveals ---------- */
 
+function initResourceReveal() {
+  const links = document.querySelectorAll(".resource-links a");
+  if (!links.length || !hasObserver || reduceMotion.matches) return;
 
+  links.forEach((link, index) => {
+    link.classList.add("reveal-resource");
+    link.style.setProperty("--reveal-delay", `${index * 300}ms`);
+  });
+  observeVisibility(links, { threshold: 0.15, once: true });
+}
 
-// About Us Section Scroll Reveal Trigger
-document.addEventListener("DOMContentLoaded", () => {
-  const aboutSection = document.getElementById("about");
+function initTextReveal() {
+  observeVisibility(document.querySelectorAll(".animate-text"), { threshold: 0.2 });
+}
 
-  if (!aboutSection) return;
+function initAboutReveal() {
+  const about = document.getElementById("about");
+  if (!about) return;
+
+  // Card and its texts reveal together, once the section is in view.
+  const parts = about.querySelectorAll(".animate-about-card, .animate-about-text");
+  if (!hasObserver) {
+    parts.forEach((el) => el.classList.add("is-visible"));
+    return;
+  }
 
   const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        const card = entry.target.querySelector(".animate-about-card");
-        const texts = entry.target.querySelectorAll(".animate-about-text");
-
-        if (entry.isIntersecting) {
-          if (card) card.classList.add("is-visible");
-          texts.forEach((el) => el.classList.add("is-visible"));
-        } else {
-          if (card) card.classList.remove("is-visible");
-          texts.forEach((el) => el.classList.remove("is-visible"));
-        }
-      });
+    ([entry]) => {
+      parts.forEach((el) => el.classList.toggle("is-visible", entry.isIntersecting));
     },
     { threshold: 0.1 }
   );
+  observer.observe(about);
+}
 
-  observer.observe(aboutSection);
-});
+/* ---------- Page background shifts while scrolling ---------- */
 
-// change footer color on scroll
-// Background Gradient Switch (Cards -> HOW -> Footer)
+function initBackgroundShifts() {
+  toggleBodyClass(document.querySelectorAll(".cards .card"), "cards-visible-bg", 0.15);
+  toggleBodyClass(document.querySelectorAll("#how"), "how-visible-bg", 0.05);
+  toggleBodyClass(document.querySelectorAll(".site-footer"), "footer-visible-bg", 0.1);
+}
+
+/* ---------- Modals (STACD + Infrastructure) ---------- */
+
+function setupModal(openBtnId, overlayId, closeBtnId) {
+  const openBtn = document.getElementById(openBtnId);
+  const overlay = document.getElementById(overlayId);
+  const closeBtn = document.getElementById(closeBtnId);
+  if (!openBtn || !overlay) return;
+
+  function open() {
+    overlay.classList.add("is-open");
+    overlay.setAttribute("aria-hidden", "false");
+    document.body.classList.add("modal-open");
+    if (closeBtn) closeBtn.focus({ preventScroll: true });
+  }
+
+  function close() {
+    overlay.classList.remove("is-open");
+    overlay.setAttribute("aria-hidden", "true");
+    document.body.classList.remove("modal-open");
+    openBtn.focus({ preventScroll: true });
+  }
+
+  openBtn.addEventListener("click", open);
+  if (closeBtn) closeBtn.addEventListener("click", close);
+
+  overlay.addEventListener("click", (event) => {
+    if (event.target === overlay) close();
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && overlay.classList.contains("is-open")) close();
+  });
+}
+
+function initModals() {
+  setupModal("openStacdModal", "stacdModalOverlay", "closeStacdModal");
+  setupModal("openInfraModal", "infraModalOverlay", "closeInfraModal");
+}
+
+/* ---------- Start everything ---------- */
+
 document.addEventListener("DOMContentLoaded", () => {
-  const serviceCards = document.querySelectorAll(".cards .card");
-  const howSection = document.getElementById("how");
-  const footerSection = document.querySelector(".site-footer");
-
-  // 1. Service Cards Observer
-  if (serviceCards.length) {
-    const cardsObserver = new IntersectionObserver(
-      (entries) => {
-        const isCardVisible = entries.some((entry) => entry.isIntersecting);
-        if (isCardVisible) {
-          document.body.classList.add("cards-visible-bg");
-        } else {
-          document.body.classList.remove("cards-visible-bg");
-        }
-      },
-      { threshold: 0.15 }
-    );
-    serviceCards.forEach((card) => cardsObserver.observe(card));
-  }
-
-  // 2. HOW Section Observer (#how)
-  if (howSection) {
-    const howObserver = new IntersectionObserver(
-      (entries) => {
-        const isHowVisible = entries.some((entry) => entry.isIntersecting);
-        if (isHowVisible) {
-          document.body.classList.add("how-visible-bg");
-        } else {
-          document.body.classList.remove("how-visible-bg");
-        }
-      },
-      { threshold: 0.05 }
-    );
-    howObserver.observe(howSection);
-  }
-
-  // 3. Footer Observer (.site-footer) - Activates Dark Gradient
-  if (footerSection) {
-    const footerObserver = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            document.body.classList.add("footer-visible-bg");
-          } else {
-            document.body.classList.remove("footer-visible-bg");
-          }
-        });
-      },
-      { threshold: 0.1 } // 10% footer screen par aate hi active ho jayega
-    );
-    footerObserver.observe(footerSection);
-  }
+  initHeroTitle();
+  initLeaves();
+  initCardReveal();
+  initCardTilt();
+  initResourceReveal();
+  initTextReveal();
+  initAboutReveal();
+  initBackgroundShifts();
+  initModals();
 });
-
