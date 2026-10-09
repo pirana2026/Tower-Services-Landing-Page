@@ -1,7 +1,14 @@
 const SERVICE_VIDEOS = {
   drone: "../../resources/videos/drone.mp4",
-  "diy-lulc": "../../resources/videos/diy-lulc.mp4",
+  "diy-lulc": "../../resources/videos/diy_lulc.mp4",
   bioacoustic: "../../resources/videos/bioacoustic.mp4",
+};
+
+// Walk Through slides, exported as PDF and kept in resources/ppt (browsers cannot show .pptx directly)
+const SERVICE_SLIDES = {
+  drone: "../../resources/ppt/drone.pdf",
+  "diy-lulc": "../../resources/ppt/diy_lulc.pdf",
+  bioacoustic: "../../resources/ppt/bioacoustic.pdf",
 };
 
 function initVideo() {
@@ -29,7 +36,7 @@ function initVideo() {
 // Open popups, oldest first. The last one is the topmost (a popup can open on top of another).
 const openModals = [];
 
-function setupModal(openIds, overlayId, closeId) {
+function setupModal(openIds, overlayId, closeId, onOpen) {
   const openBtns = [].concat(openIds).map((id) => document.getElementById(id)).filter(Boolean);
   const closeBtn = document.getElementById(closeId);
   const overlay = document.getElementById(overlayId);
@@ -48,6 +55,8 @@ function setupModal(openIds, overlayId, closeId) {
     // Keep page scroll locked while any popup is still open
     document.body.classList.toggle("modal-open", openModals.length > 0);
     (isOpen ? closeBtn : lastOpener).focus({ preventScroll: true });
+
+    if (isOpen && onOpen) onOpen();
   }
 
   openBtns.forEach((btn) => {
@@ -68,8 +77,31 @@ function setupModal(openIds, overlayId, closeId) {
   });
 }
 
+// Walk Through popup: the PDF is only loaded the first time the popup opens
+function loadSlides() {
+  const stage = document.querySelector("[data-slides-stage]");
+  const src = SERVICE_SLIDES[document.body.dataset.service];
+  if (!stage || !src || stage.querySelector("iframe")) return;
+
+  const frame = document.createElement("iframe");
+  frame.src = `${src}#view=FitH`;
+  frame.title = stage.dataset.slidesTitle || "Walk through slides";
+  frame.allowFullscreen = true;
+
+  const help = document.querySelector("[data-slides-help]");
+  frame.addEventListener("error", () => {
+    if (help) help.hidden = false;
+  });
+
+  const openLink = document.querySelector("[data-slides-open]");
+  if (openLink) openLink.href = src;
+
+  stage.replaceChildren(frame);
+}
+
 function initModal() {
   setupModal("openMethod", "methodModal", "closeMethod");
+  setupModal("openWalkthrough", "walkthroughModal", "closeWalkthrough", loadSlides);
   // Bioacoustic page only: repo popup opens from the page and from inside Methodology
   setupModal(["openRepoModal", "openRepoFromMethod"], "repoModal", "closeRepo");
 }

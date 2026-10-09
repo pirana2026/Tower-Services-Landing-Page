@@ -68,7 +68,7 @@
           <div class="usage-guide">
             <div class="usage-head">
               <h3>How to use it</h3>
-              <a class="walkthrough-button" href="https://csciitd-my.sharepoint.com/:p:/g/personal/cs1230015_iitd_ac_in/IQBzofNaciszQL9EYlbiMBPaAZa2Z9xxZArhlZWfGRMVd1k?e=RtHBG2" target="_blank" rel="noopener noreferrer">Walk Through <span aria-hidden="true">↗</span></a>
+              <button type="button" class="walkthrough-button" id="openWalkthrough" aria-haspopup="dialog">Walk Through <span aria-hidden="true">→</span></button>
             </div>
             <div class="timeline-steps">
               <div class="timeline-step"><span class="step-num">1</span><div class="step-text"><strong>Open the app:</strong> Launch the Bioacoustic (CEM) application. It opens on a map of monitoring spots.</div></div>
@@ -290,6 +290,23 @@
           <a class="modal-btn" href="https://github.com/err400/cem-master-backend" target="_blank" rel="noopener noreferrer">Master Page ↗</a>
           <a class="modal-btn" href="https://github.com/err400/cem-backend" target="_blank" rel="noopener noreferrer">Do Your Own CEM ↗</a>
         </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="walkthroughModal" aria-hidden="true">
+      <div class="modal-container walkthrough-modal" role="dialog" aria-modal="true" aria-label="Walk through slides">
+        <button type="button" class="modal-close-btn" id="closeWalkthrough" aria-label="Close">&times;</button>
+        <div class="slides-head">
+          <div>
+            <p class="eyebrow">Walk Through</p>
+          </div>
+          <a class="walkthrough-button slides-open" data-slides-open href="../../resources/ppt/bioacoustic.pdf" target="_blank" rel="noopener noreferrer">Open in new tab <span aria-hidden="true">↗</span></a>
+        </div>
+        <!-- services.js loads the PDF from resources/ppt/ into this box the first time the popup opens -->
+        <div class="slides-stage" data-slides-stage data-slides-title="Bioacoustic walk through">
+          <p class="slides-loading">Loading slides…</p>
+        </div>
+        <p class="slides-help" data-slides-help hidden>The slides could not be loaded. Use the Open in new tab button to open them.</p>
       </div>
     </div>
 

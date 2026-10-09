@@ -625,7 +625,6 @@ nav {
   }
 
   .cards:hover .card:not(:hover) {
-    opacity: 0.85;
     transform: scale(0.98);
   }
 }

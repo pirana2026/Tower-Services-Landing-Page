@@ -63,7 +63,7 @@
           <div class="usage-guide">
             <div class="usage-head">
               <h3>How to use it</h3>
-              <a class="walkthrough-button" href="https://docs.google.com/presentation/d/1x20uCFaykPQ28TlSzfNuJmQd2UDF7G-B/edit?slide=id.p1#slide=id.p1" target="_blank" rel="noopener noreferrer">Walk Through <span aria-hidden="true">↗</span></a>
+              <button type="button" class="walkthrough-button" id="openWalkthrough" aria-haspopup="dialog">Walk Through <span aria-hidden="true">→</span></button>
             </div>
             <div class="timeline-steps">
               <div class="timeline-step"><span class="step-num">1</span><div class="step-text"><strong>Create a project:</strong> Sign in with Google, then pick an area (preset, coordinates or a box), a year and the base classes.</div></div>
@@ -229,6 +229,23 @@
           <a class="modal-btn" href="https://docs.core-stack.org/infra/tower-services/deployed-architecture/" target="_blank" rel="noopener noreferrer">Deployed Architecture ↗</a>
           <a class="modal-btn" href="https://github.com/salil-123/Project" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
         </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="walkthroughModal" aria-hidden="true">
+      <div class="modal-container walkthrough-modal" role="dialog" aria-modal="true" aria-label="Walk through slides">
+        <button type="button" class="modal-close-btn" id="closeWalkthrough" aria-label="Close">&times;</button>
+        <div class="slides-head">
+          <div>
+            <p class="eyebrow">Walk Through</p>
+          </div>
+          <a class="walkthrough-button slides-open" data-slides-open href="../../resources/ppt/diy_lulc.pdf" target="_blank" rel="noopener noreferrer">Open in new tab <span aria-hidden="true">↗</span></a>
+        </div>
+        <!-- services.js loads the PDF from resources/ppt/ into this box the first time the popup opens -->
+        <div class="slides-stage" data-slides-stage data-slides-title="DIY LULC walk through">
+          <p class="slides-loading">Loading slides…</p>
+        </div>
+        <p class="slides-help" data-slides-help hidden>The slides could not be loaded. Use the Open in new tab button to open them.</p>
       </div>
     </div>
 

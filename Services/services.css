@@ -333,6 +333,10 @@ nav {
   transition: background 0.3s ease, transform 0.3s ease;
 }
 
+button.walkthrough-button {
+  cursor: pointer;
+}
+
 .walkthrough-button span {
   color: var(--lime);
 }
@@ -392,6 +396,59 @@ button.resource-link {
 /* Repository chooser popup (same look as the Methodology popup, just narrower) */
 .repo-modal {
   max-width: 520px;
+}
+
+/* Walk Through popup: same size as Methodology, the PDF fills the whole popup body */
+.slides-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-right: 36px; /* keep clear of the close (×) button */
+}
+
+.modal-container .slides-head h2 {
+  margin: 0;
+}
+
+.slides-open {
+  flex: none;
+  gap: 6px;
+  padding: 6px 14px;
+  font-size: 13px;
+}
+
+.slides-stage {
+  display: block;
+  width: 100%;
+  height: calc(100dvh - 230px);
+  min-height: 320px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #f1f4ec;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.slides-stage iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.slides-loading {
+  margin: 0;
+  padding: 24px;
+  text-align: center;
+}
+
+.modal-container .slides-help {
+  margin: 10px 0 0;
+  color: #9a3b2a;
+  font-size: 14px;
 }
 
 .timeline-steps {
@@ -717,13 +774,6 @@ body[data-service="diy-lulc"] .flow-step {
   border-top: 4px solid var(--green);
   background: #ffffff;
   box-shadow: 0 6px 16px rgba(23, 60, 48, 0.07);
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-}
-
-body[data-service="diy-lulc"] .flow-step:hover {
-  border-color: #92ad7a;
-  box-shadow: 0 12px 24px rgba(23, 60, 48, 0.14);
-  transform: translateY(-3px);
 }
 
 body[data-service="diy-lulc"] .flow-step:not(:last-child)::after {
@@ -1124,6 +1174,14 @@ body[data-service="diy-lulc"] .flow-sub {
 
   .modal-close-btn {
     margin: -16px -12px -24px auto;
+  }
+
+  .slides-head {
+    padding-right: 44px;
+  }
+
+  .slides-stage {
+    height: calc(100dvh - 200px);
   }
 
   .modal-footer {
