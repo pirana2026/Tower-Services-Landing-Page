@@ -77,26 +77,86 @@ function setupModal(openIds, overlayId, closeId, onOpen) {
   });
 }
 
-// Walk Through popup: the PDF is only loaded the first time the popup opens
+// Walk Through popup: the PDF is only loaded the first time the popup opens.
+// Desktop browsers show it in their own PDF viewer (iframe). Phones and tablets cannot show a PDF
+// inside an iframe (they only offer an "Open" button), so there the pages are drawn with PDF.js.
+const PDFJS_VERSION = "3.11.174";
+const PDFJS_BASE = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDFJS_VERSION}`;
+
+function canShowPdfInline() {
+  const touch = window.matchMedia("(pointer: coarse)").matches;
+  return !touch && navigator.pdfViewerEnabled !== false;
+}
+
+function loadPdfJs() {
+  if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
+  return new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = `${PDFJS_BASE}/pdf.min.js`;
+    script.onload = () => {
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc = `${PDFJS_BASE}/pdf.worker.min.js`;
+      resolve(window.pdfjsLib);
+    };
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+}
+
+async function renderSlidePages(stage, src) {
+  const pdfjs = await loadPdfJs();
+  const pdf = await pdfjs.getDocument(src).promise;
+
+  const pages = document.createElement("div");
+  pages.className = "slides-pages";
+  stage.classList.add("is-pages");
+  stage.replaceChildren(pages);
+
+  const width = pages.clientWidth || stage.clientWidth;
+  const ratio = Math.min(window.devicePixelRatio || 1, 2); // sharp, but not huge on phones
+
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const base = page.getViewport({ scale: 1 });
+    const viewport = page.getViewport({ scale: (width / base.width) * ratio });
+
+    const canvas = document.createElement("canvas");
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    canvas.setAttribute("role", "img");
+    canvas.setAttribute("aria-label", `Slide ${i} of ${pdf.numPages}`);
+    pages.appendChild(canvas);
+
+    await page.render({ canvasContext: canvas.getContext("2d"), viewport }).promise;
+  }
+}
+
 function loadSlides() {
   const stage = document.querySelector("[data-slides-stage]");
   const src = SERVICE_SLIDES[document.body.dataset.service];
-  if (!stage || !src || stage.querySelector("iframe")) return;
-
-  const frame = document.createElement("iframe");
-  frame.src = `${src}#view=FitH`;
-  frame.title = stage.dataset.slidesTitle || "Walk through slides";
-  frame.allowFullscreen = true;
+  if (!stage || !src || stage.dataset.loaded) return;
+  stage.dataset.loaded = "true";
 
   const help = document.querySelector("[data-slides-help]");
-  frame.addEventListener("error", () => {
+  const showHelp = () => {
     if (help) help.hidden = false;
-  });
+  };
 
   const openLink = document.querySelector("[data-slides-open]");
   if (openLink) openLink.href = src;
 
-  stage.replaceChildren(frame);
+  if (canShowPdfInline()) {
+    const frame = document.createElement("iframe");
+    frame.src = `${src}#view=FitH`;
+    frame.title = stage.dataset.slidesTitle || "Walk through slides";
+    frame.allowFullscreen = true;
+    frame.addEventListener("error", showHelp);
+    stage.replaceChildren(frame);
+  } else {
+    renderSlidePages(stage, src).catch(() => {
+      stage.replaceChildren();
+      showHelp();
+    });
+  }
 }
 
 function initModal() {
