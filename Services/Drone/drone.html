@@ -58,10 +58,13 @@
           </div>
           <div class="resource-links">
             <a class="resource-link" href="https://docs.core-stack.org/infra/tower-services/deployed-architecture/#services-and-repos" target="_blank" rel="noopener noreferrer">Documentation <span aria-hidden="true">↗</span></a>
-            <a class="resource-link" href="https://github.com/anunay1206/drone_docker" target="_blank" rel="noopener noreferrer">GitHub Repository <span aria-hidden="true">↗</span></a>
+            <a class="resource-link" href="https://github.com/stuck-in-infinity/TreeCrownDetection" target="_blank" rel="noopener noreferrer">GitHub Repository <span aria-hidden="true">↗</span></a>
           </div>
           <div class="usage-guide">
-            <h3>How to use it</h3>
+            <div class="usage-head">
+              <h3>How to use it</h3>
+              <a class="walkthrough-button" href="https://csciitd-my.sharepoint.com/:p:/g/personal/mcs252102_iitd_ac_in/IQBw_teK9iJHSZhSOvBMLssLAd1O-4yiWa2L_Mf5h3MJQto?e=M6upKV" target="_blank" rel="noopener noreferrer">Walk Through <span aria-hidden="true">↗</span></a>
+            </div>
             <div class="timeline-steps">
               <div class="timeline-step"><span class="step-num">1</span><div class="step-text"><strong>Create a project:</strong> Sign in with Google, then start a new project for your site.</div></div>
               <div class="timeline-step"><span class="step-num">2</span><div class="step-text"><strong>Upload orthomosaics:</strong> Add a GeoTIFF (.tif or .tiff) with its coordinates built in, from your computer or a Google Drive link shared as "Anyone with the link". A ground resolution finer than 8 cm per pixel works best, and a project takes up to 10 orthomosaics and 5 GB. If the file has no coordinates, the app asks for the EPSG code.</div></div>
@@ -92,37 +95,55 @@
       <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="methodTitle">
         <button type="button" class="modal-close-btn" id="closeMethod" aria-label="Close">&times;</button>
         <p class="eyebrow">Methodology</p>
-        <h2 id="methodTitle">How Drone runs</h2>
-        <p class="method-sub">Detectree2 crown detection · clustering · species labelling · Airflow + STACD</p>
+        <h2 id="methodTitle">How Drone works</h2>
+        <p class="method-sub">From drone orthomosaic to tree species map · Detectree2 crown detection · DINOv2 embeddings · KMeans grouping · user labelling</p>
 
-        <div class="method-flow" role="img" aria-label="Pipeline: upload, detect, group, name, export">
-          <div class="flow-step"><span class="flow-num">1</span><span class="flow-title">Upload</span><span class="flow-sub">GeoTIFF orthomosaic of your site</span></div>
-          <div class="flow-step"><span class="flow-num">2</span><span class="flow-title">Detect</span><span class="flow-sub">Detectree2 outlines every tree crown</span></div>
-          <div class="flow-step"><span class="flow-num">3</span><span class="flow-title">Group</span><span class="flow-sub">Look-alike crowns are clustered</span></div>
-          <div class="flow-step"><span class="flow-num">4</span><span class="flow-title">Name</span><span class="flow-sub">You type a species for each group</span></div>
-          <div class="flow-step"><span class="flow-num">5</span><span class="flow-title">Export</span><span class="flow-sub">Map, tables and STAC record</span></div>
+        <div class="method-flow" role="img" aria-label="Five stages: upload, detect, group, name, export">
+          <div class="flow-step"><span class="flow-num">1</span><span class="flow-title">Upload</span><span class="flow-sub">One stitched GeoTIFF of your site</span></div>
+          <div class="flow-step"><span class="flow-num">2</span><span class="flow-title">Detect</span><span class="flow-sub">Detectree2 outlines every crown</span></div>
+          <div class="flow-step"><span class="flow-num">3</span><span class="flow-title">Group</span><span class="flow-sub">DINOv2 + KMeans cluster look-alikes</span></div>
+          <div class="flow-step"><span class="flow-num">4</span><span class="flow-title">Name</span><span class="flow-sub">You type one species per group</span></div>
+          <div class="flow-step"><span class="flow-num">5</span><span class="flow-title">Export</span><span class="flow-sub">Map, CSV, GeoJSON, STAC item</span></div>
         </div>
 
         <article class="method-section">
-          <h3>Overview</h3>
+          <h3>System architecture</h3>
           <ul class="method-list">
-            <li>Drone is a <strong>Docker app</strong> (frontend + backend) behind Nginx at <code>/drone</code>.</li>
-            <li>The <strong>backend</strong> triggers the compute job; the heavy work does not run in the web page.</li>
-            <li><strong>Everything is saved per run</strong>, so you can change settings and run again without losing earlier results.</li>
+            <li>The <strong>backend owns state</strong>, the <strong>worker computes</strong>, and the <strong>orchestrator only schedules</strong>.</li>
+            <li>You sign in with Google in the browser. The <strong>web frontend</strong> is a page served by Nginx and talks to the <strong>FastAPI backend</strong> over REST.</li>
+            <li>The backend owns project and run state and sends the run to a <strong>GPU worker</strong>, which runs Detectree2 and DINOv2, one process per run.</li>
+            <li><strong>Airflow + STACD</strong> schedule the runs and call back into the backend when they finish.</li>
+            <li><strong>Storage</strong> holds the database for state and one folder per run: orthomosaic, crown polygons, crown crops, clusters, exports and the STAC item.</li>
+            <li><strong>FileBrowser</strong> gives a read-only share link to a run's folder, so you can view and download the generated files.</li>
           </ul>
+          <img class="modal-diagram-img method-diagram" src="../../resources/images/drone-architecture.png" alt="Drone architecture: browser, web frontend, FastAPI backend, GPU worker, FileBrowser, Airflow and STACD, storage">
         </article>
 
         <article class="method-section">
-          <h3>How a run executes</h3>
-          <ol class="method-list">
-            <li>You sign in with Google, create a project and upload an orthomosaic.</li>
-            <li>You pick the detector weights and settings and start the run.</li>
-            <li>The backend <strong>triggers an Airflow DAG</strong> generated by STACD.</li>
-            <li>Airflow runs the detection and clustering tasks on the cluster.</li>
-            <li>The backend <strong>polls</strong> the DAG until it ends in <code>success</code> or <code>failed</code>.</li>
-            <li>On success, results are written to <code>data/drone/</code> and you browse them in <strong>FileBrowser</strong>.</li>
-          </ol>
-          <img class="modal-diagram-img method-diagram" src="../../resources/images/drone-architecture.png" alt="Drone architecture: browser, Nginx, Drone app, Airflow and STACD, data/drone, FileBrowser">
+          <h3>The pipeline: eight steps, one needs you</h3>
+          <p class="method-label">Stage 1 · Find the crowns (automatic)</p>
+          <table class="method-table">
+            <thead><tr><th>Step</th><th>What happens</th></tr></thead>
+            <tbody>
+              <tr><td><strong>1 · Orthomosaic</strong></td><td>GeoTIFF from a drone survey, ideally finer than 8 cm/px.</td></tr>
+              <tr><td><strong>2 · Rescale and tile</strong></td><td>Brought to the GSD best suited for the model, then cut into overlapping tiles.</td></tr>
+              <tr><td><strong>3 · Detectree2</strong></td><td>Mask R-CNN outlines the crowns in each tile, with a confidence score for each crown.</td></tr>
+              <tr><td><strong>4 · Crown layer</strong></td><td>Tiles are stitched; weak, tiny, huge and duplicate crowns are removed.</td></tr>
+            </tbody>
+          </table>
+          <img src="../../resources/images/drone_pipeline.png" alt="Drone pipeline">
+          <p class="method-label">Stage 2 · Group and name (automatic, then labelling)</p>
+          <table class="method-table">
+            <thead><tr><th>Step</th><th>What happens</th></tr></thead>
+            <tbody>
+              <tr><td><strong>5 · Crown crops</strong></td><td>Each polygon is cut from the full-resolution image.</td></tr>
+              <tr><td><strong>6 · DINOv2 + PCA</strong></td><td>One embedding per crown, reduced to 50 dimensions.</td></tr>
+              <tr><td><strong>7 · KMeans</strong></td><td>Crowns are grouped for every k; three scores suggest a k.</td></tr>
+              <tr><td><strong>8 · User labels</strong></td><td>After reviewing the crowns, you name each group and every tree crown in that group gets labelled.</td></tr>
+            </tbody>
+          </table>
+          <p class="method-note"><strong>Exports:</strong> species map (KMZ) · per-crown CSV · crown polygons (GeoJSON) · STAC item.</p>
+          <img src="../../resources/images/drone_pipeline2.png" alt="Drone pipeline">
         </article>
 
         <article class="method-section">
@@ -131,7 +152,7 @@
             <li>Open-source tree-crown detector: <strong>Mask R-CNN</strong> instance segmentation, built on Meta's detectron2.</li>
             <li>Each tile returns a <strong>crown outline</strong> and a <strong>confidence score</strong>.</li>
             <li>Published weights are used as they are. <strong>Nothing is trained here.</strong></li>
-            <li>Weights are mounted <strong>read-only</strong> and can be picked per project:</li>
+            <li>Weights are mounted <strong>read-only</strong> at <code>/models</code> and can be picked per project:</li>
           </ul>
           <table class="method-table">
             <thead><tr><th>Weights</th><th>Best for</th></tr></thead>
@@ -143,71 +164,85 @@
               <tr><td><code>tropical_closed</code></td><td>Dense tropical forest only.</td></tr>
             </tbody>
           </table>
+          <p class="method-note">The detector <strong>only finds crowns</strong>. Naming the species is the clustering and labelling work that follows.</p>
         </article>
 
         <article class="method-section">
-          <h3>Preparing the image</h3>
+          <h3>Crown embedding: DINOv2</h3>
           <ul class="method-list">
-            <li>The detector was trained at one ground resolution, so every survey is first brought to <strong>6.7 cm/px</strong>.</li>
-            <li>Scale = native GSD ÷ target, <strong>capped at 1.0</strong>, so a coarse survey is never upsampled.</li>
-            <li>Native GSD is read from the raster's own geotransform, never assumed.</li>
-            <li>The run log records native GSD, scale and effective GSD for every file.</li>
-            <li>The image is cut into <code>tile_size</code> metre tiles with a <code>buffer</code> overlap.</li>
-            <li>At most <strong>6 crowns per tile</strong> are kept; extras are dropped.</li>
+            <li>Each crown polygon is cut from the <strong>full-resolution</strong> orthomosaic.</li>
+            <li>A <strong>DINOv2 vision transformer</strong> returns one embedding per crown.</li>
+            <li>Embeddings are <strong>L2-normalised</strong>, standardised, then reduced with <strong>PCA to 50 components</strong> (configurable).</li>
+            <li>The backbone can be picked per run:</li>
           </ul>
-        </article>
-
-        <article class="method-section">
-          <h3>From tiles back to one crown map</h3>
-          <ol class="method-list">
-            <li><strong>Project:</strong> tile pixel masks become map coordinates.</li>
-            <li><strong>Stitch:</strong> per-tile layers are joined into one, in the orthomosaic's own coordinates.</li>
-            <li><strong>Confidence filter:</strong> crowns under <code>conf_threshold</code> (0.85 by default) are dropped.</li>
-            <li><strong>Area filter:</strong> only crowns between 4 and 2000 m² are kept.</li>
-            <li><strong>Clean-up:</strong> duplicates from the tile overlap are removed at an IoU of 0.9.</li>
-          </ol>
-        </article>
-
-        <article class="method-section">
-          <h3>Grouping and species labels</h3>
-          <ul class="method-list">
-            <li>The detector <strong>only finds crowns</strong>. Species come from the clustering and labelling that follow.</li>
-            <li>Look-alike crowns are grouped into <strong>k</strong> clusters, and you get sample pictures of each group.</li>
-            <li>The <strong>elbow</strong>, <strong>silhouette</strong> (higher is better) and <strong>Davies-Bouldin</strong> (lower is better) charts suggest k. The red dashed line is the app's suggestion.</li>
-            <li>The <strong>t-SNE map</strong> shows each crown as a dot. Tight, separate patches of colour mean clean groups; mixed colours mean you should try another k.</li>
-            <li>You <strong>name each group once</strong>, and every tree in that group gets that species.</li>
-          </ul>
-        </article>
-
-        <article class="method-section">
-          <h3>Key settings to tune</h3>
           <table class="method-table">
-            <thead><tr><th>Setting</th><th>Default</th><th>When to change it</th></tr></thead>
+            <thead><tr><th>Backbone</th><th>Trade-off</th></tr></thead>
             <tbody>
-              <tr><td><code>tile_size</code></td><td>10 m</td><td>Big crowns are missed or cut: raise it.</td></tr>
-              <tr><td><code>conf_threshold</code></td><td>0.85</td><td>Far fewer trees than you can see: lower it.</td></tr>
-              <tr><td><code>area_max</code></td><td>2000 m²</td><td>A lawn or field is marked as one tree: lower it.</td></tr>
-              <tr><td>Max crowns per tile</td><td>6</td><td>Dense areas look emptier than sparse ones: raise it.</td></tr>
-              <tr><td>Overlap merge threshold</td><td>IoU 0.9</td><td>One outline covers several trees, or one tree is outlined twice.</td></tr>
-              <tr><td>Full coverage</td><td>Off</td><td>Nothing is found along an edge: turn it on.</td></tr>
+              <tr><td><code>ViT-S/14</code></td><td>Fastest, smallest embeddings.</td></tr>
+              <tr><td><code>ViT-B/14</code></td><td>Balanced. <strong>Default.</strong></td></tr>
+              <tr><td><code>ViT-L/14</code></td><td>Highest quality, slowest.</td></tr>
             </tbody>
           </table>
-          <p class="method-note"><strong>Example:</strong> on one site, the default settings found 19 crowns. With <code>tile_size</code> 20, <code>conf_threshold</code> 0.5 and <code>area_max</code> 200, the same image gave 154 crowns.</p>
+        </article>
+
+        <article class="method-section">
+          <h3>Clustering and choosing k</h3>
+          <ul class="method-list">
+            <li>Look-alike crowns are grouped with <strong>KMeans</strong>, once for every k in the list. The default list is <strong>2, 4, 6, 8, 10</strong>.</li>
+            <li>The <strong>elbow</strong>, <strong>silhouette</strong> (higher is better) and <strong>Davies-Bouldin</strong> (lower is better) scores are computed for every k.</li>
+            <li>The best k is <strong>suggested</strong> (the red dashed line on the plot), but you can choose <strong>any k</strong> after reviewing.</li>
+            <li>For review, the app also shows the <strong>crowns nearest each group's centre</strong> and a <strong>t-SNE map</strong> of all crowns. Tight, separate patches of colour mean clean groups; mixed colours mean you should try another k.</li>
+          </ul>
+        </article>
+
+        <article class="method-section">
+          <h3>Naming species</h3>
+          <ul class="method-list">
+            <li>Clustering only groups crowns. <strong>You supply the species names</strong> after reviewing the cropped crowns.</li>
+            <li>The review page shows sample crowns for every group at the chosen k.</li>
+            <li>You type <strong>one species per group</strong>, and every crown in the group inherits it.</li>
+            <li>Two groups can be given the <strong>same species</strong>.</li>
+            <li>Labels are stored <strong>per run</strong>, so an older run can still be finished later.</li>
+          </ul>
+        </article>
+
+        <article class="method-section">
+          <h3>Example result</h3>
+          <div class="stat-row">
+            <div class="stat"><span class="stat-value">782</span><span class="stat-label">tree crowns detected</span></div>
+            <div class="stat"><span class="stat-value">206</span><span class="stat-label">labelled acacia (26%)</span></div>
+            <div class="stat"><span class="stat-value">576</span><span class="stat-label">labelled non-acacia (74%)</span></div>
+          </div>
+          <p class="method-note">One orthomosaic at 2 cm/px, k = 2, with Detectree2 (<code>urban_cambridge</code>) and DINOv2 ViT-B/14. Species come from the user-named clusters.</p>
         </article>
 
         <article class="method-section">
           <h3>Outputs</h3>
           <ul class="method-list">
             <li><strong>Species map (KMZ):</strong> opens in Google Earth or any GIS tool.</li>
-            <li><strong>CSV tables and GeoJSON:</strong> every crown with its species.</li>
+            <li><strong>CSV tables:</strong> every crown with its species, ready for Excel.</li>
+            <li><strong>Crown polygons (GeoJSON).</strong></li>
             <li><strong>STAC record:</strong> so the dataset can be catalogued and found later.</li>
-            <li><strong>FileBrowser folder:</strong> a read-only, shareable link to every file of the run. Each run keeps its own folder, so runs never mix.</li>
+            <li><strong>FileBrowser folder:</strong> a shareable, read-only link to every file of the run.</li>
+            <li><strong>Every run is kept:</strong> compare settings and finish any run later.</li>
           </ul>
         </article>
 
+        <article class="method-section">
+          <h3>Limitations and what they imply</h3>
+          <table class="method-table">
+            <thead><tr><th>Limitation</th><th>What it means</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Detection is not identification</strong></td><td>Detectree2 only outlines crowns. A missed or merged crown is a detection problem, not a labelling one.</td></tr>
+              <tr><td><strong>Species come from you</strong></td><td>Groups are made by visual similarity. A group is only as accurate as the name you give it after reviewing the sample crowns.</td></tr>
+              <tr><td><strong>Groups are not always species</strong></td><td>A species can split across several groups, so two groups can share one name. Check the t-SNE map before trusting a k.</td></tr>
+              <tr><td><strong>Weights are used as published</strong></td><td>Nothing is trained here, so pick the weights closest to your forest type.</td></tr>
+            </tbody>
+          </table>
+        </article>
         <div class="modal-footer">
           <a class="modal-btn" href="https://docs.core-stack.org/infra/tower-services/deployed-architecture/" target="_blank" rel="noopener noreferrer">Deployed Architecture ↗</a>
-          <a class="modal-btn" href="https://github.com/anunay1206/drone_docker" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+          <a class="modal-btn" href="https://github.com/stuck-in-infinity/TreeCrownDetection" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
         </div>
       </div>
     </div>

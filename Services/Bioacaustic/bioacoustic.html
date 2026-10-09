@@ -63,10 +63,13 @@
           </div>
           <div class="resource-links">
             <a class="resource-link" href="https://docs.core-stack.org/infra/tower-services/deployed-architecture/#services-and-repos" target="_blank" rel="noopener noreferrer">Documentation <span aria-hidden="true">↗</span></a>
-            <a class="resource-link" href="https://github.com/xHrid/continuous-ecological-monitoring-toolkit" target="_blank" rel="noopener noreferrer">GitHub Repository <span aria-hidden="true">↗</span></a>
+            <button type="button" class="resource-link" id="openRepoModal" aria-haspopup="dialog">GitHub Repository <span aria-hidden="true">↗</span></button>
           </div>
           <div class="usage-guide">
-            <h3>How to use it</h3>
+            <div class="usage-head">
+              <h3>How to use it</h3>
+              <a class="walkthrough-button" href="https://csciitd-my.sharepoint.com/:p:/g/personal/cs1230015_iitd_ac_in/IQBzofNaciszQL9EYlbiMBPaAZa2Z9xxZArhlZWfGRMVd1k?e=RtHBG2" target="_blank" rel="noopener noreferrer">Walk Through <span aria-hidden="true">↗</span></a>
+            </div>
             <div class="timeline-steps">
               <div class="timeline-step"><span class="step-num">1</span><div class="step-text"><strong>Open the app:</strong> Launch the Bioacoustic (CEM) application. It opens on a map of monitoring spots.</div></div>
               <div class="timeline-step"><span class="step-num">2</span><div class="step-text"><strong>Pick a spot:</strong> Select a monitoring spot on the map to see what was heard there, including how many species were noticed.</div></div>
@@ -271,7 +274,21 @@
 
         <div class="modal-footer">
           <a class="modal-btn" href="https://docs.core-stack.org/infra/tower-services/deployed-architecture/" target="_blank" rel="noopener noreferrer">Deployed Architecture ↗</a>
-          <a class="modal-btn" href="https://github.com/xHrid/continuous-ecological-monitoring-toolkit" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+          <button type="button" class="modal-btn" id="openRepoFromMethod" aria-haspopup="dialog">GitHub ↗</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="repoModal" aria-hidden="true">
+      <div class="modal-container repo-modal" role="dialog" aria-modal="true" aria-labelledby="repoTitle">
+        <button type="button" class="modal-close-btn" id="closeRepo" aria-label="Close">&times;</button>
+        <p class="eyebrow">Source code</p>
+        <h2 id="repoTitle">GitHub Repositories</h2>
+        <p class="method-sub">Master page · Do your own CEM</p>
+
+        <div class="modal-footer">
+          <a class="modal-btn" href="https://github.com/err400/cem-master-backend" target="_blank" rel="noopener noreferrer">Master Page ↗</a>
+          <a class="modal-btn" href="https://github.com/err400/cem-backend" target="_blank" rel="noopener noreferrer">Do Your Own CEM ↗</a>
         </div>
       </div>
     </div>

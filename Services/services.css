@@ -306,6 +306,42 @@ nav {
   box-shadow: 0 16px 36px rgba(23, 60, 48, 0.12);
 }
 
+/* "How to use it" heading with a Walk Through button beside it */
+.usage-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.usage-head h3 {
+  margin: 0;
+}
+
+.walkthrough-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 18px;
+  border: 1px solid var(--ink);
+  border-radius: 10px;
+  background: var(--ink);
+  color: #ffffff;
+  font: 600 14px Arial, sans-serif;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.walkthrough-button span {
+  color: var(--lime);
+}
+
+.walkthrough-button:hover {
+  background: #285641;
+  transform: translateY(-2px);
+}
+
 .about-card h2,
 .usage-guide h3 {
   margin: 0 0 12px;
@@ -342,6 +378,20 @@ nav {
   border-color: #92ad7a;
   background: #f1f7ea;
   transform: translateY(-2px);
+}
+
+/* <button> version of .resource-link (opens the repo popup) */
+button.resource-link {
+  width: 100%;
+  color: inherit;
+  font-family: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+/* Repository chooser popup (same look as the Methodology popup, just narrower) */
+.repo-modal {
+  max-width: 520px;
 }
 
 .timeline-steps {
@@ -577,6 +627,14 @@ nav {
 
 .modal-btn + .modal-btn {
   background: var(--green);
+}
+
+/* <button> version of .modal-btn (opens the repo popup on top of Methodology) */
+button.modal-btn {
+  border: 0;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: pointer;
 }
 
 /* Methodology content (Drone and DIY LULC) */

@@ -278,13 +278,15 @@ nav {
 .button {
   display: inline-flex;
   align-items: center;
-  gap: 38px;
-  margin-left: 15px;
-  padding: 15px 23px;
-  border-radius: 4px;
+  justify-content: center;
+  margin-left: 30px;
+  padding: 15px 32px;
+  border-radius: 50px;
+  box-shadow: 0 6px 16px rgba(90, 119, 30, 0.28);
   font-size: 15px;
-  font-weight: 600;
-  transition: background 0.2s ease, transform 0.2s ease;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .lime {
@@ -294,7 +296,8 @@ nav {
 
 .button:hover {
   background: #c5e56e;
-  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(90, 119, 30, 0.35);
+  transform: translateY(-3px);
 }
 
 .hero-meta {
@@ -544,8 +547,8 @@ nav {
 }
 
 .card p {
-  min-height: 72px;
-  margin-bottom: 25px;
+  min-height: 48px; /* 2 lines (15px x 1.6) so all three cards stay aligned */
+  margin-bottom: 8px;
   color: var(--muted);
   font-size: 15px;
 }

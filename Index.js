@@ -133,7 +133,7 @@ function initLeaves() {
     "rgba(214, 240, 138, 0.75)",
     "rgba(90, 150, 60, 0.55)",
   ];
-  const LEAF_COUNT = window.innerWidth < 650 ? 18 : 33;
+  const LEAF_COUNT = window.innerWidth < 650 ? 18 : 35;
 
   // All sizes below are in CSS pixels; the canvas is scaled for sharp retina screens.
   let width = 0;
