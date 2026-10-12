@@ -1621,3 +1621,280 @@ body.modal-open {
     opacity: 1;
   }
 }
+
+/* ---------- STACD modal: pipeline flow (same look as DIY LULC) ---------- */
+.method-flow {
+  display: flex;
+  gap: 16px;
+  align-items: stretch;
+  margin: 28px 0 14px;
+}
+
+.flow-step {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+  padding: 18px 10px 14px;
+  border: 1px solid var(--card-line);
+  border-top: 4px solid var(--green);
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 6px 16px rgba(23, 60, 48, 0.07);
+  text-align: center;
+}
+
+.flow-step:not(:last-child)::after {
+  content: "\2192";
+  position: absolute;
+  top: 50%;
+  right: -15px;
+  z-index: 1;
+  color: var(--green);
+  font-size: 18px;
+  font-weight: 700;
+  transform: translateY(-50%);
+}
+
+.flow-num {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  margin: -34px auto 10px;
+  border: 3px solid #ffffff;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 4px 10px rgba(90, 119, 30, 0.3);
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.flow-title {
+  display: block;
+  color: var(--ink);
+  font-size: 13.5px;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.flow-sub {
+  display: block;
+  margin-top: 6px;
+  color: var(--muted);
+  font-size: 11.5px;
+  line-height: 1.4;
+}
+
+.method-note {
+  margin: 0 0 20px;
+  color: #4a5c52;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+@media (max-width: 700px) {
+  .method-flow {
+    flex-direction: column;
+    gap: 26px;
+  }
+
+  .flow-step:not(:last-child)::after {
+    content: "\2193";
+    top: auto;
+    right: auto;
+    bottom: -22px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+/* ---------- STACD modal: video ---------- */
+.modal-video {
+  width: 100%;
+  margin: 0 0 24px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #000000;
+  box-shadow: 0 4px 14px rgba(23, 60, 48, 0.08);
+}
+
+.modal-video video {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 60vh;
+}
+
+/* ---------- Modals (STACD + Infrastructure): taller dialog ---------- */
+/* The dialog was already almost full-screen, so the extra room comes from
+   trimming the header / footer so the scrolling content area gets taller. */
+.modal-overlay {
+  padding: 8px;
+}
+
+.modal-overlay .modal-container {
+  height: calc(100vh - 16px);
+  height: calc(100dvh - 16px);
+  max-height: calc(100vh - 16px);
+  max-height: calc(100dvh - 16px);
+  padding: 26px 40px 18px;
+}
+
+.modal-overlay .modal-close-btn {
+  top: 10px;
+}
+
+.modal-overlay .modal-header h2 {
+  margin-bottom: 14px;
+}
+
+.modal-overlay .modal-subtitle {
+  margin: -8px 0 12px;
+}
+
+.modal-overlay .modal-footer {
+  margin-top: 14px;
+}
+
+.modal-overlay .modal-btn {
+  padding: 11px 18px;
+}
+
+@media (max-width: 650px) {
+  .modal-overlay .modal-container {
+    padding: 22px 16px 14px;
+  }
+
+  .modal-overlay .modal-footer {
+    gap: 8px;
+  }
+}
+
+/* ---------- STACD Walk Through (same look as the Bioacoustic page) ---------- */
+
+/* Button at the end of the scrolling area inside the STACD popup */
+.modal-walkthrough {
+  display: flex;
+  justify-content: center;
+  padding: 8px 0 16px;
+}
+
+.walkthrough-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 18px;
+  border: 1px solid var(--ink);
+  border-radius: 10px;
+  background: var(--ink);
+  color: #ffffff;
+  font: 600 14px Arial, sans-serif;
+  transition: background 0.3s ease, transform 0.3s ease;
+}
+
+button.walkthrough-button {
+  cursor: pointer;
+}
+
+.walkthrough-button span {
+  color: var(--lime);
+}
+
+.walkthrough-button:hover {
+  background: #285641;
+  transform: translateY(-2px);
+}
+
+/* Popup: the PDF fills the whole popup */
+.slides-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-right: 52px; /* keep clear of the close (x) button */
+}
+
+.slides-head p {
+  margin: 0;
+}
+
+.walkthrough-modal .eyebrow {
+  display: block;
+  margin: 0;
+  color: var(--green);
+  font-size: 12px;
+  letter-spacing: 1.8px;
+}
+
+.slides-open {
+  flex: none;
+  gap: 6px;
+  padding: 6px 14px;
+  font-size: 13px;
+}
+
+.slides-stage {
+  display: block;
+  flex: 1;
+  min-height: 320px;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: #f1f4ec;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.slides-stage.is-pages {
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: #e6eadf;
+}
+
+.slides-pages {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+.slides-pages canvas {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 6px;
+  background: #fff;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
+}
+
+.slides-stage iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.slides-loading {
+  margin: 0;
+  padding: 24px;
+  text-align: center;
+}
+
+.slides-help {
+  margin: 10px 0 0;
+  color: #9a3b2a;
+  font-size: 14px;
+}
+
+@media (max-width: 650px) {
+  .slides-head {
+    padding-right: 44px;
+  }
+}

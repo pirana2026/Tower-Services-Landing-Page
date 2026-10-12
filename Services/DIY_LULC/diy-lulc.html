@@ -56,14 +56,9 @@
             <p class="about-copy">Map any part of India at 10 m, in the classes you need. Start from a base map of greenery, water, built-up and barren, then split any class into finer ones using a model from the zoo or a few polygons of your own.</p>
             <p class="about-copy">Every run is saved with the exact class scheme that made it. Download the GeoTIFF, the whole project or a STAC record, or make the project public so others can reuse your model.</p>
           </div>
-          <div class="resource-links">
-            <a class="resource-link" href="https://docs.core-stack.org/infra/tower-services/deployed-architecture/#services-and-repos" target="_blank" rel="noopener noreferrer">Documentation <span aria-hidden="true">↗</span></a>
-            <a class="resource-link" href="https://github.com/salil-123/Project" target="_blank" rel="noopener noreferrer">GitHub Repository <span aria-hidden="true">↗</span></a>
-          </div>
           <div class="usage-guide">
             <div class="usage-head">
               <h3>How to use it</h3>
-              <button type="button" class="walkthrough-button" id="openWalkthrough" aria-haspopup="dialog">Walk Through <span aria-hidden="true">→</span></button>
             </div>
             <div class="timeline-steps">
               <div class="timeline-step"><span class="step-num">1</span><div class="step-text"><strong>Create a project:</strong> Sign in with Google, then pick an area (preset, coordinates or a box), a year and the base classes.</div></div>
@@ -75,7 +70,8 @@
           </div>
         </section>
 
-        <section class="video-section" aria-labelledby="video-title">
+        <div class="video-column">
+          <section class="video-section" aria-labelledby="video-title">
           <div class="video-heading"><h2 id="video-title">Watch it in action</h2><span class="video-tag">DIY LULC</span></div>
           <!-- services.js swaps this placeholder for the tutorial video when one is set -->
           <div class="video-stage" data-video-stage data-video-title="DIY LULC">
@@ -88,6 +84,11 @@
             <noscript><p>Enable JavaScript to load the tutorial player.</p></noscript>
           </div>
         </section>
+          <div class="walkthrough-github-card">
+            <button type="button" class="walkthrough-button" id="openWalkthrough" aria-haspopup="dialog">Walk Through <span aria-hidden="true">→</span></button>
+            <a class="resource-link" href="https://github.com/salil-123/Project" target="_blank" rel="noopener noreferrer">GitHub Repository <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
       </div>
     </main>
 
@@ -227,7 +228,6 @@
 
         <div class="modal-footer">
           <a class="modal-btn" href="https://docs.core-stack.org/infra/tower-services/deployed-architecture/" target="_blank" rel="noopener noreferrer">Deployed Architecture ↗</a>
-          <a class="modal-btn" href="https://github.com/salil-123/Project" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
         </div>
       </div>
     </div>

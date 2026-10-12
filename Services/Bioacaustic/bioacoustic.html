@@ -1,4 +1,3 @@
-<!doctype html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -61,14 +60,9 @@
               <div class="stat"><span class="stat-value">6,000+</span><span class="stat-label">species the classifier knows</span></div>
             </div>
           </div>
-          <div class="resource-links">
-            <a class="resource-link" href="https://docs.core-stack.org/infra/tower-services/deployed-architecture/#services-and-repos" target="_blank" rel="noopener noreferrer">Documentation <span aria-hidden="true">↗</span></a>
-            <button type="button" class="resource-link" id="openRepoModal" aria-haspopup="dialog">GitHub Repository <span aria-hidden="true">↗</span></button>
-          </div>
           <div class="usage-guide">
             <div class="usage-head">
               <h3>How to use it</h3>
-              <button type="button" class="walkthrough-button" id="openWalkthrough" aria-haspopup="dialog">Walk Through <span aria-hidden="true">→</span></button>
             </div>
             <div class="timeline-steps">
               <div class="timeline-step"><span class="step-num">1</span><div class="step-text"><strong>Open the app:</strong> Launch the Bioacoustic (CEM) application. It opens on a map of monitoring spots.</div></div>
@@ -80,7 +74,8 @@
           </div>
         </section>
 
-        <section class="video-section" aria-labelledby="video-title">
+        <div class="video-column">
+          <section class="video-section" aria-labelledby="video-title">
           <div class="video-heading"><h2 id="video-title">Watch it in action</h2><span class="video-tag">Bioacoustic</span></div>
           <!-- services.js swaps this placeholder for the tutorial video when one is set -->
           <div class="video-stage" data-video-stage data-video-title="Bioacoustic">
@@ -93,6 +88,11 @@
             <noscript><p>Enable JavaScript to load the tutorial player.</p></noscript>
           </div>
         </section>
+          <div class="walkthrough-github-card">
+            <button type="button" class="walkthrough-button" id="openWalkthrough" aria-haspopup="dialog">Walk Through <span aria-hidden="true">→</span></button>
+            <button type="button" class="resource-link" id="openRepoModal" aria-haspopup="dialog">GitHub Repository <span aria-hidden="true">↗</span></button>
+          </div>
+        </div>
       </div>
     </main>
 
@@ -274,7 +274,6 @@
 
         <div class="modal-footer">
           <a class="modal-btn" href="https://docs.core-stack.org/infra/tower-services/deployed-architecture/" target="_blank" rel="noopener noreferrer">Deployed Architecture ↗</a>
-          <button type="button" class="modal-btn" id="openRepoFromMethod" aria-haspopup="dialog">GitHub ↗</button>
         </div>
       </div>
     </div>

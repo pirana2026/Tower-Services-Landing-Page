@@ -263,10 +263,25 @@
             </article>
 
             <div class="modal-diagram-container">
+              <img src="resources/images/stacd.png" />
               <img src="resources/images/stacd_workflow.png" alt="STACD workflow diagram" class="modal-diagram-img" />
             </div>
 
             <article class="modal-section">
+              <h3>How a run flow through the platform?</h3>
+              <div class="method-flow stacd-flow" role="img" aria-label="Five steps: service backend, Airflow DAG, STACD register, STAC item, browsers">
+                <div class="flow-step"><span class="flow-num">1</span><span class="flow-title">Service backend</span><span class="flow-sub">Exposes one compute API.</span></div>
+                <div class="flow-step"><span class="flow-num">2</span><span class="flow-title">Airflow DAG</span><span class="flow-sub">Generated from YAML; calls the API.</span></div>
+                <div class="flow-step"><span class="flow-num">3</span><span class="flow-title">STACD register</span><span class="flow-sub">Versions the output in the database.</span></div>
+                <div class="flow-step"><span class="flow-num">4</span><span class="flow-title">STAC item</span><span class="flow-sub">Written to the catalog with provenance.</span></div>
+                <div class="flow-step"><span class="flow-num">5</span><span class="flow-title">Browsers</span><span class="flow-sub">STAC and STACD browsers show data and lineage.</span></div>
+              </div>
+              <p class="method-note">All compute goes through Airflow and STACD. Onboarding a service needs three YAML files: DAG, algorithm repo and dataset repo.</p>
+              <div class="modal-video">
+                <video controls playsinline preload="metadata" title="STACD tutorial">
+                  <source src="resources/videos/stacd.mp4" type="video/mp4" />
+                </video>
+              </div>
               <h3>Key Features</h3>
               <ul class="modal-list">
                 <li><strong>Selective Recomputation:</strong> When an algorithm is updated, STACD re-runs only the affected steps instead of processing the entire workflow again.</li>
@@ -281,6 +296,11 @@
                 STACD serves as the data orchestration backbone for the <strong>CoRE Stack</strong> project at IIT Delhi, powering drone canopy processing, bioacoustics monitoring, and landscape mapping across more than 1,000 villages in India.
               </p>
             </article>
+
+            <!-- Walk Through button: sits at the very end of the scrolling area -->
+            <div class="modal-walkthrough">
+              <button type="button" class="walkthrough-button" id="openStacdWalkthrough" aria-haspopup="dialog">Walk Through <span aria-hidden="true">→</span></button>
+            </div>
           </div>
 
           <div class="modal-footer">
@@ -288,6 +308,24 @@
             <a href="https://drive.google.com/file/d/14LTqk47Nfjp4DOOyME3SMxElkxdvmTr1/view" target="_blank" rel="noopener noreferrer" class="modal-btn btn-secondary">Read Thesis PDF ↗</a>
             <a href="https://github.com/SaharshLaud/STACD_framework/tree/dev" target="_blank" rel="noopener noreferrer" class="modal-btn btn-secondary">Github Repo ↗</a>
           </div>
+        </div>
+      </div>
+
+      <!-- ================= STACD Walk Through popup (opens on top of the STACD modal) ================= -->
+      <div class="modal-overlay" id="stacdWalkthroughModal" aria-hidden="true">
+        <div class="modal-container walkthrough-modal" role="dialog" aria-modal="true" aria-label="Walk through slides">
+          <button type="button" class="modal-close-btn" id="closeStacdWalkthrough" aria-label="Close">&times;</button>
+          <div class="slides-head">
+            <div>
+              <p class="eyebrow">STACD Deck.</p>
+            </div>
+            <a class="walkthrough-button slides-open" data-slides-open href="resources/ppt/stacd.pdf" target="_blank" rel="noopener noreferrer">Open in new tab <span aria-hidden="true">↗</span></a>
+          </div>
+          <!-- Index.js loads the PDF from resources/ppt/ into this box the first time the popup opens -->
+          <div class="slides-stage" data-slides-stage data-slides-title="STACD walk through">
+            <p class="slides-loading">Loading slides…</p>
+          </div>
+          <p class="slides-help" data-slides-help hidden>The slides could not be loaded. Use the Open in new tab button to open them.</p>
         </div>
       </div>
 

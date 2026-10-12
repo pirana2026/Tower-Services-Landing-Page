@@ -357,39 +357,33 @@ button.walkthrough-button {
   color: var(--muted);
 }
 
-.resource-links {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-  margin-bottom: 22px;
-}
-
 .resource-link {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   gap: 10px;
   padding: 16px 20px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--green);
   border-radius: 12px;
-  background: #ffffff;
+  background: var(--green);
+  color: #ffffff;
   font-size: 14px;
   font-weight: 600;
   transition: background 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
 }
 
 .resource-link:hover {
-  border-color: #92ad7a;
-  background: #f1f7ea;
+  border-color: #4a6318;
+  background: #4a6318;
   transform: translateY(-2px);
 }
 
 /* <button> version of .resource-link (opens the repo popup) */
 button.resource-link {
   width: 100%;
-  color: inherit;
+  color: #ffffff;
   font-family: inherit;
-  text-align: left;
+  text-align: center;
   cursor: pointer;
 }
 
@@ -516,6 +510,32 @@ button.resource-link {
 }
 
 /* ---------- 6. Video ---------- */
+/* Right column: video card with the GitHub and Walk Through buttons under it */
+.video-column {
+  display: grid;
+  gap: 18px;
+}
+
+.walkthrough-github-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  padding: 18px 20px;
+  border: 1px solid rgba(90, 119, 30, 0.35);
+  border-radius: 20px;
+  background: var(--tint); /* same soft colour as the hero, changes per service */
+  box-shadow: 0 20px 50px rgba(23, 60, 48, 0.12);
+}
+
+.walkthrough-github-card .resource-link,
+.walkthrough-github-card .walkthrough-button {
+  justify-content: center;
+  padding: 16px 20px;
+  border-radius: 12px;
+  font-size: 14px;
+  text-align: center;
+}
+
 .video-section {
   overflow: hidden;
   border: 1px solid var(--line);
@@ -706,6 +726,15 @@ button.resource-link {
 
 .modal-btn + .modal-btn {
   background: var(--green);
+}
+
+/* A lone footer button (Methodology popup): centred, half width */
+.modal-footer .modal-btn:only-child {
+  flex: 0 0 50%;
+}
+
+.modal-footer:has(> .modal-btn:only-child) {
+  justify-content: center;
 }
 
 /* <button> version of .modal-btn (opens the repo popup on top of Methodology) */
@@ -1095,9 +1124,6 @@ body[data-service="diy-lulc"] .flow-sub {
     max-width: 520px;
   }
 
-  .resource-links {
-    grid-template-columns: 1fr;
-  }
 }
 
 @media (max-width: 700px) {
@@ -1206,9 +1232,19 @@ body[data-service="diy-lulc"] .flow-sub {
     height: calc(100dvh - 200px);
   }
 
+  .walkthrough-github-card {
+    grid-template-columns: 1fr;
+    border-radius: 0px;
+  }
+
   .modal-footer {
     flex-direction: column;
     gap: 10px;
+  }
+
+  /* on phones the lone button goes back to full width */
+  .modal-footer .modal-btn:only-child {
+    flex: none;
   }
 
   .site-footer .wrap {

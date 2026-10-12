@@ -326,25 +326,39 @@ function initBackgroundShifts() {
 const FOCUSABLE =
   'a[href], button:not([disabled]), input, select, textarea, [tabindex]:not([tabindex="-1"])';
 
-function setupModal(openBtnId, overlayId, closeBtnId) {
+// Open popups, oldest first. The last one is the topmost
+// (the Walk Through popup opens on top of the STACD popup).
+const openModals = [];
+
+function setupModal(openBtnId, overlayId, closeBtnId, onOpen) {
   const openBtn = document.getElementById(openBtnId);
   const overlay = document.getElementById(overlayId);
   const closeBtn = document.getElementById(closeBtnId);
   if (!openBtn || !overlay) return;
 
-  const isOpen = () => overlay.classList.contains("is-open");
+  const isTop = () => openModals[openModals.length - 1] === overlay;
 
   function open() {
     overlay.classList.add("is-open");
     overlay.setAttribute("aria-hidden", "false");
+    if (!openModals.includes(overlay)) openModals.push(overlay);
     document.body.classList.add("modal-open");
     if (closeBtn) closeBtn.focus({ preventScroll: true });
+    if (onOpen) onOpen();
   }
 
   function close() {
     overlay.classList.remove("is-open");
     overlay.setAttribute("aria-hidden", "true");
-    document.body.classList.remove("modal-open");
+
+    const idx = openModals.indexOf(overlay);
+    if (idx !== -1) openModals.splice(idx, 1);
+
+    // Keep page scroll locked while any popup is still open.
+    document.body.classList.toggle("modal-open", openModals.length > 0);
+
+    // Stop any video that is playing inside this modal.
+    overlay.querySelectorAll("video").forEach((video) => video.pause());
     openBtn.focus({ preventScroll: true });
   }
 
@@ -357,7 +371,8 @@ function setupModal(openBtnId, overlayId, closeBtnId) {
   });
 
   document.addEventListener("keydown", (event) => {
-    if (!isOpen()) return;
+    // Only the topmost popup reacts to the keyboard.
+    if (!isTop()) return;
 
     if (event.key === "Escape") {
       close();
@@ -366,7 +381,9 @@ function setupModal(openBtnId, overlayId, closeBtnId) {
 
     // Keep Tab / Shift+Tab inside the open dialog.
     if (event.key === "Tab") {
-      const items = Array.from(overlay.querySelectorAll(FOCUSABLE));
+      const items = Array.from(overlay.querySelectorAll(FOCUSABLE)).filter(
+        (el) => !el.hidden && el.offsetParent !== null
+      );
       if (!items.length) return;
 
       const first = items[0];
@@ -383,9 +400,102 @@ function setupModal(openBtnId, overlayId, closeBtnId) {
   });
 }
 
+/* ---------- STACD Walk Through slides (PDF) ---------- */
+
+const STACD_SLIDES = "resources/ppt/stacd.pdf";
+
+// Desktop browsers show the PDF in their own viewer (iframe). Phones and tablets cannot show a PDF
+// inside an iframe (they only offer an "Open" button), so there the pages are drawn with PDF.js.
+const PDFJS_VERSION = "3.11.174";
+const PDFJS_BASE = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${PDFJS_VERSION}`;
+
+function canShowPdfInline() {
+  const touch = window.matchMedia("(pointer: coarse)").matches;
+  return !touch && navigator.pdfViewerEnabled !== false;
+}
+
+function loadPdfJs() {
+  if (window.pdfjsLib) return Promise.resolve(window.pdfjsLib);
+  return new Promise((resolve, reject) => {
+    const script = document.createElement("script");
+    script.src = `${PDFJS_BASE}/pdf.min.js`;
+    script.onload = () => {
+      window.pdfjsLib.GlobalWorkerOptions.workerSrc = `${PDFJS_BASE}/pdf.worker.min.js`;
+      resolve(window.pdfjsLib);
+    };
+    script.onerror = reject;
+    document.head.appendChild(script);
+  });
+}
+
+async function renderSlidePages(stage, src) {
+  const pdfjs = await loadPdfJs();
+  const pdf = await pdfjs.getDocument(src).promise;
+
+  const pages = document.createElement("div");
+  pages.className = "slides-pages";
+  stage.classList.add("is-pages");
+  stage.replaceChildren(pages);
+
+  const width = pages.clientWidth || stage.clientWidth;
+  const ratio = Math.min(window.devicePixelRatio || 1, 2); // sharp, but not huge on phones
+
+  for (let i = 1; i <= pdf.numPages; i++) {
+    const page = await pdf.getPage(i);
+    const base = page.getViewport({ scale: 1 });
+    const viewport = page.getViewport({ scale: (width / base.width) * ratio });
+
+    const canvas = document.createElement("canvas");
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+    canvas.setAttribute("role", "img");
+    canvas.setAttribute("aria-label", `Slide ${i} of ${pdf.numPages}`);
+    pages.appendChild(canvas);
+
+    await page.render({ canvasContext: canvas.getContext("2d"), viewport }).promise;
+  }
+}
+
+/** Loads the PDF into the popup, only the first time it opens. */
+function loadStacdSlides() {
+  const overlay = document.getElementById("stacdWalkthroughModal");
+  const stage = overlay && overlay.querySelector("[data-slides-stage]");
+  if (!stage || stage.dataset.loaded) return;
+  stage.dataset.loaded = "true";
+
+  const help = overlay.querySelector("[data-slides-help]");
+  const showHelp = () => {
+    if (help) help.hidden = false;
+  };
+
+  const openLink = overlay.querySelector("[data-slides-open]");
+  if (openLink) openLink.href = STACD_SLIDES;
+
+  if (canShowPdfInline()) {
+    const frame = document.createElement("iframe");
+    frame.src = `${STACD_SLIDES}#view=FitH`;
+    frame.title = stage.dataset.slidesTitle || "Walk through slides";
+    frame.allowFullscreen = true;
+    frame.addEventListener("error", showHelp);
+    stage.replaceChildren(frame);
+  } else {
+    renderSlidePages(stage, STACD_SLIDES).catch(() => {
+      stage.replaceChildren();
+      showHelp();
+    });
+  }
+}
+
 function initModals() {
   setupModal("openStacdModal", "stacdModalOverlay", "closeStacdModal");
   setupModal("openInfraModal", "infraModalOverlay", "closeInfraModal");
+  // Opens on top of the STACD popup; Esc / close returns to it.
+  setupModal(
+    "openStacdWalkthrough",
+    "stacdWalkthroughModal",
+    "closeStacdWalkthrough",
+    loadStacdSlides
+  );
 }
 
 /* ---------- Start everything ---------- */
