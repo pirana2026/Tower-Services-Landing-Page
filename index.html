@@ -219,7 +219,7 @@
         </div>
 
         <div class="resource-links">
-          <a href="https://www.cse.iitd.ernet.in/act4dws5/airflow/home" target="_blank" rel="noopener noreferrer">
+          <a href="https://www.cse.iitd.ernet.in/act4dws5/stacd/" target="_blank" rel="noopener noreferrer">
             <span>
               <strong>STAC / STACD Browser</strong>
               <small> Web-based tool • Geospatial data • Satellite imagery • Browse & search • Data access</small>
@@ -270,11 +270,8 @@
                 <div class="flow-step"><span class="flow-num">5</span><span class="flow-title">Browsers</span><span class="flow-sub">STAC and STACD browsers show data and lineage.</span></div>
               </div>
               <p class="method-note">All compute goes through Airflow and STACD. Onboarding a service needs three YAML files: DAG, algorithm repo and dataset repo.</p>
-              <div class="modal-video">
-                <video controls playsinline preload="metadata" title="STACD tutorial">
-                  <source src="resources/videos/stacd.mp4" type="video/mp4" />
-                </video>
-              </div>
+              <!-- Index.js puts the YouTube player here the first time the popup opens (link: STACD_VIDEO in Index.js) -->
+              <div class="modal-video" data-video-stage data-video-title="STACD" hidden></div>
               <h3>Key Features</h3>
               <ul class="modal-list">
                 <li><strong>Selective Recomputation:</strong> When an algorithm is updated, STACD re-runs only the affected steps instead of processing the entire workflow again.</li>

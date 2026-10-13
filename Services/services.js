@@ -1,7 +1,8 @@
 const SERVICE_VIDEOS = {
-  drone: "../../resources/videos/drone.mp4",
-  "diy-lulc": "../../resources/videos/diy_lulc.mp4",
-  bioacoustic: "../../resources/videos/bioacoustic.mp4",
+  drone: "https://www.youtube.com/watch?v=Rz-QJ0uBXRM",
+  "diy-lulc": "https://www.youtube.com/watch?v=xGK4WGlHD3Y",
+  bioacoustic: "https://www.youtube.com/watch?v=VIFJE174oDU",
+  bioacaustic2: "https://www.youtube.com/watch?v=W1ebMReGzmQ&t=8s"
 };
 
 // Walk Through slides, exported as PDF and kept in resources/ppt (browsers cannot show .pptx directly)
@@ -11,26 +12,63 @@ const SERVICE_SLIDES = {
   bioacoustic: "../../resources/ppt/bioacoustic.pdf",
 };
 
+/** Turns any common YouTube link into an embeddable URL, or returns null if it is not one. */
+function getYouTubeEmbedUrl(link) {
+  let url;
+  try {
+    url = new URL(link);
+  } catch {
+    return null;
+  }
+
+  const host = url.hostname.replace(/^www\.|^m\./, "");
+  let id = null;
+
+  if (host === "youtu.be") {
+    id = url.pathname.slice(1);
+  } else if (host === "youtube.com" || host === "youtube-nocookie.com") {
+    if (url.pathname === "/watch") {
+      id = url.searchParams.get("v");
+    } else {
+      const match = url.pathname.match(/^\/(?:embed|shorts|live)\/([^/?]+)/);
+      if (match) id = match[1];
+    }
+  }
+
+  if (!id || !/^[\w-]{11}$/.test(id)) return null;
+
+  const params = new URLSearchParams({ rel: "0", modestbranding: "1" });
+  const start = url.searchParams.get("t") || url.searchParams.get("start");
+  if (start && /^\d+s?$/.test(start)) params.set("start", parseInt(start, 10));
+
+  return `https://www.youtube-nocookie.com/embed/${id}?${params}`;
+}
+
 function initVideo() {
-  const stage = document.querySelector("[data-video-stage]");
-  if (!stage) return;
+  document.querySelectorAll("[data-video-stage]").forEach(initVideoStage);
+}
 
-  const src = SERVICE_VIDEOS[document.body.dataset.service];
-  if (!src) return;
+function initVideoStage(stage) {
+  // A stage can pick its own link with data-video-key, otherwise the page's service is used
+  const key = stage.dataset.videoKey || document.body.dataset.service;
+  const embedUrl = getYouTubeEmbedUrl(SERVICE_VIDEOS[key] || "");
+  if (!embedUrl) return; // keep the "Tutorial coming soon" placeholder
 
-  const video = document.createElement("video");
-  video.controls = true;
-  video.playsInline = true;
-  video.preload = "metadata"; // do not download the whole file on page load
-  video.title = `${stage.dataset.videoTitle} tutorial`;
-  video.src = src;
+  const frame = document.createElement("iframe");
+  frame.src = embedUrl;
+  frame.title = `${stage.dataset.videoTitle} tutorial`;
+  frame.loading = "lazy"; // do not load the player until it is near the screen
+  frame.referrerPolicy = "strict-origin-when-cross-origin";
+  frame.allow =
+    "accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+  frame.allowFullscreen = true;
 
-  const help = document.querySelector("[data-video-help]");
-  video.addEventListener("error", () => {
+  const help = stage.closest(".video-section")?.querySelector("[data-video-help]");
+  frame.addEventListener("error", () => {
     if (help) help.hidden = false;
   });
 
-  stage.replaceChildren(video);
+  stage.replaceChildren(frame);
 }
 
 // Open popups, oldest first. The last one is the topmost (a popup can open on top of another).

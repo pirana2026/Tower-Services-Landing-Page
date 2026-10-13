@@ -359,6 +359,10 @@ function setupModal(openBtnId, overlayId, closeBtnId, onOpen) {
 
     // Stop any video that is playing inside this modal.
     overlay.querySelectorAll("video").forEach((video) => video.pause());
+    // A YouTube player cannot be paused from here, so reloading it is what stops the sound.
+    overlay.querySelectorAll(".modal-video iframe").forEach((frame) => {
+      frame.src = frame.src;
+    });
     openBtn.focus({ preventScroll: true });
   }
 
@@ -398,6 +402,65 @@ function setupModal(openBtnId, overlayId, closeBtnId, onOpen) {
       }
     }
   });
+}
+
+/* ---------- STACD tutorial video (YouTube) ---------- */
+
+// Paste the full YouTube link here (watch / youtu.be / embed / shorts all work).
+// While it is empty or not a valid YouTube link, the video box stays hidden.
+const STACD_VIDEO = "https://www.youtube.com/watch?v=Y5AIbn2-YYY";
+
+/** Turns any common YouTube link into an embeddable URL, or returns null if it is not one. */
+function getYouTubeEmbedUrl(link) {
+  let url;
+  try {
+    url = new URL(link);
+  } catch {
+    return null;
+  }
+
+  const host = url.hostname.replace(/^www\.|^m\./, "");
+  let id = null;
+
+  if (host === "youtu.be") {
+    id = url.pathname.slice(1);
+  } else if (host === "youtube.com" || host === "youtube-nocookie.com") {
+    if (url.pathname === "/watch") {
+      id = url.searchParams.get("v");
+    } else {
+      const match = url.pathname.match(/^\/(?:embed|shorts|live)\/([^/?]+)/);
+      if (match) id = match[1];
+    }
+  }
+
+  if (!id || !/^[\w-]{11}$/.test(id)) return null;
+
+  const params = new URLSearchParams({ rel: "0", modestbranding: "1" });
+  const start = url.searchParams.get("t") || url.searchParams.get("start");
+  if (start && /^\d+s?$/.test(start)) params.set("start", parseInt(start, 10));
+
+  return `https://www.youtube-nocookie.com/embed/${id}?${params}`;
+}
+
+/** Puts the player into the STACD popup, only the first time it opens. */
+function loadStacdVideo() {
+  const stage = document.querySelector("#stacdModalOverlay [data-video-stage]");
+  if (!stage || stage.dataset.loaded) return;
+
+  const embedUrl = getYouTubeEmbedUrl(STACD_VIDEO);
+  if (!embedUrl) return; // keep the box hidden
+  stage.dataset.loaded = "true";
+
+  const frame = document.createElement("iframe");
+  frame.src = embedUrl;
+  frame.title = `${stage.dataset.videoTitle} tutorial`;
+  frame.referrerPolicy = "strict-origin-when-cross-origin";
+  frame.allow =
+    "accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share";
+  frame.allowFullscreen = true;
+
+  stage.replaceChildren(frame);
+  stage.hidden = false;
 }
 
 /* ---------- STACD Walk Through slides (PDF) ---------- */
@@ -487,7 +550,7 @@ function loadStacdSlides() {
 }
 
 function initModals() {
-  setupModal("openStacdModal", "stacdModalOverlay", "closeStacdModal");
+  setupModal("openStacdModal", "stacdModalOverlay", "closeStacdModal", loadStacdVideo);
   setupModal("openInfraModal", "infraModalOverlay", "closeInfraModal");
   // Opens on top of the STACD popup; Esc / close returns to it.
   setupModal(

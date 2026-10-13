@@ -1712,11 +1712,11 @@ body.modal-open {
   box-shadow: 0 4px 14px rgba(23, 60, 48, 0.08);
 }
 
-.modal-video video {
+.modal-video iframe {
   display: block;
   width: 100%;
-  height: auto;
-  max-height: 60vh;
+  aspect-ratio: 16 / 9;
+  border: 0;
 }
 
 /* ---------- Modals (STACD + Infrastructure): taller dialog ---------- */
