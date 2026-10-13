@@ -38,7 +38,7 @@ function observeVisibility(elements, { threshold = 0.2, once = false } = {}) {
   elements.forEach((el) => observer.observe(el));
 }
 
-/** Add `className` to <body> while any of `targets` is on screen. */
+
 function toggleBodyClass(targets, className, threshold) {
   if (!hasObserver || !targets.length) return;
 
@@ -57,7 +57,7 @@ function toggleBodyClass(targets, className, threshold) {
   targets.forEach((el) => observer.observe(el));
 }
 
-/** Call `onChange(isOnScreen)` whenever `element` enters or leaves the viewport. */
+
 function watchOnScreen(element, onChange) {
   if (!hasObserver) return;
   new IntersectionObserver(([entry]) => onChange(entry.isIntersecting)).observe(element);
@@ -406,8 +406,6 @@ function setupModal(openBtnId, overlayId, closeBtnId, onOpen) {
 
 /* ---------- STACD tutorial video (YouTube) ---------- */
 
-// Paste the full YouTube link here (watch / youtu.be / embed / shorts all work).
-// While it is empty or not a valid YouTube link, the video box stays hidden.
 const STACD_VIDEO = "https://www.youtube.com/watch?v=Y5AIbn2-YYY";
 
 /** Turns any common YouTube link into an embeddable URL, or returns null if it is not one. */
@@ -465,7 +463,15 @@ function loadStacdVideo() {
 
 /* ---------- STACD Walk Through slides (PDF) ---------- */
 
-const STACD_SLIDES = "resources/ppt/stacd.pdf";
+// Comes straight from the STACD GitHub repo (paste the normal /blob/ link here)
+const STACD_SLIDES =
+  "https://github.com/SaharshLaud/STACD_framework/blob/dev/report/STACD%20Methodology%20Deck.pdf";
+
+/** Turns a github.com/.../blob/... link into the raw file link that PDF.js can download. Other links pass through. */
+function getPdfFileUrl(link) {
+  const match = link.match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\/blob\/(.+)$/);
+  return match ? `https://raw.githubusercontent.com/${match[1]}/${match[2]}/${match[3]}` : link;
+}
 
 // Desktop browsers show the PDF in their own viewer (iframe). Phones and tablets cannot show a PDF
 // inside an iframe (they only offer an "Open" button), so there the pages are drawn with PDF.js.
@@ -534,7 +540,12 @@ function loadStacdSlides() {
   const openLink = overlay.querySelector("[data-slides-open]");
   if (openLink) openLink.href = STACD_SLIDES;
 
-  if (canShowPdfInline()) {
+  const fileUrl = getPdfFileUrl(STACD_SLIDES);
+  const isExternal = /^https?:\/\//.test(fileUrl);
+
+  // GitHub does not let its files be shown inside an iframe (it forces a download),
+  // so external PDFs are always drawn with PDF.js. Local PDFs keep the browser's own viewer.
+  if (!isExternal && canShowPdfInline()) {
     const frame = document.createElement("iframe");
     frame.src = `${STACD_SLIDES}#view=FitH`;
     frame.title = stage.dataset.slidesTitle || "Walk through slides";
@@ -542,7 +553,7 @@ function loadStacdSlides() {
     frame.addEventListener("error", showHelp);
     stage.replaceChildren(frame);
   } else {
-    renderSlidePages(stage, STACD_SLIDES).catch(() => {
+    renderSlidePages(stage, fileUrl).catch(() => {
       stage.replaceChildren();
       showHelp();
     });

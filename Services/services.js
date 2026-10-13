@@ -5,12 +5,17 @@ const SERVICE_VIDEOS = {
   bioacaustic2: "https://www.youtube.com/watch?v=W1ebMReGzmQ&t=8s"
 };
 
-// Walk Through slides, exported as PDF and kept in resources/ppt (browsers cannot show .pptx directly)
 const SERVICE_SLIDES = {
-  drone: "../../resources/ppt/drone.pdf",
-  "diy-lulc": "../../resources/ppt/diy_lulc.pdf",
-  bioacoustic: "../../resources/ppt/bioacoustic.pdf",
+  drone: "https://github.com/stuck-in-infinity/TreeCrownDetection/blob/main/Drone_TreeCrown_Methodology_final.pdf",
+  "diy-lulc": "https://github.com/salil-123/Project/blob/main/DIY%20LULC%20-%20methodology.pdf",
+  bioacoustic: "https://github.com/err400/cem-backend/blob/master/BIOMON%20-%20methodology.pdf",
 };
+
+/** Turns a github.com/.../blob/... link into the raw file link that PDF.js can download. Other links pass through. */
+function getPdfFileUrl(link) {
+  const match = link.match(/^https:\/\/github\.com\/([^/]+)\/([^/]+)\/blob\/(.+)$/);
+  return match ? `https://raw.githubusercontent.com/${match[1]}/${match[2]}/${match[3]}` : link;
+}
 
 /** Turns any common YouTube link into an embeddable URL, or returns null if it is not one. */
 function getYouTubeEmbedUrl(link) {
@@ -182,7 +187,12 @@ function loadSlides() {
   const openLink = document.querySelector("[data-slides-open]");
   if (openLink) openLink.href = src;
 
-  if (canShowPdfInline()) {
+  const fileUrl = getPdfFileUrl(src);
+  const isExternal = /^https?:\/\//.test(fileUrl);
+
+  // GitHub does not let its files be shown inside an iframe (it forces a download),
+  // so external PDFs are always drawn with PDF.js. Local PDFs keep the browser's own viewer.
+  if (!isExternal && canShowPdfInline()) {
     const frame = document.createElement("iframe");
     frame.src = `${src}#view=FitH`;
     frame.title = stage.dataset.slidesTitle || "Walk through slides";
@@ -190,7 +200,7 @@ function loadSlides() {
     frame.addEventListener("error", showHelp);
     stage.replaceChildren(frame);
   } else {
-    renderSlidePages(stage, src).catch(() => {
+    renderSlidePages(stage, fileUrl).catch(() => {
       stage.replaceChildren();
       showHelp();
     });
