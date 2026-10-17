@@ -246,39 +246,6 @@ function initCardReveal() {
   observeVisibility(cards, { threshold: 0.15 });
 }
 
-/**
- * Tilt angles follow the mouse. JS only writes two CSS variables;
- * the transform itself (and the dimmed neighbours) live in index.css.
- */
-function initCardTilt() {
-  const cards = document.querySelectorAll(".cards .card");
-  if (!cards.length || !canHover.matches || reduceMotion.matches) return;
-
-  const TILT_DIVISOR = 45; // higher = gentler tilt
-
-  cards.forEach((card) => {
-    let frameId = null;
-
-    card.addEventListener("mousemove", (event) => {
-      const rect = card.getBoundingClientRect();
-      const x = event.clientX - rect.left - rect.width / 2;
-      const y = event.clientY - rect.top - rect.height / 2;
-
-      cancelAnimationFrame(frameId);
-      frameId = requestAnimationFrame(() => {
-        card.style.setProperty("--tilt-x", `${y / TILT_DIVISOR}deg`);
-        card.style.setProperty("--tilt-y", `${-x / TILT_DIVISOR}deg`);
-      });
-    });
-
-    card.addEventListener("mouseleave", () => {
-      cancelAnimationFrame(frameId);
-      card.style.removeProperty("--tilt-x");
-      card.style.removeProperty("--tilt-y");
-    });
-  });
-}
-
 /* ---------- Scroll reveals ---------- */
 
 function initResourceReveal() {
@@ -578,7 +545,6 @@ document.addEventListener("DOMContentLoaded", () => {
   initHeroTitle();
   initLeaves();
   initCardReveal();
-  initCardTilt();
   initResourceReveal();
   initTextReveal();
   initAboutReveal();

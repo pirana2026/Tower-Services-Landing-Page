@@ -613,18 +613,13 @@ nav {
 }
 
 /* Desktop hover: gentle 3D tilt (angles come from JS) and dimmed neighbours */
+
 @media (hover: hover) and (pointer: fine) {
   .card:hover {
     z-index: 10;
     border-color: #739450;
-    box-shadow: 0 16px 36px rgba(23, 60, 48, 0.16);
-    transform: perspective(1000px)
-      rotateX(var(--tilt-x, 0deg)) rotateY(var(--tilt-y, 0deg))
-      scale(1.025) translateY(-4px);
-  }
-
-  .cards:hover .card:not(:hover) {
-    transform: scale(0.98);
+    box-shadow: 0 10px 24px rgba(23, 60, 48, 0.12);
+    transform: translateY(-3px);
   }
 }
 
