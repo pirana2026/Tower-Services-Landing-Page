@@ -213,6 +213,107 @@ nav {
   font-weight: 600;
 }
 
+/* Services dropdown: the link goes to #services, the arrow button opens the menu */
+.nav-dropdown {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 44px; /* comfortable touch target */
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.dropdown-toggle svg {
+  transition: transform 0.25s var(--ease-out);
+}
+
+.dropdown-toggle[aria-expanded="true"] svg {
+  transform: rotate(180deg);
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 0;
+  z-index: 30; /* above the leafy vine (10) and the page content below the header */
+  width: min(290px, calc(100vw - 36px));
+  margin: 0;
+  padding: 8px;
+  list-style: none;
+  border: 1px solid var(--card-line);
+  border-radius: 12px;
+  background: #ffffff;
+  box-shadow: 0 14px 32px rgba(23, 60, 48, 0.16);
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-6px);
+  transition: opacity 0.2s ease, transform 0.25s var(--ease-out), visibility 0.2s;
+}
+
+/* Invisible bridge over the 14px gap, so the menu doesn't close while the mouse travels down to it */
+.dropdown-menu::before {
+  content: "";
+  position: absolute;
+  inset: -14px 0 auto 0;
+  height: 14px;
+}
+
+.dropdown-menu a {
+  display: block;
+  padding: 10px 14px;
+  border-radius: 8px;
+  transition: background-color 0.2s ease;
+}
+
+.dropdown-menu a:hover,
+.dropdown-menu a:focus-visible {
+  background: #eef4e4;
+}
+
+.dropdown-menu strong {
+  display: block;
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 1.3;
+}
+
+.dropdown-menu small {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.nav-dropdown.is-open .dropdown-menu {
+  opacity: 1;
+  visibility: visible;
+  transform: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .nav-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+  }
+
+  .nav-dropdown:hover .dropdown-toggle svg {
+    transform: rotate(180deg);
+  }
+}
+
 /* Leafy vine hanging below the header */
 .header-branch-border {
   position: absolute;
@@ -458,6 +559,7 @@ nav {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
+  row-gap: 56px; /* room for the peeking mascots of the cards in the second row */
 }
 
 .card {
@@ -477,6 +579,7 @@ nav {
 .c1 { background-image: linear-gradient(90deg, #d8e8c2 0%, #ffffff 50%, #d8e8c2 100%); }
 .c2 { background-image: linear-gradient(90deg, #c3ded3 0%, #ffffff 50%, #c3ded3 100%); }
 .c3 { background-image: linear-gradient(90deg, #e3dbc3 0%, #ffffff 50%, #e3dbc3 100%); }
+.c4 { background-image: linear-gradient(90deg, #d8e8c2 0%, #ffffff 50%, #d8e8c2 100%); }
 
 /* Spinning neon ring around each card */
 @property --neon-angle {
@@ -626,13 +729,15 @@ nav {
 /* ---------- 7. Peeking mascots (hover on desktop only) ---------- */
 .card.bioacoustic-card,
 .card.drone-card,
-.card.lulc-card {
+.card.lulc-card,
+.card.pest-card {
   overflow: visible;
 }
 
 .peeking-bird,
 .peeking-drone,
-.peeking-satellite {
+.peeking-satellite,
+.peeking-bug {
   position: absolute;
   top: 0;
   z-index: 5;
@@ -662,7 +767,8 @@ nav {
 
 .peeking-bird img,
 .peeking-drone svg,
-.peeking-satellite svg {
+.peeking-satellite svg,
+.peeking-bug svg {
   display: block;
   width: 100%;
   height: auto;
@@ -727,6 +833,84 @@ nav {
 @keyframes signalPulse {
   0%, 100% { opacity: 0; }
   40%, 60% { opacity: 1; }
+}
+
+/* Pest card: a beetle that crawls back and forth along the top edge of the card.
+   Legs move in a tripod gait (3 at a time) and the body bobs a little with each step.
+   Everything animates on hover only, so nothing runs while the beetle is hidden. */
+.peeking-bug {
+  right: 25px;
+  width: 95px;
+  transform: translateY(25px) scale(0.6);
+}
+
+/* The feet sit at y=64 of 70 in the SVG, so -43px lands them on the card's top border */
+.pest-card:hover .peeking-bug {
+  opacity: 1;
+  transform: translateY(-43px) scale(1);
+}
+
+/* Walks left, turns around, walks back. Distance is % of its own width, so it fits narrow cards. */
+.pest-card:hover .peeking-bug svg {
+  animation: bugCrawl 14s linear 0.4s infinite;
+}
+
+@keyframes bugCrawl {
+  0%   { transform: translateX(0) scaleX(1); }
+  44%  { transform: translateX(-140%) scaleX(1); }
+  50%  { transform: translateX(-140%) scaleX(-1); }
+  94%  { transform: translateX(0) scaleX(-1); }
+  100% { transform: translateX(0) scaleX(1); }
+}
+
+.peeking-bug .l1 { transform-origin: 50px 53px; }
+.peeking-bug .l2 { transform-origin: 72px 53px; }
+.peeking-bug .l3 { transform-origin: 100px 53px; }
+.peeking-bug .l4 { transform-origin: 58px 53px; }
+.peeking-bug .l5 { transform-origin: 86px 53px; }
+.peeking-bug .l6 { transform-origin: 112px 53px; }
+
+.pest-card:hover .peeking-bug .leg {
+  animation: legStep 0.7s ease-in-out infinite alternate;
+}
+
+.pest-card:hover .peeking-bug .leg-b {
+  animation-direction: alternate-reverse;
+}
+
+@keyframes legStep {
+  from { transform: rotate(-16deg); }
+  to   { transform: rotate(16deg); }
+}
+
+.pest-card:hover .peeking-bug .beetle-body {
+  animation: beetleBob 0.7s ease-in-out infinite alternate;
+}
+
+@keyframes beetleBob {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-1.2px); }
+}
+
+.peeking-bug .antenna {
+  transform-origin: 36px 38px;
+}
+
+.peeking-bug .antenna-b {
+  transform-origin: 41px 37px;
+}
+
+.pest-card:hover .peeking-bug .antenna {
+  animation: antennaWiggle 0.9s ease-in-out infinite alternate;
+}
+
+.pest-card:hover .peeking-bug .antenna-b {
+  animation-direction: alternate-reverse;
+}
+
+@keyframes antennaWiggle {
+  from { transform: rotate(-8deg); }
+  to   { transform: rotate(8deg); }
 }
 
 /* ---------- 8. "How it works" strip ---------- */
@@ -1569,7 +1753,8 @@ body.modal-open {
 @media (hover: none) {
   .peeking-bird,
   .peeking-drone,
-  .peeking-satellite {
+  .peeking-satellite,
+  .peeking-bug {
     display: none;
   }
 }

@@ -1,0 +1,240 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#cae4a6">
+    <meta name="description" content="Next-week pest and disease risk across Maharashtra. Choose a crop, see where its pests are expected next week, and click any subdistrict for symptoms and management advice.">
+    <title>Pest &amp; Disease Forecasting · Tower Services</title>
+    <link rel="stylesheet" href="../services.css">
+    <script src="../services.js" defer></script>
+    <link rel="icon" type="image/png" href="../../resources/images/logo.png">
+  </head>
+  <body data-service="pest-forecasting">
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="brand" href="https://core-stack.org/" aria-label="CoRE Stack website">
+          <img class="brand-logo" src="../../resources/images/logo.png" alt="CoRE Stack logo">
+          <span>CoRE Stack<small>Tower Services</small></span>
+        </a>
+        <nav aria-label="Main navigation">
+          <a class="nav-link" href="../../index.html#services">Services</a>
+          <a class="nav-link" href="../../index.html#more">More Tools</a>
+          <a class="nav-doc nav-link" href="../../index.html#about">About Us</a>
+        </nav>
+      </div>
+      <svg class="header-branch-border" viewBox="0 0 1200 32" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,0 L1200,0 L1200,16 Q900,10 600,16 T300,12 T0,8 Z" fill="#cae4a6"/>
+        <path d="M0,8 Q150,22 300,12 T600,16 T900,10 T1200,16 L1200,32 L0,32 Z" fill="#f6f7f0"/>
+        <path d="M0,8 Q150,22 300,12 T600,16 T900,10 T1200,16" fill="none" stroke="#6b9347" stroke-width="4" stroke-linecap="round"/>
+        <path d="M120,13 C115,7 107,8 110,15 Z" fill="#84ab5c"/><path d="M302,12 C307,6 315,8 311,15 Z" fill="#6b9347"/>
+        <path d="M750,12 C745,6 737,7 740,14 Z" fill="#84ab5c"/><path d="M902,10 C907,4 915,6 911,13 Z" fill="#6b9347"/>
+      </svg>
+    </header>
+
+    <main class="wrap">
+      <a class="back" href="../../index.html#services"><span aria-hidden="true">←</span> Back to services</a>
+
+      <section class="service-hero" aria-labelledby="service-title">
+        <div>
+          <p class="eyebrow">Agricultural decision support</p>
+          <h1 class="service-name" id="service-title">Pest &amp; Disease Forecasting</h1>
+          <p class="lead">Next-week pest and disease risk across Maharashtra.</p>
+          <p class="lead">Choose a crop, see where its pests are expected next week, and click any subdistrict for symptoms and management advice.</p>
+          <div class="service-actions">
+            <a class="try-button" href="https://www.cse.iitd.ernet.in/act4dws5/maharashtra-pest/" target="_blank" rel="noopener noreferrer">Use the service <span aria-hidden="true">↗</span></a>
+            <button type="button" class="method-button" id="openMethod" aria-haspopup="dialog">Methodology <span aria-hidden="true">→</span></button>
+          </div>
+        </div>
+        <div class="hero-art"><img src="../../resources/images/pest.png" alt="Pest and disease forecasting preview"></div>
+      </section>
+
+      <div class="service-layout">
+        <section class="intro" aria-label="About Pest and Disease Forecasting">
+          <div class="about-card">
+            <h2>About this service</h2>
+            <p class="about-copy">Pest &amp; Disease Forecasting is a web application that shows next-week pest and disease risk across Maharashtra. Weather data feeds trained Random Forest models, and the dashboard turns their output into a map. You pick a crop, see which of its pests and diseases are expected in each subdistrict, and click any place to read the forecast.</p>
+            <p class="about-copy">Forecasts are prepared once a day, so the map opens quickly for everyone. Each result shows whether a pest is predicted present or absent, the model's probability, and notes on what the pest is, which symptoms to look for and how to manage it.</p>
+          </div>
+          <div class="usage-guide">
+            <div class="usage-head">
+              <h3>How to use it</h3>
+            </div>
+            <div class="timeline-steps">
+              <div class="timeline-step"><span class="step-num">1</span><div class="step-text"><strong>Open the dashboard:</strong> Launch the app in your browser. It opens on a map of Maharashtra, and the header shows the week the forecast covers.</div></div>
+              <div class="timeline-step"><span class="step-num">2</span><div class="step-text"><strong>Choose crops and pests:</strong> Tick the crops you grow. The pests and diseases for those crops are listed below and are ticked by default. Untick any you don't want to see, then press Load Forecast Map.</div></div>
+              <div class="timeline-step"><span class="step-num">3</span><div class="step-text"><strong>Click a place:</strong> Zoom in with the + and − buttons, then click anywhere in Maharashtra. A panel opens with the subdistrict name and how many pests are predicted present and absent.</div></div>
+              <div class="timeline-step"><span class="step-num">4</span><div class="step-text"><strong>Read the advice:</strong> Each pest has its own card with its prediction, probability and risk. Open "About, symptoms &amp; management" on a card to see what the pest looks like and how to manage it. Close the panel with ✕ to check another place.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="video-column">
+          <section class="video-section" aria-labelledby="video-title">
+          <div class="video-heading"><h2 id="video-title">Watch it in action</h2><span class="video-tag">Pipeline walkthrough</span></div>
+          <!-- services.js swaps this placeholder for the tutorial video when one is set -->
+          <div class="video-stage" data-video-stage data-video-title="Pest &amp; Disease Forecasting">
+            <div class="video-empty"><span class="video-symbol" aria-hidden="true">▷</span><strong>Tutorial coming soon</strong><p>The walkthrough will appear here when it is available.</p></div>
+          </div>
+          <div class="video-caption">
+            <h3>Pest attack forecasting in Maharashtra.</h3>
+            <p>A walkthrough of Pest &amp; Disease Forecasting, from choosing a crop to reading the advice for your place.</p>
+            <p class="video-help" data-video-help hidden>The video could not be loaded. Check your connection and try again.</p>
+            <noscript><p>Enable JavaScript to load the tutorial player.</p></noscript>
+          </div>
+        </section>
+          <div class="walkthrough-github-card">
+            <button type="button" class="walkthrough-button" id="openWalkthrough" aria-haspopup="dialog">Walk Through Deck.<span aria-hidden="true">→</span></button>
+            <a class="resource-link" href="https://github.com/ssjgit08/maharashtraPestDiseaseForecasting" target="_blank" rel="noopener noreferrer">GitHub Repository <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div class="modal-overlay" id="methodModal" aria-hidden="true">
+      <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="methodTitle">
+        <button type="button" class="modal-close-btn" id="closeMethod" aria-label="Close">&times;</button>
+        <p class="eyebrow">Methodology</p>
+        <h2 id="methodTitle">How Pest &amp; Disease Forecasting Works?</h2>
+        <p class="method-sub">ERA5 + IFS weather · Random Forest · Google Earth Engine · Airflow · FastAPI + Leaflet</p>
+
+        <div class="method-flow" role="img" aria-label="Five stages: gather weather, build features, predict, publish, explore">
+          <div class="flow-step"><span class="flow-num">1</span><span class="flow-title">Gather weather</span><span class="flow-sub">ERA5 history and IFS forecast</span></div>
+          <div class="flow-step"><span class="flow-num">2</span><span class="flow-title">Build features</span><span class="flow-sub">Hourly to weekly, per pest</span></div>
+          <div class="flow-step"><span class="flow-num">3</span><span class="flow-title">Predict</span><span class="flow-sub">10 pest-specific Random Forests</span></div>
+          <div class="flow-step"><span class="flow-num">4</span><span class="flow-title">Publish</span><span class="flow-sub">Subdistrict forecasts in Earth Engine</span></div>
+          <div class="flow-step"><span class="flow-num">5</span><span class="flow-title">Explore</span><span class="flow-sub">Pick a crop, load the map, click a place to read its forecast and advice</span></div>
+        </div>
+
+        <article class="method-section">
+          <h3>System architecture</h3>
+          <ul class="method-list">
+            <li>The <strong>worker computes</strong>, <strong>Google Earth Engine stores</strong>, and the <strong>dashboard only reads</strong>.</li>
+            <li><strong>Weather sources:</strong> ERA5 supplies observed weather and IFS supplies the forecast. Both are read from weather collections in Earth Engine.</li>
+            <li><strong>Forecast worker:</strong> a daily batch pipeline turns weather into model features, runs the models and publishes the results.</li>
+            <li><strong>Scheduling:</strong> an external time trigger starts an Airflow job at 03:00 IST. Airflow calls a refresh endpoint on the FastAPI service and checks its JSON reply, and FastAPI runs the forecast scheduler.</li>
+            <li><strong>Google Earth Engine:</strong> holds the weather collections, the deployed model assets, the subdistrict boundary and the published forecast FeatureCollections.</li>
+            <li><strong>Web dashboard:</strong> a FastAPI JSON API reads the published forecasts and serves map tile layers and location lookups. A browser front end built on Leaflet.js draws the map, handles clicks and builds the farmer-facing panel.</li>
+            <li>The dashboard is standalone. It never calls the refresh endpoint, and its only link to the forecasting system is the published forecast asset.</li>
+          </ul>
+          <img class="modal-diagram-img method-diagram" src="../../resources/images/pest-architecture.png" alt="Pest forecasting architecture: time trigger, Airflow job, FastAPI service and forecast worker on the daily run; Google Earth Engine in the middle; browser and web dashboard reading forecasts">
+          <p class="method-note">The top row is the daily forecast run. The bottom row is what happens when someone uses the dashboard. Earth Engine sits between them.</p>
+        </article>
+
+        <article class="method-section">
+          <h3>Training data: CROPSAP pest maps</h3>
+          <p>Weekly pest and disease maps from the ICAR-CRIDA Crop Pest DSS, 15 years (2010 to 2025), chosen by crop, pest, year and week.</p>
+          <table class="method-table">
+            <thead><tr><th>Step</th><th>What happens</th></tr></thead>
+            <tbody>
+              <tr><td><strong>1 · Download</strong></td><td>Pest and disease maps from the ICAR-CRIDA portal, as JPEG images.</td></tr>
+              <tr><td><strong>2 · Georeference</strong></td><td>One map is georeferenced by hand against the Maharashtra boundary. Its CRS, transform, size and extent are reused for the rest, then saved as GeoTIFF.</td></tr>
+              <tr><td><strong>3 · Extract</strong></td><td>Over each of the 359 sub-district polygons, the most common (mode) pixel colour inside it.</td></tr>
+              <tr><td><strong>4 · Classify</strong></td><td>White = class 0 (no pest). Green, yellow and red = class 1 (pest present).</td></tr>
+            </tbody>
+          </table>
+          <p class="method-note">Each record holds crop, pest, year, week, latitude and longitude (polygon centroid) and class. Positives are rare: 0.8% to 15% per pest, about 7.5% overall.</p>
+        </article>
+
+        <article class="method-section">
+          <h3>Weather inputs</h3>
+          <ul class="method-list">
+            <li><strong>ERA5 (history):</strong> hourly reanalysis at each sub-district, aligned to the end date of the pest report. 15, 43 or 77 days are used, depending on the pest.</li>
+            <li><strong>IFS (recent and ahead):</strong> 6 recent days plus 7 days ahead, from the near-real-time forecast collection.</li>
+            <li>Hourly data become daily statistics, then <strong>weekly periods</strong>: w1 is the most recent, w13 the most distant.</li>
+            <li>Eight variables: dew point, surface pressure, rainfall, soil temperature, solar radiation, and maximum, mean and minimum temperature. Processed at 28 km in Earth Engine.</li>
+          </ul>
+          <table class="method-table">
+            <thead><tr><th>Window</th><th>Inputs</th></tr></thead>
+            <tbody>
+              <tr><td><strong>13 weeks</strong></td><td>w1 … w13 (104 inputs)</td></tr>
+              <tr><td><strong>8 weeks</strong></td><td>w1 … w8 (64 inputs)</td></tr>
+              <tr><td><strong>4 weeks</strong></td><td>w1 … w4 (32 inputs)</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="method-section">
+          <h3>Model development</h3>
+          <ul class="method-list">
+            <li>A <strong>Random Forest</strong> takes antecedent weather features in and gives pest occurrence out, one model per pest.</li>
+            <li><strong>Negative-class sampling:</strong> because positives are rare, meaningful negatives are kept using one of three policies, then <strong>K-means</strong> keeps them diverse and classes are balanced 1:1 for training.</li>
+          </ul>
+          <table class="method-table">
+            <thead><tr><th>Policy</th><th>A negative is kept if…</th></tr></thead>
+            <tbody>
+              <tr><td><strong>SYW</strong></td><td>Sub-district × Year × Week: the sub-district had any pest-positive record that week.</td></tr>
+              <tr><td><strong>SYP</strong></td><td>Sub-district × Year × Pest: the sub-district had that pest at any week that year.</td></tr>
+              <tr><td><strong>SWCP</strong></td><td>Sub-district × Week × Crop × Pest: that exact combination was positive elsewhere. Strictest, smallest, most balanced.</td></tr>
+            </tbody>
+          </table>
+          <p class="method-note"><strong>9 configurations per pest</strong> (3 negative policies × 3 windows of 4, 8 and 13 weeks). Per pest, the policy and window with the highest mean validation performance is selected.</p>
+        </article>
+
+        <article class="method-section">
+          <h3>Validation</h3>
+          <ul class="method-list">
+            <li><strong>Temporal (leave one year out):</strong> train on four years, test on the fifth, repeated for each year from 2021 to 2025. Tests generalisation to an unseen year.</li>
+            <li><strong>Spatial (rainfall-stratified folds):</strong> the 359 sub-districts fall into 7 normal-rainfall categories (0–650 up to over 2200 mm). Each is split into 5 folds. Train on four folds, test on the held-out fifth.</li>
+            <li>Every spatial fold spans the same range of rainfall regimes, so it tests unseen but climatically representative sub-districts. This is the more relevant test for a system deployed state-wide.</li>
+          </ul>
+        </article>
+
+        <article class="method-section">
+          <h3>Model integration in Earth Engine</h3>
+          <ul class="method-list">
+            <li><strong>Convert:</strong> the final Random Forest models are converted to Earth Engine tree representations.</li>
+            <li><strong>Publish:</strong> exported as a FeatureCollection asset, so models run on image pixels inside Earth Engine.</li>
+            <li><strong>Classification:</strong> one representation gives the binary class, 0 = absent, 1 = present.</li>
+            <li><strong>Probability:</strong> a second representation of the same model gives a class-1 probability from 0 to 1.</li>
+            <li>Inputs follow each pest's selected window: 32, 64 or 104 features, in a fixed order checked at start-up.</li>
+          </ul>
+        </article>
+
+        <article class="method-section">
+          <h3>Coverage at a glance</h3>
+          <div class="stat-row">
+            <div class="stat"><span class="stat-value">359</span><span class="stat-label">sub-districts covered</span></div>
+            <div class="stat"><span class="stat-value">10</span><span class="stat-label">pest-specific Random Forests</span></div>
+            <div class="stat"><span class="stat-value">15</span><span class="stat-label">years of CROPSAP maps (2010–2025)</span></div>
+          </div>
+        </article>
+
+        <article class="method-section">
+          <h3>Outputs</h3>
+          <ul class="method-list">
+            <li><strong>Risk map:</strong> one layer that combines every ticked pest. With a single pest selected, red marks subdistricts where it is predicted present and green where it is predicted absent.</li>
+            <li><strong>Place names:</strong> subdistrict names appear on the map from zoom level 8.</li>
+            <li><strong>Location forecast:</strong> after a click, the subdistrict name, its code and the clicked coordinates, with counts of pests predicted present and absent.</li>
+            <li><strong>Pest cards:</strong> each pest's status, probability, risk and relevant crops.</li>
+            <li><strong>Advice:</strong> an "About, symptoms &amp; management" section on every card, with what the pest is, the symptoms to look for and how to manage it.</li>
+            <li><strong>Always current:</strong> the map uses the latest date for which every needed pest has a forecast.</li>
+          </ul>
+        </article>
+        <div class="modal-footer">
+          <a class="modal-btn" href="https://docs.core-stack.org/infra/tower-services/deployed-architecture/" target="_blank" rel="noopener noreferrer">Deployed Architecture ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="walkthroughModal" aria-hidden="true">
+      <div class="modal-container walkthrough-modal" role="dialog" aria-modal="true" aria-label="Walk through slides">
+        <button type="button" class="modal-close-btn" id="closeWalkthrough" aria-label="Close">&times;</button>
+        <div class="slides-head">
+          <div>
+            <p class="eyebrow">Pest &amp; Disease Forecasting</p>
+          </div>
+          <a class="walkthrough-button slides-open" data-slides-open href="https://github.com/ssjgit08/maharashtraPestDiseaseForecasting/blob/tower-deployment/docs/walkthroughDeck.pdf" target="_blank" rel="noopener noreferrer">Open in new tab <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="slides-stage" data-slides-stage data-slides-title="Pest &amp; Disease Forecasting walk through">
+          <p class="slides-loading">Loading slides…</p>
+        </div>
+        <p class="slides-help" data-slides-help hidden>The slides could not be loaded. Use the Open in new tab button to open them.</p>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="wrap"><span>CoRE Stack · Tower Services</span><a href="https://docs.core-stack.org/infra/tower-services/" target="_blank" rel="noopener noreferrer">CoRE Stack docs ↗</a></div>
+    </footer>
+  </body>
+</html>

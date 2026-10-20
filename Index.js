@@ -539,6 +539,46 @@ function initModals() {
   );
 }
 
+/* ---------- Header: Services dropdown ---------- */
+
+function initNavDropdown() {
+  const dropdown = document.querySelector("[data-nav-dropdown]");
+  const toggle = dropdown && dropdown.querySelector(".dropdown-toggle");
+  if (!toggle) return;
+
+  const isOpen = () => dropdown.classList.contains("is-open");
+  const setOpen = (open) => {
+    dropdown.classList.toggle("is-open", open);
+    toggle.setAttribute("aria-expanded", String(open));
+  };
+
+  // Arrow button: the only way to open it by touch or keyboard.
+  // (On desktop with a mouse, hovering opens it through CSS.)
+  toggle.addEventListener("click", () => setOpen(!isOpen()));
+
+  // A menu opened by click should not stay stuck open once the mouse leaves.
+  dropdown.addEventListener("pointerleave", (event) => {
+    if (event.pointerType === "mouse") setOpen(false);
+  });
+
+  // Tabbing out of the dropdown closes it.
+  dropdown.addEventListener("focusout", (event) => {
+    if (event.relatedTarget && !dropdown.contains(event.relatedTarget)) setOpen(false);
+  });
+
+  // Click anywhere else closes it.
+  document.addEventListener("click", (event) => {
+    if (!dropdown.contains(event.target)) setOpen(false);
+  });
+
+  // Esc closes it and hands focus back to the arrow.
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape" || !isOpen()) return;
+    setOpen(false);
+    if (dropdown.contains(document.activeElement)) toggle.focus({ preventScroll: true });
+  });
+}
+
 /* ---------- Start everything ---------- */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -550,4 +590,5 @@ document.addEventListener("DOMContentLoaded", () => {
   initAboutReveal();
   initBackgroundShifts();
   initModals();
+  initNavDropdown();
 });

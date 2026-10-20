@@ -24,7 +24,40 @@
         </a>
 
         <nav aria-label="Main navigation">
-          <a class="nav-link" href="index.html#services">Services</a>
+          <!-- Services dropdown: hover/focus on desktop, tap the arrow on touch (see initNavDropdown in Index.js) -->
+          <div class="nav-dropdown" data-nav-dropdown>
+            <a class="nav-link" href="index.html#services">Services</a>
+            <button type="button" class="dropdown-toggle" aria-expanded="false" aria-controls="servicesMenu" aria-label="Show services menu">
+              <svg viewBox="0 0 12 8" width="12" height="8" aria-hidden="true"><path d="M1 1.5 6 6.5 11 1.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg>
+            </button>
+
+            <ul class="dropdown-menu" id="servicesMenu">
+              <li>
+                <a href="Services/Drone/drone.html">
+                  <strong>Drone Imagery Analysis</strong>
+                  <small>Tree crowns and species maps</small>
+                </a>
+              </li>
+              <li>
+                <a href="Services/Bioacaustic/bioacoustic.html">
+                  <strong>Bioacoustic Data</strong>
+                  <small>Field audio to bird-activity metrics</small>
+                </a>
+              </li>
+              <li>
+                <a href="Services/DIY_LULC/diy-lulc.html">
+                  <strong>Do It Yourself LULC</strong>
+                  <small>10 m land-cover mapping over India</small>
+                </a>
+              </li>
+              <li>
+                <a href="Services/Pest_forecasting/pest_forecasting.html">
+                  <strong>Pest &amp; Disease Forecasting</strong>
+                  <small>Next-week risk across Maharashtra</small>
+                </a>
+              </li>
+            </ul>
+          </div>
           <a class="nav-link" href="index.html#more">More Tools</a>
           <a class="nav-link nav-doc" href="index.html#about">About Us</a>
         </nav>
@@ -197,6 +230,68 @@
             <div class="card-actions">
               <a class="explore-link" href="Services/DIY_LULC/diy-lulc.html">Explore →</a>
               <a class="try-link" href="https://www.cse.iitd.ernet.in/act4dws5/diy-lulc/" target="_blank" rel="noopener noreferrer">
+                Use the Service ↗
+              </a>
+            </div>
+          </article>
+
+          <!-- Pest & Disease Forecasting -->
+          <article class="card c4 pest-card">
+            <div class="peeking-bug" aria-hidden="true">
+              <svg viewBox="0 0 140 70" xmlns="http://www.w3.org/2000/svg">
+                <!-- legs (behind the body). Tripod gait: leg-a and leg-b take turns -->
+                <g fill="none" stroke="#173c30" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                  <path class="leg leg-a l1" d="M50 53 L42 58 L38 64" />
+                  <path class="leg leg-b l2" d="M72 53 L68 59 L66 64" />
+                  <path class="leg leg-a l3" d="M100 53 L106 58 L110 64" />
+                  <path class="leg leg-b l4" d="M58 53 L52 59 L50 64" stroke="#2c4a3d" />
+                  <path class="leg leg-a l5" d="M86 53 L84 59 L84 64" stroke="#2c4a3d" />
+                  <path class="leg leg-b l6" d="M112 53 L116 58 L120 64" stroke="#2c4a3d" />
+                </g>
+
+                <g class="beetle-body">
+                  <!-- underbody -->
+                  <path d="M50 47 H116 Q114 54 104 54 H62 Q52 54 50 47 Z" fill="#173c30" />
+                  <!-- shell -->
+                  <path d="M56 47 C56 24 72 17 92 19 C110 21 120 33 118 47 Z" fill="#cd4a3e" stroke="#173c30" stroke-width="2.5" stroke-linejoin="round" />
+                  <path d="M88 19 V47" stroke="#173c30" stroke-width="2" />
+                  <circle cx="75" cy="34" r="3.4" fill="#173c30" />
+                  <circle cx="101" cy="32" r="3.4" fill="#173c30" />
+                  <circle cx="72" cy="43" r="2.4" fill="#173c30" />
+                  <circle cx="106" cy="42" r="2.4" fill="#173c30" />
+                  <path d="M66 30 Q74 22 84 22" fill="none" stroke="#ffffff" stroke-opacity="0.4" stroke-width="2" stroke-linecap="round" />
+                  <!-- neck shield + head (faces left) -->
+                  <path d="M42 47 C42 35 50 29 60 30 C64 33 65 41 64 47 Z" fill="#2c4a3d" stroke="#173c30" stroke-width="2.5" stroke-linejoin="round" />
+                  <ellipse cx="39" cy="44" rx="8" ry="7" fill="#173c30" />
+                  <circle cx="36" cy="42" r="1.8" fill="#d6f08a" />
+                  <!-- antennae -->
+                  <g class="antenna">
+                    <line x1="36" y1="38" x2="26" y2="27" stroke="#173c30" stroke-width="2.5" stroke-linecap="round" />
+                    <circle cx="25" cy="26" r="2.4" fill="#f4a261" />
+                  </g>
+                  <g class="antenna antenna-b">
+                    <line x1="41" y1="37" x2="35" y2="24" stroke="#173c30" stroke-width="2.5" stroke-linecap="round" />
+                    <circle cx="34" cy="23" r="2.4" fill="#f4a261" />
+                  </g>
+                </g>
+              </svg>
+            </div>
+
+            <div class="card-top">
+              <span>AGRICULTURAL DECISION SUPPORT</span>
+              <span>4</span>
+            </div>
+
+            <img class="service-image" src="resources/images/pest.png" alt="Risk map of Maharashtra with a next-week pest forecast panel" width="800" height="500" loading="lazy" decoding="async" />
+            <h3>Pest &amp; Disease Forecasting</h3>
+            <h4>Next-week pest and disease risk across Maharashtra</h4>
+            <p>Choose a crop, see where its pests are expected next week, and click any subdistrict for symptoms and management advice.</p>
+
+            <div class="card-actions">
+              <!-- TODO: Explore page ka link -->
+              <a class="explore-link" href="../../Services/Pest_forecasting/pest_forecasting.html">Explore →</a>
+              <!-- TODO: service ka URL -->
+              <a class="try-link" href="https://www.cse.iitd.ernet.in/act4dws5/maharashtra-pest/" target="_blank" rel="noopener noreferrer">
                 Use the Service ↗
               </a>
             </div>
