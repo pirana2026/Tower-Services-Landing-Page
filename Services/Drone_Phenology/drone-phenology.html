@@ -1,0 +1,302 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#cae4a6">
+    <meta name="description" content="Upload repeated drone orthomosaics of one site to detect, track and classify every tree crown and map its phenology.">
+    <title>Drone Phenology Monitoring · Tower Services</title>
+    <link rel="stylesheet" href="../services.css">
+    <script src="../services.js" defer></script>
+    <link rel="icon" type="image/png" href="../../resources/images/logo.png">
+  </head>
+  <body data-service="drone-phenology">
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="brand" href="https://core-stack.org/" aria-label="CoRE Stack website">
+          <img class="brand-logo" src="../../resources/images/logo.png" alt="CoRE Stack logo">
+          <span>CoRE Stack<small>Tower Services</small></span>
+        </a>
+        <nav aria-label="Main navigation">
+          <a class="nav-link" href="../../index.html#services">Services</a>
+          <a class="nav-link" href="../../index.html#more">More Tools</a>
+          <a class="nav-doc nav-link" href="../../index.html#about">About Us</a>
+        </nav>
+      </div>
+      <svg class="header-branch-border" viewBox="0 0 1200 32" preserveAspectRatio="none" aria-hidden="true">
+        <path d="M0,0 L1200,0 L1200,16 Q900,10 600,16 T300,12 T0,8 Z" fill="#cae4a6"/>
+        <path d="M0,8 Q150,22 300,12 T600,16 T900,10 T1200,16 L1200,32 L0,32 Z" fill="#f6f7f0"/>
+        <path d="M0,8 Q150,22 300,12 T600,16 T900,10 T1200,16" fill="none" stroke="#6b9347" stroke-width="4" stroke-linecap="round"/>
+        <path d="M120,13 C115,7 107,8 110,15 Z" fill="#84ab5c"/><path d="M302,12 C307,6 315,8 311,15 Z" fill="#6b9347"/>
+        <path d="M750,12 C745,6 737,7 740,14 Z" fill="#84ab5c"/><path d="M902,10 C907,4 915,6 911,13 Z" fill="#6b9347"/>
+      </svg>
+    </header>
+
+    <main class="wrap">
+      <a class="back" href="../../index.html#services"><span aria-hidden="true">←</span> Back to services</a>
+
+      <section class="service-hero" aria-labelledby="service-title">
+        <div>
+          <p class="eyebrow">Forest intelligence</p>
+          <h1 class="service-name" id="service-title">Drone Phenology Monitoring</h1>
+          <p class="lead">End to end system of drone imagery collection, processing and phenology monitoring.</p>
+          <div class="service-actions">
+            <a class="try-button" href="https://www.cse.iitd.ernet.in/act4dws5/dpm/" target="_blank" rel="noopener noreferrer">Use the service <span aria-hidden="true">↗</span></a>
+            <button type="button" class="method-button" id="openMethod" aria-haspopup="dialog">Methodology <span aria-hidden="true">→</span></button>
+          </div>
+        </div>
+        <div class="hero-art"><img src="../../resources/images/phenology.jpeg" alt="Drone Phenology Monitoring preview"></div>
+      </section>
+
+      <div class="service-layout">
+        <section class="intro" aria-label="About Drone Phenology Monitoring">
+          <div class="about-card">
+            <h2>About this service</h2>
+            <p class="about-copy">Drone Phenology Monitoring is a web application that turns a time series of drone orthomosaics into a phenology map at individual tree-crown resolution. Each run is isolated: you create it, upload the orthomosaics, pick a model and parameters, and the pipeline runs end to end. Earlier runs stay available for comparison, so you can try different settings on the same site without losing anything.</p>
+            <p class="about-copy">Crown detection uses Detectree2 (Mask R-CNN). A graph-based tracker links the same crown across orthomosaic dates, and the phenology step uses those chains to decide whether a crown is deciduous and when its leaves fell and returned. When the run finishes, an interactive viewer opens the result as a clickable map: pick any crown and read its full phenology record on top of the orthomosaic.</p>
+          </div>
+          <div class="usage-guide">
+            <div class="usage-head">
+              <h3>How to use it</h3>
+            </div>
+            <div class="timeline-steps">
+              <div class="timeline-step"><span class="step-num">1</span><div class="step-text"><strong>Sign in and create a run:</strong> Sign in with Google. From the dashboard, create a new run. Each run keeps its own uploads, parameters, logs and outputs, so you can compare runs later. The service does not re-run an existing run; changing parameters means a new run.</div></div>
+              <div class="timeline-step"><span class="step-num">2</span><div class="step-text"><strong>Upload orthomosaics:</strong> Add GeoTIFFs (.tif / .tiff) of the same site at different dates. Each file must carry a coordinate reference system in its metadata. If an orthomosaic is missing a CRS, you are prompted to select one before the pipeline starts.</div></div>
+              <div class="timeline-step"><span class="step-num">3</span><div class="step-text"><strong>Pick a model and parameters:</strong> Choose a Detectree2 weight (for example 250312_flexi for mixed sites, or canopy-specific weights). Set the tracking parameters, or keep the defaults.</div></div>
+              <div class="timeline-step"><span class="step-num">4</span><div class="step-text"><strong>Run the pipeline:</strong> Start the run. The four pipeline steps execute one after another and the browser streams their logs live. If you close the tab, the run keeps going on the server; come back later and the logs and finished outputs are still there.</div></div>
+              <div class="timeline-step"><span class="step-num">5</span><div class="step-text"><strong>Review and export:</strong> Open the interactive viewer to inspect crowns and phenology overlays on top of the orthomosaic. Download the phenology vector (GeoPackage / GeoJSON), the per-crown CSV, the crown polygons, the pipeline log and the STAC Item from the per-run file browser.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <div class="video-column">
+          <section class="video-section" aria-labelledby="video-title">
+          <div class="video-heading"><h2 id="video-title">Watch it in action</h2><span class="video-tag">Pipeline walkthrough</span></div>
+          <!-- services.js swaps this placeholder for the tutorial video when one is set -->
+          <div class="video-stage" data-video-stage data-video-title="Drone Phenology Monitoring">
+            <div class="video-empty"><span class="video-symbol" aria-hidden="true">▷</span><strong>Tutorial coming soon</strong><p>The walkthrough will appear here when it is available.</p></div>
+          </div>
+          <div class="video-caption">
+            <h3>From repeated drone orthomosaics to a tree-crown phenology map.</h3>
+            <p>A walkthrough of Drone Phenology Monitoring, from creating a run to exploring the viewer and exporting your files.</p>
+            <p class="video-help" data-video-help hidden>The video could not be loaded. Check your connection and try again.</p>
+            <noscript><p>Enable JavaScript to load the tutorial player.</p></noscript>
+          </div>
+        </section>
+          <div class="walkthrough-github-card">
+            <button type="button" class="walkthrough-button" id="openWalkthrough" aria-haspopup="dialog">Walk Through Deck.<span aria-hidden="true">→</span></button>
+            <a class="resource-link" href="https://github.com/hbot07/Drone-Phenology-Monitoring" target="_blank" rel="noopener noreferrer">GitHub Repository <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div class="modal-overlay" id="methodModal" aria-hidden="true">
+      <div class="modal-container" role="dialog" aria-modal="true" aria-labelledby="methodTitle">
+        <button type="button" class="modal-close-btn" id="closeMethod" aria-label="Close">&times;</button>
+        <p class="eyebrow">Methodology</p>
+        <h2 id="methodTitle">How Drone Phenology Monitoring Works?</h2>
+        <p class="method-sub">Detectree2 (Mask R-CNN) · Graph-based tracker · Cloud-Optimised GeoTIFF · Leaflet.js · FastAPI · Airflow + STACD</p>
+
+        <div class="method-flow" role="img" aria-label="Five stages: upload, detect, track, classify, explore">
+          <div class="flow-step"><span class="flow-num">1</span><span class="flow-title">Upload</span><span class="flow-sub">Orthomosaics of one site, many dates</span></div>
+          <div class="flow-step"><span class="flow-num">2</span><span class="flow-title">Detect</span><span class="flow-sub">Detectree2 outlines every crown</span></div>
+          <div class="flow-step"><span class="flow-num">3</span><span class="flow-title">Track</span><span class="flow-sub">Same crown linked across dates</span></div>
+          <div class="flow-step"><span class="flow-num">4</span><span class="flow-title">Classify</span><span class="flow-sub">GCC curve to deciduous or evergreen</span></div>
+          <div class="flow-step"><span class="flow-num">5</span><span class="flow-title">Explore</span><span class="flow-sub">Clickable map with a date slider</span></div>
+        </div>
+
+        <article class="method-section">
+          <h3>System architecture</h3>
+          <ul class="method-list">
+            <li>The <strong>pipeline worker computes</strong>, <strong>FileBrowser stores</strong>, and the <strong>dashboard only reads</strong>. A run's results, once written, do not depend on the worker to be served.</li>
+            <li><strong>Upload path:</strong> orthomosaics (GeoTIFFs with an embedded CRS) go from the browser to the FastAPI service, which validates the CRS, writes the files and records acquisition dates in the database.</li>
+            <li><strong>Pipeline worker:</strong> runs the four-step pipeline inside Docker and writes outputs to <code>/app/data/&lt;run_id&gt;/outputs</code>. GPU inference is used for detection.</li>
+            <li><strong>Scheduling:</strong> when the upload completes, FastAPI triggers the <code>drone_phenology_monitoring</code> DAG in <strong>Airflow</strong> with the <code>run_id</code> and any overridden parameters. The DAG runs the <code>Phenology_Export</code> root algorithm, which calls the pipeline's <code>/api/export-phenology</code> endpoint.</li>
+            <li><strong>Storage:</strong> every run has its own folder with uploads, intermediate outputs and the final viewer. <strong>FileBrowser</strong> gives read-only share links for each folder.</li>
+            <li><strong>Web dashboard:</strong> a FastAPI JSON API serves run metadata, triggers runs and streams per-step status. A Leaflet.js front end draws the viewer, polls run status every five seconds, and shows signed-in users only their own runs.</li>
+            <li><strong>Standalone viewer:</strong> each run also produces a self-contained <code>viewer.html</code> with relative paths, so it opens in any browser without the backend.</li>
+          </ul>
+
+          <svg class="modal-diagram-img method-diagram" viewBox="0 0 880 330" role="img" aria-label="Drone Phenology Monitoring architecture: browser, FastAPI service, Airflow and STACD and pipeline worker write to per-run storage; web dashboard, FileBrowser and STAC catalog read from it" xmlns="http://www.w3.org/2000/svg" font-family="Inter, Arial, sans-serif">
+            <defs>
+              <marker id="dpmArrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+                <path d="M0,0 L10,5 L0,10 z" fill="#6b9347"/>
+              </marker>
+            </defs>
+
+            <text x="15" y="18" font-size="12" font-weight="700" letter-spacing="1" fill="#6b9347">ONE-TIME RUN PER SITE</text>
+
+            <g fill="#f1f7ea" stroke="#6b9347" stroke-width="1.5">
+              <rect x="15" y="30" width="150" height="62" rx="10"/>
+              <rect x="190" y="30" width="150" height="62" rx="10"/>
+              <rect x="365" y="30" width="150" height="62" rx="10"/>
+              <rect x="540" y="30" width="150" height="62" rx="10"/>
+            </g>
+            <g text-anchor="middle" fill="#173c30">
+              <text x="90" y="56" font-size="14" font-weight="700">Browser</text>
+              <text x="90" y="76" font-size="11.5">GeoTIFFs + dates</text>
+              <text x="265" y="56" font-size="14" font-weight="700">FastAPI service</text>
+              <text x="265" y="76" font-size="11.5">Google OAuth · CRS check</text>
+              <text x="440" y="56" font-size="14" font-weight="700">Airflow + STACD</text>
+              <text x="440" y="76" font-size="11.5">triggers the DAG</text>
+              <text x="615" y="56" font-size="14" font-weight="700">Pipeline worker</text>
+              <text x="615" y="76" font-size="11.5">4 steps · GPU · Docker</text>
+            </g>
+            <g stroke="#6b9347" stroke-width="2" fill="none" marker-end="url(#dpmArrow)">
+              <line x1="165" y1="61" x2="188" y2="61"/>
+              <line x1="340" y1="61" x2="363" y2="61"/>
+              <line x1="515" y1="61" x2="538" y2="61"/>
+              <line x1="615" y1="92" x2="615" y2="128"/>
+            </g>
+
+            <rect x="190" y="130" width="675" height="72" rx="12" fill="#cae4a6" stroke="#6b9347" stroke-width="1.5"/>
+            <text x="527" y="153" text-anchor="middle" font-size="14" font-weight="700" fill="#173c30">Per-run storage · /app/data/&lt;run_id&gt;/</text>
+            <g text-anchor="middle" font-size="11.5" fill="#173c30">
+              <text x="285" y="182">Uploads + dates</text>
+              <text x="430" y="182">COG tiles per date</text>
+              <text x="585" y="182">Annotated GeoJSON</text>
+              <text x="715" y="182">viewer.html</text>
+              <text x="820" y="182">STAC item</text>
+            </g>
+
+            <text x="15" y="240" font-size="12" font-weight="700" letter-spacing="1" fill="#6b9347">ANY TIME SOMEONE OPENS A RUN</text>
+            <g fill="#ffffff" stroke="#6b9347" stroke-width="1.5">
+              <rect x="15" y="252" width="150" height="62" rx="10"/>
+              <rect x="190" y="252" width="150" height="62" rx="10"/>
+              <rect x="365" y="252" width="150" height="62" rx="10"/>
+              <rect x="540" y="252" width="150" height="62" rx="10"/>
+            </g>
+            <g text-anchor="middle" fill="#173c30">
+              <text x="90" y="278" font-size="14" font-weight="700">Browser</text>
+              <text x="90" y="298" font-size="11.5">dates · click crowns</text>
+              <text x="265" y="278" font-size="14" font-weight="700">Web dashboard</text>
+              <text x="265" y="298" font-size="11.5">FastAPI · Leaflet.js</text>
+              <text x="440" y="278" font-size="14" font-weight="700">FileBrowser</text>
+              <text x="440" y="298" font-size="11.5">read-only share links</text>
+              <text x="615" y="278" font-size="14" font-weight="700">STAC catalog</text>
+              <text x="615" y="298" font-size="11.5">discoverable output</text>
+            </g>
+            <g stroke="#6b9347" stroke-width="2" fill="none" marker-end="url(#dpmArrow)">
+              <line x1="190" y1="283" x2="167" y2="283"/>
+              <line x1="265" y1="250" x2="265" y2="204"/>
+              <line x1="440" y1="250" x2="440" y2="204"/>
+              <line x1="615" y1="250" x2="615" y2="204"/>
+            </g>
+          </svg>
+          <p class="method-note">The top row is a one-time run per site. The bottom row is what happens whenever someone opens the dashboard or the viewer. Per-run storage sits between them.</p>
+        </article>
+
+        <article class="method-section">
+          <h3>The pipeline: four steps in sequence</h3>
+          <p>The moment you click <em>Upload &amp; start pipeline</em>, the four steps run one after another. Each step writes to a run-specific folder and the next step picks the files up automatically.</p>
+          <table class="method-table">
+            <thead><tr><th>Step</th><th>What happens</th></tr></thead>
+            <tbody>
+              <tr><td><strong>1 · Crown Detection</strong><br><code>01_crown_detection.py</code></td><td><strong>In:</strong> orthomosaic GeoTIFFs. <strong>Out:</strong> per-date crown GeoPackages. A fine-tuned Detectree2 (Mask R-CNN) model outlines every visible crown. Overlapping detections are merged so each crown is counted once, with a confidence score per polygon.</td></tr>
+              <tr><td><strong>2 · Crown Tracking</strong><br><code>02_crown_tracking.py</code></td><td><strong>In:</strong> per-date crown GeoPackages. <strong>Out:</strong> consensus crowns GeoPackage. Anchor crowns align the dates by phase-correlation, then crowns are matched by IoU and centroid distance so each tree keeps one ID. Only crowns seen in enough dates (<code>base_threshold</code>) survive, which filters out false detections and transient objects.</td></tr>
+              <tr><td><strong>3 · Phenology Analysis</strong><br><code>03_phenology_analysis.py</code><br><code>10_phenophase_classifier.py</code><br><code>12_apply_phenophase_to_geojson.py</code></td><td><strong>In:</strong> consensus crowns. <strong>Out:</strong> final annotated GeoJSON. A Green Chromatic Coordinate (GCC) time series is extracted per crown and reduced to a <strong>Deciduousness Score (DS)</strong>, which classifies each crown as <em>deciduous</em> or <em>evergreen</em>. The label is written into the GeoJSON that the viewer loads and that QGIS users download.</td></tr>
+              <tr><td><strong>4 · Interactive Viewer</strong><br><code>04a_cog_tiling.py</code><br><code>04b_interactive_viz.py</code></td><td><strong>In:</strong> orthomosaics + final GeoJSON. <strong>Out:</strong> self-contained Leaflet map. Orthomosaics are tiled into Cloud-Optimised GeoTIFFs so the viewer loads only the tiles it needs. The map has clickable crowns, a date slider across acquisition dates, and a switch between the orthomosaic and a false-colour vegetation view.</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="method-section">
+          <h3>Crown detector: Detectree2</h3>
+          <ul class="method-list">
+            <li>Open-source tree-crown detector using <strong>Mask R-CNN</strong> instance segmentation.</li>
+            <li>Published weights are used as they are. <strong>Nothing is retrained per site.</strong></li>
+            <li>Three weight options can be picked when you start a run:</li>
+          </ul>
+          <table class="method-table">
+            <thead><tr><th>Model variant</th><th>When to use</th></tr></thead>
+            <tbody>
+              <tr><td><code>urban_canopy</code></td><td>Mixed urban / peri-urban canopy; well-separated crowns. <strong>Default.</strong></td></tr>
+              <tr><td><code>250312_flexi</code></td><td>General-purpose; a good first fallback if <code>urban_canopy</code> underfits.</td></tr>
+              <tr><td><code>tropical_dense</code></td><td>Dense tropical closed-canopy forests with heavy crown overlap.</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="method-section">
+          <h3>Tracking a crown across dates</h3>
+          <ul class="method-list">
+            <li><strong>Align:</strong> high-confidence <strong>anchor crowns</strong> are used to line up every date with a tiled phase-correlation (<code>align_method = pcc_tiled</code>).</li>
+            <li><strong>Match:</strong> crowns from different dates are linked by <strong>IoU</strong> and <strong>centroid distance</strong>, so one tree keeps one ID throughout the series.</li>
+            <li><strong>Filter:</strong> a crown must appear in enough dates to be kept. This removes false detections and transient objects such as vehicles or shadows.</li>
+          </ul>
+          <table class="method-table">
+            <thead><tr><th>Parameter</th><th>Default</th><th>What it does</th></tr></thead>
+            <tbody>
+              <tr><td><code>base_threshold</code></td><td>45</td><td>How many dates a crown must appear in to be kept. Raise it to drop more transient detections, lower it to retain more.</td></tr>
+              <tr><td><code>align_threshold</code></td><td>65</td><td>Confidence floor for the anchor crowns used in alignment.</td></tr>
+              <tr><td><code>align_method</code></td><td><code>pcc_tiled</code></td><td>Phase-correlation on tiles.</td></tr>
+            </tbody>
+          </table>
+        </article>
+
+        <article class="method-section">
+          <h3>Phenology and the Deciduousness Score</h3>
+          <ul class="method-list">
+            <li>A <strong>Green Chromatic Coordinate (GCC)</strong> time series is extracted for every tracked crown.</li>
+            <li>Four phenological signals are combined into one <strong>Deciduousness Score (DS)</strong> using four weights: <code>w_veg_amp</code>, <code>w_depth</code>, <code>w_gcc_amp</code> and <code>w_tex</code>.</li>
+            <li>The classifier uses the DS to label each crown <strong>deciduous</strong> or <strong>evergreen</strong>, and to tell when leaves fell and returned.</li>
+            <li>Default weights are tuned for <strong>mixed temperate / subtropical forests</strong>. The Parameter Guide covers tuning for other biomes.</li>
+          </ul>
+        </article>
+
+        <article class="method-section">
+          <h3>Outputs</h3>
+          <ul class="method-list">
+            <li><strong>Interactive viewer</strong> (<code>viewer.html</code>): date slider, clickable crowns, tooltips with tracked ID and phenophase, and a base-map switch between the orthomosaic and a false-colour vegetation view.</li>
+            <li><strong>Final annotated GeoJSON</strong> (<code>final_annotated_crowns.geojson</code>): all tracked crowns with their phenophase label. The main deliverable for QGIS.</li>
+            <li><strong>Phenology metrics GeoJSON</strong> (<code>phenology_metrics.geojson</code>): raw metrics before classification, for your own analysis of the fitted curves.</li>
+            <li><strong>COG tiles</strong> (<code>cogs/</code>): one Cloud-Optimised GeoTIFF per date, reusable in any COG-aware GIS tool.</li>
+            <li><strong>STAC item:</strong> the per-crown vector is registered by STACD (<code>DPM_Phenology_Vector</code>) so it can be found in the shared catalog.</li>
+            <li><strong>Public listing:</strong> toggle a run <em>Public</em> and its viewer appears on the DPM landing page, open to anyone without signing in.</li>
+            <li><strong>Portable run folder:</strong> the viewer and tiles use relative paths, so the whole folder can be moved and still opens.</li>
+          </ul>
+        </article>
+
+        <article class="method-section">
+          <h3>Limitations and what they imply</h3>
+          <table class="method-table">
+            <thead><tr><th>Limitation</th><th>What it means</th></tr></thead>
+            <tbody>
+              <tr><td><strong>Detection needs visible canopy</strong></td><td>Understorey trees hidden under taller crowns are not detected. Only nadir drone imagery is supported; oblique captures are not.</td></tr>
+              <tr><td><strong>Phenology needs temporal coverage</strong></td><td>At least 5 dates across the active season are needed; 8 to 12 dates, 2 to 3 weeks apart, are ideal. Missing leaf-out or leaf-off lowers phenophase accuracy.</td></tr>
+              <tr><td><strong>Alignment assumes overlap</strong></td><td>A survey that flew a very different path on one date may fail alignment for that date.</td></tr>
+              <tr><td><strong>Classification depends on DS weights</strong></td><td>Defaults suit mixed temperate / subtropical forests. Other sites may need the Parameter Guide's tuning procedure.</td></tr>
+              <tr><td><strong>Weights are not retrained</strong></td><td>Detection quality depends on how close your site is to the training data, so pick the closest model variant.</td></tr>
+              <tr><td><strong>Illumination must be consistent</strong></td><td>Low-sun shadows add spectral noise. Fly within ±2 hours of solar noon on every date.</td></tr>
+              <tr><td><strong>Boundary must be consistent</strong></td><td>Changing the survey polygon between dates changes which crowns are detected and tracked. Reuse the exact saved flight plan every date.</td></tr>
+            </tbody>
+          </table>
+        </article>
+        <div class="modal-footer">
+          <a class="modal-btn" href="https://docs.core-stack.org/infra/tower-services/deployed-architecture/" target="_blank" rel="noopener noreferrer">Deployed Architecture ↗</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal-overlay" id="walkthroughModal" aria-hidden="true">
+      <div class="modal-container walkthrough-modal" role="dialog" aria-modal="true" aria-label="Walk through slides">
+        <button type="button" class="modal-close-btn" id="closeWalkthrough" aria-label="Close">&times;</button>
+        <div class="slides-head">
+          <div>
+            <p class="eyebrow">Drone Phenology Monitoring</p>
+          </div>
+          <a class="walkthrough-button slides-open" data-slides-open href="https://github.com/hbot07/Drone-Phenology-Monitoring/blob/main/Drone_Phenology_Monitoring.pdf" target="_blank" rel="noopener noreferrer">Open in new tab <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="slides-stage" data-slides-stage data-slides-title="Drone Phenology Monitoring walk through">
+          <p class="slides-loading">Loading slides…</p>
+        </div>
+        <p class="slides-help" data-slides-help hidden>The slides could not be loaded. Use the Open in new tab button to open them.</p>
+      </div>
+    </div>
+
+    <footer class="site-footer">
+      <div class="wrap"><span>CoRE Stack · Tower Services</span><a href="https://docs.core-stack.org/infra/tower-services/" target="_blank" rel="noopener noreferrer">CoRE Stack docs ↗</a></div>
+    </footer>
+  </body>
+</html>

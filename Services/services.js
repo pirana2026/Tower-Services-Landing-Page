@@ -3,7 +3,8 @@ const SERVICE_VIDEOS = {
   "diy-lulc": "https://www.youtube.com/watch?v=xGK4WGlHD3Y",
   bioacoustic: "https://www.youtube.com/watch?v=VIFJE174oDU",
   bioacaustic2: "https://www.youtube.com/watch?v=W1ebMReGzmQ&t=8s",
-  "pest-forecasting": "https://www.youtube.com/watch?v=_mscAv_evlQ&feature=youtu.be"
+  "pest-forecasting": "https://www.youtube.com/watch?v=_mscAv_evlQ&feature=youtu.be",
+  "drone-phenology": "https://drive.google.com/file/d/1v8fkMk2dLyIXxLwQBRDRm2hX9SSWeyRM/view"
 };
 
 const SERVICE_SLIDES = {
@@ -11,6 +12,7 @@ const SERVICE_SLIDES = {
   "diy-lulc": "https://github.com/salil-123/Project/blob/main/DIY%20LULC%20-%20methodology.pdf",
   bioacoustic: "https://github.com/err400/cem-backend/blob/master/BIOMON%20-%20methodology.pdf",
   "pest-forecasting": "https://github.com/ssjgit08/maharashtraPestDiseaseForecasting/blob/tower-deployment/docs/walkthroughDeck.pdf",
+  "drone-phenology": "https://github.com/hbot07/Drone-Phenology-Monitoring/blob/main/Drone_Phenology_Monitoring.pdf"
 };
 
 /** Turns a github.com/.../blob/... link into the raw file link that PDF.js can download. Other links pass through. */
