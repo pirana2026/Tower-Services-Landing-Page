@@ -9,6 +9,15 @@
     <link rel="stylesheet" href="../services.css">
     <script src="../services.js" defer></script>
     <link rel="icon" type="image/png" href="../../resources/images/logo.png">
+    <style>
+      /* IN / OUT pills for the pipeline steps (can be moved into services.css) */
+      .io-row { display: flex; flex-wrap: wrap; gap: 6px; margin: 0 0 8px; }
+      .io-pill { display: inline-flex; align-items: center; gap: 6px; padding: 3px 10px; border: 1px solid; border-radius: 999px; font-size: .78rem; line-height: 1.4; }
+      .io-pill b { font-size: .66rem; font-weight: 700; letter-spacing: .08em; }
+      .io-in { background: #eaf4df; border-color: #a9cf86; color: #2f5a1e; }
+      .io-out { background: #e6f0fb; border-color: #9cc3ec; color: #1f4f82; }
+      .io-desc { margin: 0; }
+    </style>
   </head>
   <body data-service="drone-phenology">
     <header class="site-header">
@@ -82,7 +91,7 @@
             <div class="video-empty"><span class="video-symbol" aria-hidden="true">▷</span><strong>Tutorial coming soon</strong><p>The walkthrough will appear here when it is available.</p></div>
           </div>
           <div class="video-caption">
-            <h3>From repeated drone orthomosaics to a tree-crown phenology map.</h3>
+            <h3>Phenology monitoring of trees using drone imagery at different timestamps.</h3>
             <p>A walkthrough of Drone Phenology Monitoring, from creating a run to exploring the viewer and exporting your files.</p>
             <p class="video-help" data-video-help hidden>The video could not be loaded. Check your connection and try again.</p>
             <noscript><p>Enable JavaScript to load the tutorial player.</p></noscript>
@@ -198,10 +207,10 @@
           <table class="method-table">
             <thead><tr><th>Step</th><th>What happens</th></tr></thead>
             <tbody>
-              <tr><td><strong>1 · Crown Detection</strong><br><code>01_crown_detection.py</code></td><td><strong>In:</strong> orthomosaic GeoTIFFs. <strong>Out:</strong> per-date crown GeoPackages. A fine-tuned Detectree2 (Mask R-CNN) model outlines every visible crown. Overlapping detections are merged so each crown is counted once, with a confidence score per polygon.</td></tr>
-              <tr><td><strong>2 · Crown Tracking</strong><br><code>02_crown_tracking.py</code></td><td><strong>In:</strong> per-date crown GeoPackages. <strong>Out:</strong> consensus crowns GeoPackage. Anchor crowns align the dates by phase-correlation, then crowns are matched by IoU and centroid distance so each tree keeps one ID. Only crowns seen in enough dates (<code>base_threshold</code>) survive, which filters out false detections and transient objects.</td></tr>
-              <tr><td><strong>3 · Phenology Analysis</strong><br><code>03_phenology_analysis.py</code><br><code>10_phenophase_classifier.py</code><br><code>12_apply_phenophase_to_geojson.py</code></td><td><strong>In:</strong> consensus crowns. <strong>Out:</strong> final annotated GeoJSON. A Green Chromatic Coordinate (GCC) time series is extracted per crown and reduced to a <strong>Deciduousness Score (DS)</strong>, which classifies each crown as <em>deciduous</em> or <em>evergreen</em>. The label is written into the GeoJSON that the viewer loads and that QGIS users download.</td></tr>
-              <tr><td><strong>4 · Interactive Viewer</strong><br><code>04a_cog_tiling.py</code><br><code>04b_interactive_viz.py</code></td><td><strong>In:</strong> orthomosaics + final GeoJSON. <strong>Out:</strong> self-contained Leaflet map. Orthomosaics are tiled into Cloud-Optimised GeoTIFFs so the viewer loads only the tiles it needs. The map has clickable crowns, a date slider across acquisition dates, and a switch between the orthomosaic and a false-colour vegetation view.</td></tr>
+              <tr><td><strong>1 · Crown Detection</strong><br><code>01_crown_detection.py</code></td><td><div class="io-row"><span class="io-pill io-in"><b>IN</b> Orthomosaic GeoTIFFs</span><span class="io-pill io-out"><b>OUT</b> Per-date crown GeoPackages</span></div><p class="io-desc">A fine-tuned Detectree2 (Mask R-CNN) model outlines every visible crown. Overlapping detections are merged so each crown is counted once, with a confidence score per polygon.</p></td></tr>
+              <tr><td><strong>2 · Crown Tracking</strong><br><code>02_crown_tracking.py</code></td><td><div class="io-row"><span class="io-pill io-in"><b>IN</b> Per-date crown GeoPackages</span><span class="io-pill io-out"><b>OUT</b> Consensus crowns GeoPackage</span></div><p class="io-desc">Anchor crowns align the dates by phase-correlation, then crowns are matched by IoU and centroid distance so each tree keeps one ID. Only crowns seen in enough dates (<code>base_threshold</code>) survive, which filters out false detections and transient objects.</p></td></tr>
+              <tr><td><strong>3 · Phenology Analysis</strong><br><code>03_phenology_analysis.py</code><br><code>10_phenophase_classifier.py</code><br><code>12_apply_phenophase_to_geojson.py</code></td><td><div class="io-row"><span class="io-pill io-in"><b>IN</b> Consensus crowns GeoPackage</span><span class="io-pill io-out"><b>OUT</b> Final annotated GeoJSON</span></div><p class="io-desc">A Green Chromatic Coordinate (GCC) time series is extracted per crown and reduced to a <strong>Deciduousness Score (DS)</strong>, which classifies each crown as <em>deciduous</em> or <em>evergreen</em>. The label is written into the GeoJSON that the viewer loads and that QGIS users download.</p></td></tr>
+              <tr><td><strong>4 · Interactive Viewer</strong><br><code>04a_cog_tiling.py</code><br><code>04b_interactive_viz.py</code></td><td><div class="io-row"><span class="io-pill io-in"><b>IN</b> Orthomosaics + Final GeoJSON</span><span class="io-pill io-out"><b>OUT</b> Self-contained Leaflet map HTML</span></div><p class="io-desc">Orthomosaics are tiled into Cloud-Optimised GeoTIFFs so the viewer loads only the tiles it needs. The map has clickable crowns, a date slider across acquisition dates, and a switch between the orthomosaic and a false-colour vegetation view.</p></td></tr>
             </tbody>
           </table>
         </article>
