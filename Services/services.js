@@ -4,7 +4,7 @@ const SERVICE_VIDEOS = {
   bioacoustic: "https://www.youtube.com/watch?v=VIFJE174oDU",
   bioacaustic2: "https://www.youtube.com/watch?v=W1ebMReGzmQ&t=8s",
   "pest-forecasting": "https://www.youtube.com/watch?v=_mscAv_evlQ&feature=youtu.be",
-  "drone-phenology": "https://drive.google.com/file/d/1v8fkMk2dLyIXxLwQBRDRm2hX9SSWeyRM/view"
+  "drone-phenology": "https://www.youtube.com/watch?v=xPXotecp5wo"
 };
 
 const SERVICE_SLIDES = {
